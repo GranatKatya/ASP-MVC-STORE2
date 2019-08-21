@@ -1,0 +1,71 @@
+﻿@model IEnumerable<WebStoreDomain.Entities.Product>
+
+@{
+    ViewBag.Title = "AllProducts";
+}
+
+<h2>AllProducts</h2>
+
+
+@using WebStoreDomain.Entities;
+
+<p>
+    @Html.ActionLink("Добавить игрока", "Add")
+</p>
+
+
+@*<h2>@ViewBag.Product.Name</h2>
+    <p>Price:@ViewBag.Product.Price </p>
+
+    <p>@ViewBag.Product.Category.Name</p>*@
+
+@*<p>@Model.Category.Name</p>*@
+
+@*<p>@Html.DisplayFor(modelItem => Model.Name)</p>
+
+    @Html.DisplayFor(modelItem => Model.Description)
+    @Html.DisplayFor(modelItem => Model.Description)
+    @Html.DisplayFor(modelItem => Model.Category.Name)*@
+
+
+
+
+
+
+<table>
+    <tr>
+        <th>Имя игрока</th>
+        <th>Возраст</th>
+        <th>Description</th>
+        <th>Команда</th>
+        <th></th>
+    </tr>
+
+    @foreach (Product item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+<p>
+    @Html.ActionLink("Каталог команд", "ListTeams")
+</p>    

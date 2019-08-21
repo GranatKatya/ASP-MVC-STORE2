@@ -1,0 +1,52 @@
+﻿@model WebStoreDomain.Entities.Product
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create product</h2>
+
+@using (Html.BeginForm())
+{
+    // к какому свойству привязывается
+    <div>
+        @Html.LabelFor(model => model.Name)
+        @Html.EditorFor(model => model.Name)
+    </div>
+
+    <div>
+        @Html.LabelFor(model => model.Price)
+        @Html.EditorFor(model => model.Price)
+    </div>
+
+    <div>
+        @Html.LabelFor(model => model.Description)
+        @Html.EditorFor(model => model.Description)
+    </div>
+
+    <div>
+        @Html.LabelFor(model => model.Volume)
+        @Html.EditorFor(model => model.Volume)
+    </div>
+
+    <div>
+        @Html.LabelFor(model => model.InStoke)
+        @Html.EditorFor(model => model.InStoke)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Src)
+        @Html.EditorFor(model => model.Src)
+    </div>
+    <div>
+            @Html.LabelFor(model => model.Category)
+            @Html.DropDownListFor(model => model.CategoryId, ViewBag.Categ as SelectList)
+        </div>
+
+
+
+    <div>
+        <input type="submit" value="Create" />
+    </div>
+
+}
+

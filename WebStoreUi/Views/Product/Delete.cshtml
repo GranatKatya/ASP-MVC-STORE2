@@ -1,0 +1,29 @@
+﻿@model WebStoreDomain.Entities.Product
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+@using WebStoreUi.Models;
+
+@using (Html.BeginForm())
+{
+
+
+    <h2>Delete  product  </h2>
+
+    <p>Do you realy want to delete item?</p>
+
+    <div>
+        <h2>@Model.Name</h2>
+        <p> Price: @Model.Price</p>
+        <p> Description: @Model.Description</p>
+        <p> Volume : @Model.Volume </p>
+        <p> InStock: @Model.InStoke</p>
+        <p>Category:    @Html.DropDownListFor(model => model.CategoryId, ViewBag.Categ as SelectList)</p>
+    </div>
+
+    <input type="submit" value="delete" />
+}
+

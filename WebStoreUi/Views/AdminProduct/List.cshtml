@@ -1,0 +1,108 @@
+﻿
+
+
+@using WebStoreDomain.Entities
+@using WebStoreUi.HtmlHelpers
+@using WebStoreUi.Models
+
+
+@*@model  IEnumerable<Product>*@
+@model ProductListViewModel
+
+@{
+    ViewBag.Title = "Goods";
+}
+
+@{ WebStoreDomain.Entities.Product pr = null; }
+<h2>List</h2>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<p>
+
+
+    <button  type="button" class="btn btn-success "><i class="fa fa-plus" style="color:black">@Html.ActionLink("Create New", "CreateProduct" , null, new {style="text-decoration:none; color: black;"})</i></button>
+  @*  <button type="button" class="btn btn-primary active">@Html.ActionLink("Create New", "CreateProduct",null, new {style="text-decoration:none;"})</button>*@
+
+</p>
+<table class="table">
+    <tr>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Category.Name)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => pr.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => pr.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => pr.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => pr.Volume)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => pr.InStoke)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => pr.Src)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => pr.Category)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Products)
+    {
+        <tr>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Volume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InStoke)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Src)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                <div>
+                    <button type="button" class="btn btn-success btn-sm" style="margin-top:1px"><i class="fa fa-edit" style="color:black">@Html.ActionLink("Edit", "EditProduct", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
+                    <button type="button" class="btn btn-success btn-sm" style="margin-top:1px"><i class="fa fa-info-circle" style="color:black">@Html.ActionLink("Details", "ProductDetails", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
+                    <button type="button" class="btn btn-success btn-sm" style="margin-top:1px"><i class="fa fa-close" style="color:black">@Html.ActionLink("Delete", "DeleteProduct", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
+
+                </div>
+                @*@Html.ActionLink("Edit", "EditProduct", new { id = item.Id }) |
+                @Html.ActionLink("Details", "ProductDetails", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteProduct", new { id = item.Id })*@
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+
+
+<div>
+    @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i }))
+</div>
+
+

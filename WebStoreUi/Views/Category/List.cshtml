@@ -1,0 +1,90 @@
+﻿@using WebStoreDomain.Entities
+@using WebStoreUi.HtmlHelpers
+@using WebStoreUi.Models
+
+@*@model IEnumerable<WebStoreDomain.Entities.Category>*@
+@model  CategoryListViewModel
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Categories</h2>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+@*<div style="background-color:   beige; display: flex;   flex-direction:row; flex-wrap: wrap; ">
+    @foreach (var good in @Model.Categories)
+    {
+        <div class="e" style="background-color: beige; height: 490px; width: 49%;  margin: 5px; border: 1px solid black; text-align: center;">
+            <h2>@Html.ActionLink(good.Name, "Details", new { id = good.Id })</h2>
+
+            <div>
+                <button class="btn1"><i class="fa fa-trash"> @Html.ActionLink("Delete", "Delete", new { id = good.Id })</i></button>
+                <button class="btn1"><i class="fa fa-edit"> @Html.ActionLink("Edit", "Edit", new { id = good.Id })</i></button>
+            </div>
+
+        </div>
+
+        @*<div>
+                <p>@good.Name</p>
+                <p>@good.Price.ToString("# $")</p>
+            </div>*@
+@*}
+    </div>*@
+
+
+
+
+
+
+
+
+
+<p>
+    <button type="button" class="btn btn-success "><i class="fa fa-plus" style="color:black">@Html.ActionLink("Create New", "Create", null, new { style = "text-decoration:none; color: black;" })</i></button>
+
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Name")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Categories)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit" style="color:black">@Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
+
+                @*    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
+                <button type="button" class="btn btn-success btn-sm"><i class="fa fa-info-circle" style="color:black">@Html.ActionLink("Details", "CategoryDetails", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
+
+              @*  @Html.ActionLink("Details", "CategoryDetails", new { id = item.Id }) |*@
+                <button type="button" class="btn btn-success btn-sm"><i class="fa fa-close" style="color:black">@Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
+
+             @*   @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+
+
+<div>
+    @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i }))
+</div>
+
