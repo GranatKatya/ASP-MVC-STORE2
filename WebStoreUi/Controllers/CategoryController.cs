@@ -18,37 +18,37 @@ namespace WebStoreUi.Controllers
     {
 
         //dependency injection
-        private IStoreRepository repository; //1 зависимость
+        private IStoreRepository<Category> repository; //1 зависимость
         private int PageSize = 5;
         public CategoryController()
         {
-            repository = new StoreRepository();//2 зависимость
+            repository = new CategoryRepository();//2 зависимость
         }
 
-     //   public ActionResult Index()
-        //{
-        //    IEnumerable<Category> categories = db.Categories;
+     ////   public ActionResult Index()
+     //   //{
+     //   //    IEnumerable<Category> categories = db.Categories;
 
-        //    ViewBag.Categories = categories;
+     //   //    ViewBag.Categories = categories;
 
 
 
-        //    return View();
-      //  }
+     //   //    return View();
+     // //  }
 
-        // GET: Category
+     //   // GET: Category
         public ActionResult List(int page = 1)
         {
             var plvm = new CategoryListViewModel
             {
                 Categories = repository
-                            .Categories
+                            .Items
                             .OrderBy(p => p.Id)
                             .Skip((page - 1) * PageSize)
                             .Take(PageSize),
                 PagingInfo = new PagingInfo
                 {
-                    TotalItems = repository.Categories.Count(),
+                    TotalItems = repository.Items.Count(),
                     ItemsPerPage = PageSize,
                     CurrentPage = page
                 }
@@ -65,7 +65,7 @@ namespace WebStoreUi.Controllers
             {
                 return HttpNotFound();
             }
-            Category team =   ((DbSet<Category>)repository.Categories).Include(t => t.Products).FirstOrDefault(t => t.Id == id);
+            Category team =   ((DbSet<Category>)repository.Items).Include(t => t.Products).FirstOrDefault(t => t.Id == id);
             if (team == null)
             {
                 return HttpNotFound();
@@ -85,8 +85,8 @@ namespace WebStoreUi.Controllers
         public async Task<ActionResult> Create(Category c)
         {
 
-            ((DbSet<Category>)repository.Categories).Add(c);
-            await ((StoreRepository)repository).Context.SaveChangesAsync();
+            ((DbSet<Category>)repository.Items).Add(c);
+            await ((CategoryRepository)repository).Context.SaveChangesAsync();
 
             //return View();
             return RedirectToAction("List");
@@ -105,7 +105,7 @@ namespace WebStoreUi.Controllers
                 return HttpNotFound();
             }
             // Находим в бд футболиста
-            Category p = await ((DbSet<Category>)repository.Categories).FindAsync(id);
+            Category p = await ((DbSet<Category>)repository.Items).FindAsync(id);
             if (p == null)
             {
                 return HttpNotFound();
@@ -120,8 +120,8 @@ namespace WebStoreUi.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(Category p)
         {
-            ((StoreRepository)repository).Context.Entry(p).State = System.Data.Entity.EntityState.Modified;
-            await ((StoreRepository)repository).Context.SaveChangesAsync();
+            ((CategoryRepository)repository).Context.Entry(p).State = System.Data.Entity.EntityState.Modified;
+            await ((CategoryRepository)repository).Context.SaveChangesAsync();
             return RedirectToAction("List");
         }
 
@@ -179,7 +179,7 @@ namespace WebStoreUi.Controllers
         {
            
           
-            Category p1 = await ((DbSet<Category>)repository.Categories).FindAsync(id);
+            Category p1 = await ((DbSet<Category>)repository.Items).FindAsync(id);
             if (p1 == null)
             {
                 return HttpNotFound();
@@ -198,15 +198,15 @@ namespace WebStoreUi.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(Category category)
         {
-            Category p = await ((DbSet<Category>)repository.Categories).FindAsync(category.Id);
+            Category p = await ((DbSet<Category>)repository.Items).FindAsync(category.Id);
             if (p == null)
             {
                 return HttpNotFound();
             }
 
-            ((DbSet<Category>)repository.Categories).Remove(p);
+            ((DbSet<Category>)repository.Items).Remove(p);
             // ((DbContext)repository).SaveChanges();
-            await ((StoreRepository)repository).Context.SaveChangesAsync();
+            await ((CategoryRepository)repository).Context.SaveChangesAsync();
 
             return RedirectToAction("List");
         }

@@ -1,0 +1,9 @@
+﻿@model IEnumerable<WebStoreDomain.Entities.Category>
+
+
+@Html.ActionLink("to main", "List", "Product", null, new { @class = "btn btn-default" })
+
+@foreach (var catergory in Model)
+{
+    @Html.ActionLink(catergory.Name, "List", "Product", new { category = catergory.Name, page = 1}, new { @class = "btn btn-default" })
+}

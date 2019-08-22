@@ -15,6 +15,54 @@ namespace WebStoreUi
 
 
 
+            routes.MapRoute(
+              name: null,
+              url: "",
+              defaults: new { controller = "Product", action = "List", category= (string)null, page =1  }
+              );
+
+            //page
+            //routes.MapRoute(
+            //    name: "",
+            //    url: "Page{page}",
+            //    defaults: new { controller = "Product", action = "List" }
+            //    );
+
+
+            routes.MapRoute(
+              name: "PagingRoute2",
+              url: "{controller}/{action}/ProductPage{page}",
+              defaults: new { controller = "Product", action = "List" }
+              );
+
+            routes.MapRoute(
+               name: "PagingRoute4",
+               url: "{controller}/{action}/CategoryPage{page}",
+               defaults: new { controller = "Category", action = "List" }
+               );
+
+
+            //class
+
+
+            routes.MapRoute(
+                name: "",
+                url: "{category}/Page{page}",
+                defaults: new { controller = "Product", action = "List" }
+                );
+
+            //routes.MapRoute(
+            //name: "",
+            //url: "{action}/{category}/Page{page}"
+            //);
+
+            //routes.MapRoute(
+            // name: "",
+            // url: "{category}",
+            // defaults: new { controller = "Product", action = "List", page = 1 }
+            // );
+            //classs
+
 
             routes.MapRoute(
                 name: "PagingRoute1",
@@ -27,17 +75,7 @@ namespace WebStoreUi
               defaults: new { controller = "Category", action = "List" }
               );
 
-            routes.MapRoute(
-                name: "PagingRoute2",
-                url: "{controller}/{action}/ProductPage{page}",
-                defaults: new { controller = "Product", action = "List" }
-                );
-
-            routes.MapRoute(
-               name: "PagingRoute4",
-               url: "{controller}/{action}/CategoryPage{page}",
-               defaults: new { controller = "Category", action = "List" }
-               );
+          
 
 
 

@@ -14,11 +14,11 @@ namespace WebStoreUi.Controllers
 {
     public class AdminProductController : Controller
     {
-        private IStoreRepository repository; //1 зависимость
+        private IStoreRepository<Product> repository; //1 зависимость
         private int PageSize = 5;
         public AdminProductController()
         {
-            repository = new StoreRepository();//2 зависимость
+            repository = new ProductRepository();//2 зависимость
         }
 
 
@@ -29,7 +29,7 @@ namespace WebStoreUi.Controllers
         [HttpGet]
         public ActionResult AllProducts()
         {
-            var players = ((DbSet<Product>)repository.Products).Include(p => p.Category);
+            var players = ((DbSet<Product>)repository.Items).Include(p => p.Category);
             ViewBag.Product = players;
             return View(players.ToList());
         }
@@ -38,7 +38,7 @@ namespace WebStoreUi.Controllers
 
         public ActionResult List(int page = 1)
         {
-            var players = ((DbSet<Product>)repository.Products).Include(p => p.Category).OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize);
+            var players = ((DbSet<Product>)repository.Items).Include(p => p.Category).OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize);
             var plvm = new ProductListViewModel
             {
                 Products= players,
@@ -49,7 +49,7 @@ namespace WebStoreUi.Controllers
                 //           .Take(PageSize).Include(p => p.Category),
                 PagingInfo = new PagingInfo
                 {
-                    TotalItems = repository.Products.Count(),
+                    TotalItems = repository.Items.Count(),
                     ItemsPerPage = PageSize,
                     CurrentPage = page
                 }
@@ -70,14 +70,14 @@ namespace WebStoreUi.Controllers
                 return HttpNotFound();
             }
             // Находим в бд футболиста
-            Product p = await ((DbSet<Product>)repository.Products).FindAsync(id);
+            Product p = await ((DbSet<Product>)repository.Items).FindAsync(id);
             if (p == null)
             {
                 return HttpNotFound();
             }
 
-            SelectList cat = new SelectList(repository.Categories, "Id", "Name", p.CategoryId);
-            ViewBag.Categ = cat;
+            //SelectList cat = new SelectList(repository.Categories, "Id", "Name", p.CategoryId);
+            //ViewBag.Categ = cat;
             return View(p);
 
         }
@@ -108,30 +108,30 @@ namespace WebStoreUi.Controllers
             {
                 return HttpNotFound();
             }
-            Product p1 = await ((DbSet<Product>)repository.Products).FindAsync(p.Id);
+            Product p1 = await ((DbSet<Product>)repository.Items).FindAsync(p.Id);
             if (p1 == null)
             {
                 return HttpNotFound();
             }
 
 
-            SelectList cat = new SelectList(repository.Categories, "Id", "Name", p.CategoryId);
-            ViewBag.Categ = cat;
+            //SelectList cat = new SelectList(repository.Categories, "Id", "Name", p.CategoryId);
+            //ViewBag.Categ = cat;
             return View(p1);
         }
 
         [HttpPost]
         public async Task<ActionResult> DeleteProduct(int id)
         {
-            Product p = await ((DbSet<Product>)repository.Products).FindAsync(id);
+            Product p = await ((DbSet<Product>)repository.Items).FindAsync(id);
             if (p == null)
             {
                 return HttpNotFound();
             }
 
-            ((DbSet<Product>)repository.Products).Remove(p);
+            ((DbSet<Product>)repository.Items).Remove(p);
             // ((DbContext)repository).SaveChanges();
-            ((StoreRepository)repository).Context.SaveChanges();
+            ((ProductRepository)repository).Context.SaveChanges();
 
             return RedirectToAction("List");
         }
@@ -141,15 +141,15 @@ namespace WebStoreUi.Controllers
         [HttpGet]
         public ActionResult CreateProduct()
         {
-            SelectList categ = new SelectList(repository.Categories, "Id", "Name");
-            ViewBag.Categ = categ;
+            //SelectList categ = new SelectList(repository.Categories, "Id", "Name");
+            //ViewBag.Categ = categ;
             return View();
         }
         [HttpPost]
         public async Task<ActionResult> CreateProduct(Product p)
         {
-            ((DbSet<Product>)repository.Products).Add(p);
-            await ((StoreRepository)repository).Context.SaveChangesAsync();
+            ((DbSet<Product>)repository.Items).Add(p);
+            await ((ProductRepository)repository).Context.SaveChangesAsync();
 
             //return View();
             return RedirectToAction("List");
@@ -166,14 +166,14 @@ namespace WebStoreUi.Controllers
                 return HttpNotFound();
             }
             // Находим в бд футболиста
-            Product p = await ((DbSet<Product>)repository.Products).FindAsync(id);
+            Product p = await ((DbSet<Product>)repository.Items).FindAsync(id);
             if (p == null)
             {
                 return HttpNotFound();
             }
 
-            SelectList cat = new SelectList(repository.Categories, "Id", "Name", p.CategoryId);
-            ViewBag.Categ = cat;
+            //SelectList cat = new SelectList(repository.Categories, "Id", "Name", p.CategoryId);
+            //ViewBag.Categ = cat;
             return View(p);
         }
 
@@ -181,8 +181,8 @@ namespace WebStoreUi.Controllers
         [HttpPost]
         public async Task<ActionResult> EditProduct(Product p)
         {
-            ((StoreRepository)repository).Context.Entry(p).State = System.Data.Entity.EntityState.Modified;
-            await ((StoreRepository)repository).Context.SaveChangesAsync();
+            ((ProductRepository)repository).Context.Entry(p).State = System.Data.Entity.EntityState.Modified;
+            await ((ProductRepository)repository).Context.SaveChangesAsync();
             return RedirectToAction("List");
         }
 

@@ -45,3 +45,15 @@ D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\WebStore\WebStoreDomain\obj\D
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\WebStore\WebStoreDomain\obj\Debug\WebStoreDomain.csproj.CopyComplete
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\WebStore\WebStoreDomain\obj\Debug\WebStoreDomain.dll
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\WebStore\WebStoreDomain\obj\Debug\WebStoreDomain.pdb
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\WebStoreDomain.dll.config
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\WebStoreDomain.dll
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\WebStoreDomain.pdb
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\EntityFramework.dll
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\EntityFramework.xml
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csproj.CoreCompileInputs.cache
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csproj.CopyComplete
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.dll
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.pdb
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csprojAssemblyReference.cache

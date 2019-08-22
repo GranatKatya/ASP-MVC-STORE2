@@ -8,9 +8,12 @@ using WebStoreDomain.Entities;
 
 namespace WebStoreDomain.Abstract
 {
-   public interface IStoreRepository
+   public interface IStoreRepository<T>
     {
-        IEnumerable<Product> Products { get; }
-        IEnumerable<Category> Categories { get; }
+        IEnumerable<T> Items { get; }
+       // IEnumerable<Category> Categories { get; }
+       //add
+       //delete
+       //edite
     }
 }

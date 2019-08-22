@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WebStoreDomain.Entities
+{
+   public class Cart
+    {
+        private List<CartItem> items;
+        public List<CartItem> Items => items; //c# 6
+        public Cart()
+        {
+            items = new List<CartItem>();
+        }
+
+        public void AddItem(Product product, int quantity)
+        {
+            CartItem item = items.Where(i => i.Product.Id == product.Id).FirstOrDefault();// First exequte query
+            if (item == null)
+            {
+                items.Add(new CartItem {Product = product, Quantity = quantity });
+            }
+            else
+            {
+                item.Quantity += quantity;
+            }
+        }
+        public void RemoveItem(Product product)
+        {
+            items.RemoveAll(i=>i.Product.Id == product.Id);
+        }
+        public void Clear() {
+            items.Clear();
+        }
+        public decimal Sum() {
+            return items.Sum(i=>i.Product.Price * i.Quantity);
+        }
+    }
+}
