@@ -14,7 +14,7 @@ namespace WebStoreUi.Controllers
     {
         private IStoreRepository<Product> repository; //1 зависимость
        
-        private int PageSize = 5;
+      //  private int PageSize = 5;
         public CartController()
         {
             repository = new ProductRepository();//2 зависимость
@@ -48,6 +48,11 @@ namespace WebStoreUi.Controllers
         {
             CartIndexViewModel cartIndexViewModel = new CartIndexViewModel {Cart = this.Cart, ReturnUrl = returnurl };
             return View (cartIndexViewModel);
+        }
+
+        public ActionResult Checkout(Cart cart, ShippingDetails shippingDetails)
+        {
+            return View(new ShippingDetails());
         }
 
 

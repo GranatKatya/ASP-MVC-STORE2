@@ -2,4 +2,62 @@
 
 @*https://stackoverflow.com/questions/22918272/unable-to-cast-object-of-type-system-data-entity-infrastructure-dbquery1-us*@
 
-<p>cart</p>
+
+
+
+@model WebStoreUi.Models.CartIndexViewModel
+
+@{
+    ViewBag.Title = "Корзина";
+}
+
+<h2>Ваша корзина:</h2>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Good</th>
+            <th scope="col">Price</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Sum</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Cart.Items)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Product.Price.ToString("# грн")</td>
+                <td>@item.Quantity</td>
+                <td>@((item.Product.Price * item.Quantity).ToString("# грн"))</td>
+
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">Total:</td>
+            <td>@Model.Cart.ComputeTotalValue()</td>
+        </tr>
+    </tfoot>
+
+</table>
+
+<div>
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue shopping</a>
+
+</div>
+<div class="text-center">
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Продолжить покупки</a>
+    @Html.ActionLink("Оформить заказ", "Checkout", null, new { @class = "btn btn-primary" })
+</div>
+
+@*<div>
+    <a class="btn btn-primary" href="@Html.ActionLink("Delete", "Delete", new { id = good.Id })">to order</a>
+    <button class="btn1"><i class="fa fa-trash"> @Html.ActionLink("Delete", "Delete", new { id = good.Id })</i></button>
+</div>*@
+
+
+
+

@@ -9,7 +9,7 @@ namespace WebStoreDomain.Entities
    public class Cart
     {
         private List<CartItem> items;
-        public List<CartItem> Items => items; //c# 6
+        public List<CartItem> Items => items; //c# 6 get 
         public Cart()
         {
             items = new List<CartItem>();
@@ -34,7 +34,7 @@ namespace WebStoreDomain.Entities
         public void Clear() {
             items.Clear();
         }
-        public decimal Sum() {
+        public decimal ComputeTotalValue() {
             return items.Sum(i=>i.Product.Price * i.Quantity);
         }
     }

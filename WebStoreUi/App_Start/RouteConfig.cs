@@ -14,70 +14,103 @@ namespace WebStoreUi
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 
-
             routes.MapRoute(
-              name: null,
-              url: "",
-              defaults: new { controller = "Product", action = "List", category= (string)null, page =1  }
-              );
+               name: null,
+               url: "",
+               defaults: new
+               {
+                   controller = "Product",
+                   action = "List",
+                   category = (string)null,
+                   page = 1
+               }
+           );
 
-            //page
             //routes.MapRoute(
             //    name: "",
-            //    url: "Page{page}",
-            //    defaults: new { controller = "Product", action = "List" }
-            //    );
-
-
-            routes.MapRoute(
-              name: "PagingRoute2",
-              url: "{controller}/{action}/ProductPage{page}",
-              defaults: new { controller = "Product", action = "List" }
-              );
+            //    url: "Cart/Index",
+            //    defaults: new
+            //    {
+            //        controller = "Cart",
+            //        action = "Index"
+            //    }
+            //);
 
             routes.MapRoute(
-               name: "PagingRoute4",
-               url: "{controller}/{action}/CategoryPage{page}",
-               defaults: new { controller = "Category", action = "List" }
-               );
+                name: "PageingRoute1",
+                url: "Page{page}",
+                defaults: new
+                {
+                    controller = "Product",
+                    action = "List",
+                    category = (string)null,
+                }
+            );
 
 
-            //class
 
 
             routes.MapRoute(
                 name: "",
-                url: "{category}/Page{page}",
-                defaults: new { controller = "Product", action = "List" }
-                );
-
-            //routes.MapRoute(
-            //name: "",
-            //url: "{action}/{category}/Page{page}"
-            //);
-
-            //routes.MapRoute(
-            // name: "",
-            // url: "{category}",
-            // defaults: new { controller = "Product", action = "List", page = 1 }
-            // );
-            //classs
+                url: "Category",
+                defaults: new
+                {
+                    controller = "Category",
+                    action = "List",
+                    page = 1
+                }
+            );
 
 
             routes.MapRoute(
-                name: "PagingRoute1",
-                url: "ProductPage{page}",
-                defaults: new { controller = "Product", action = "List" }
-                );
+                name: "",
+                url: "AdminProduct",
+                defaults: new
+                {
+                    controller = "AdminProduct",
+                    action = "List",
+                    page = 1
+                }
+            );
+
+
+
+            
+
             routes.MapRoute(
-              name: "PagingRoute3",
-              url: "CategoryPage{page}",
-              defaults: new { controller = "Category", action = "List" }
-              );
+                name: "",
+                url: "{category}",
+                defaults: new
+                {
+                    controller = "Product",
+                    action = "List",
+                    page = 1
+                }
+            );
 
-          
 
 
+
+
+            //routes.MapRoute(
+            //    name: "PagingRoute1",
+            //    url: "ProductPage{page}",
+            //    defaults: new { controller = "Product", action = "List" }
+            //    );
+            //routes.MapRoute(
+            //  name: "PagingRoute3",
+            //  url: "CategoryPage{page}",
+            //  defaults: new { controller = "Category", action = "List" }
+            //  );
+
+
+
+
+            routes.MapRoute(
+                    name: "",
+                    url: "{category}/Page{page}",
+                    defaults: new { controller = "Product", action = "List" }
+            );
 
 
 
@@ -98,10 +131,17 @@ namespace WebStoreUi
 
 
 
+            routes.MapRoute(
+                 name: "PageingRoute2",
+                 url: "{controller}/{action}/Page{page}",
+                 defaults: new { category = (string)null }
+             );
 
 
-
-
+            routes.MapRoute(
+                name: "",
+                url: "{controller}/{action}/{category}/Page{page}"
+            );
 
             routes.MapRoute(
                 name: "Default",
@@ -109,13 +149,84 @@ namespace WebStoreUi
                 defaults: new { controller = "Product", action = "List", id = UrlParameter.Optional }
             );
 
-           //config.MapHttpAttributeRoutes();
 
-            //routes.MapRoute(
-            //    name: "Default1",
-            //    url: "{controller}/{action}/{id}",
-            //    defaults: new { controller = "Category", action = "List", id = UrlParameter.Optional }
-            //);
+
+            // routes.MapRoute(
+            //   name: null,
+            //   url: "",
+            //   defaults: new { controller = "Product", action = "List", category= (string)null, page =1  }
+            //   );
+
+            // //page
+            // //routes.MapRoute(
+            // //    name: "",
+            // //    url: "Page{page}",
+            // //    defaults: new { controller = "Product", action = "List" }
+            // //    );
+
+
+            // routes.MapRoute(
+            //   name: "PagingRoute2",
+            //   url: "{controller}/{action}/ProductPage{page}",
+            //   defaults: new { controller = "Product", action = "List" }
+            //   );
+
+            // routes.MapRoute(
+            //    name: "PagingRoute4",
+            //    url: "{controller}/{action}/CategoryPage{page}",
+            //    defaults: new { controller = "Category", action = "List" }
+            //    );
+
+
+            // //class
+
+
+            // routes.MapRoute(
+            //     name: "",
+            //     url: "{category}/Page{page}",
+            //     defaults: new { controller = "Product", action = "List" }
+            //     );
+
+            // //routes.MapRoute(
+            // //name: "",
+            // //url: "{action}/{category}/Page{page}"
+            // //);
+
+            // //routes.MapRoute(
+            // // name: "",
+            // // url: "{category}",
+            // // defaults: new { controller = "Product", action = "List", page = 1 }
+            // // );
+            // //classs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // routes.MapRoute(
+            //     name: "Default",
+            //     url: "{controller}/{action}/{id}",
+            //     defaults: new { controller = "Product", action = "List", id = UrlParameter.Optional }
+            // );
+
+            ////config.MapHttpAttributeRoutes();
+
+            // //routes.MapRoute(
+            // //    name: "Default1",
+            // //    url: "{controller}/{action}/{id}",
+            // //    defaults: new { controller = "Category", action = "List", id = UrlParameter.Optional }
+            // //);
         }
     }
 }

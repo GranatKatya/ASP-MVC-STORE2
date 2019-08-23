@@ -15,10 +15,12 @@ namespace WebStoreUi.Controllers
     public class AdminProductController : Controller
     {
         private IStoreRepository<Product> repository; //1 зависимость
+        private IStoreRepository<Category> categrepository; //1 зависимость
         private int PageSize = 5;
         public AdminProductController()
         {
             repository = new ProductRepository();//2 зависимость
+            categrepository = new CategoryRepository();
         }
 
 
@@ -76,8 +78,9 @@ namespace WebStoreUi.Controllers
                 return HttpNotFound();
             }
 
-            //SelectList cat = new SelectList(repository.Categories, "Id", "Name", p.CategoryId);
-            //ViewBag.Categ = cat;
+           
+            SelectList cat = new SelectList(categrepository.Items, "Id", "Name", p.CategoryId);
+            ViewBag.Categ = cat;
             return View(p);
 
         }
@@ -115,8 +118,8 @@ namespace WebStoreUi.Controllers
             }
 
 
-            //SelectList cat = new SelectList(repository.Categories, "Id", "Name", p.CategoryId);
-            //ViewBag.Categ = cat;
+            SelectList cat = new SelectList(categrepository.Items, "Id", "Name", p.CategoryId);
+            ViewBag.Categ = cat;
             return View(p1);
         }
 
@@ -141,8 +144,8 @@ namespace WebStoreUi.Controllers
         [HttpGet]
         public ActionResult CreateProduct()
         {
-            //SelectList categ = new SelectList(repository.Categories, "Id", "Name");
-            //ViewBag.Categ = categ;
+            SelectList categ = new SelectList(categrepository.Items, "Id", "Name");
+            ViewBag.Categ = categ;
             return View();
         }
         [HttpPost]
@@ -172,8 +175,8 @@ namespace WebStoreUi.Controllers
                 return HttpNotFound();
             }
 
-            //SelectList cat = new SelectList(repository.Categories, "Id", "Name", p.CategoryId);
-            //ViewBag.Categ = cat;
+            SelectList cat = new SelectList(categrepository.Items, "Id", "Name", p.CategoryId);
+            ViewBag.Categ = cat;
             return View(p);
         }
 

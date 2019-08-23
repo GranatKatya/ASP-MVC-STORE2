@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -27,19 +28,29 @@ namespace WebStoreUi.Controllers
         // GET: Product
         public ActionResult List(string category , int page = 1)
         {
-            var plvm = new ProductListViewModel
+                var arr = ((DbSet<Product>)repository.Items).Include("Category");
+        var plvm = new ProductListViewModel
             {
-                Products = repository
-                            .Items
-                            .Where(p=>category == null || p.Category.Name == category)
+
+
+            Products = arr
+                            .Where(p => category == null || p.Category.Name == category)
                             .OrderBy(p => p.Id)
                             .Skip((page - 1) * PageSize)
                             .Take(PageSize),
-                PagingInfo = new PagingInfo
+
+            //    Products = repository
+            //                .Items
+            //                .Where(p=>category == null || p.Category.Name == category)
+            //                .OrderBy(p => p.Id)
+            //                .Skip((page - 1) * PageSize)
+            //                .Take(PageSize),
+            PagingInfo = new PagingInfo
                 {
-                    TotalItems = repository.Items.Where(p => category == null || p.Category.Name == category).Count(),
-                    // TotalItems = repository.Items.Count(p => category == null || p.Category.Name == "For body"),
-                    ItemsPerPage = PageSize,
+                TotalItems = arr.Where(p => category == null || p.Category.Name == category).Count(),
+                //TotalItems = repository.Items.Where(p => category == null || p.Category.Name == category).Count(),
+                // TotalItems = repository.Items.Count(p => category == null || p.Category.Name == "For body"),
+                ItemsPerPage = PageSize,
                     CurrentPage = page
                 },
                 CurrentCategory = category
@@ -58,6 +69,16 @@ namespace WebStoreUi.Controllers
             // Находим в бд футболиста
             //е удалось привести тип объекта "System.Data.Entity.Infrastructure.DbQuery`1[WebStoreDomain.Entities.Product]" 
             //к типу "System.Data.Entity.DbSet`1[WebStoreDomain.Entities.Product]".
+
+           // Product p = repository.Items.Where(p3=>p3.Id == id).FirstOrDefault();
+           
+
+          //  DbQuery<Product> dbq = ((DbQuery<Product>) pr);
+          //  DbSet<Product> dbs0 = (DbSet<Product>)dbq;
+          // Product pp2 = dbs0.Find(id);
+          //DbSet<Product> dbs = ((DbSet<Product>)pr);
+          //Product pp =  dbs.Find(id);
+
             Product p = await ((DbSet<Product>)repository.Items).FindAsync(id);
             if (p == null)
             {
@@ -79,6 +100,7 @@ namespace WebStoreUi.Controllers
             {
                 return HttpNotFound();
             }
+           // Product p1 = repository.Items.Where(pr => pr.Id == p.Id).FirstOrDefault();
             Product p1 = await ((DbSet<Product>)repository.Items).FindAsync(p.Id);
             if (p1 == null)
             {
@@ -94,6 +116,7 @@ namespace WebStoreUi.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(int id)
         {
+          //    Product p =  repository.Items.Where(pr => pr.Id == id).FirstOrDefault();
             Product p = await ((DbSet<Product>)repository.Items).FindAsync(id);
             if (p == null)
             {
