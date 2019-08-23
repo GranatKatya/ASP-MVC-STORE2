@@ -12,9 +12,10 @@ namespace WebStoreUi.Controllers
     public class NavController : Controller
     {
         private IStoreRepository<Category> repository; //1 зависимость
-        public NavController()
+        public NavController(IStoreRepository<Category> repositorycat)
         {
-            repository = new CategoryRepository();//2 зависимость
+           // repository = new CategoryRepository();//2 зависимость
+            repository = repositorycat;
         }
         // GET: Nav
         public ActionResult Menu()

@@ -15,9 +15,10 @@ namespace WebStoreUi.Controllers
         private IStoreRepository<Product> repository; //1 зависимость
        
       //  private int PageSize = 5;
-        public CartController()
+        public CartController(IStoreRepository<Product> repositoryp)
         {
-            repository = new ProductRepository();//2 зависимость
+            //  repository = new ProductRepository();//2 зависимость
+            repository = repositoryp;
         }
         // GET: Cart
         public ActionResult AddToCart(int productid, string returnurl)

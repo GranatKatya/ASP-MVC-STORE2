@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -19,11 +20,19 @@ namespace WebStoreUi.Controllers
         private IStoreRepository<Product> repository; //1 зависимость
         private IStoreRepository<Category> categrepository; //1 зависимость
         private int PageSize = 5;
-        public ProductController()
+
+        //public ProductController()
+        //{
+        //    repository = new ProductRepository();//2 зависимость
+        //    categrepository = new CategoryRepository();
+        //}
+
+        public ProductController(IStoreRepository<Product> storeRepository, IStoreRepository<Category> storeRepository2)
         {
-            repository = new ProductRepository();//2 зависимость
-            categrepository =  new CategoryRepository();
+            repository = storeRepository; // there is no 2 injection 
+            categrepository = storeRepository2;                          // categrepository = new CategoryRepository();
         }
+
 
         // GET: Product
         public ActionResult List(string category , int page = 1)
@@ -155,29 +164,46 @@ namespace WebStoreUi.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return HttpNotFound();
-            }
-            // Находим в бд футболиста
-            Product p = await ((DbSet<Product>)repository.Items).FindAsync(id);
-            if (p == null)
-            {
-                return HttpNotFound();
-            }
+            // ModelState.IsValidField("Name"); 
+            //  ModelState["Name"].Errors;
+            // ModelState.AddModelError("Name", "ERROR");
 
-            SelectList cat = new SelectList(categrepository.Items, "Id", "Name", p.CategoryId);
-            ViewBag.Categ = cat;
-            return View(p);
+           
+
+            if (id == null)
+                {
+                    return HttpNotFound();
+                }
+                // Находим в бд футболиста
+                Product p = await ((DbSet<Product>)repository.Items).FindAsync(id);
+                if (p == null)
+                {
+                    return HttpNotFound();
+                }
+
+                SelectList cat = new SelectList(categrepository.Items, "Id", "Name", p.CategoryId);
+                ViewBag.Categ = cat;
+                return View(p);
+          
         }
 
 
         [HttpPost]
         public async Task<ActionResult> Edit(Product p)
         {
-            ((ProductRepository)repository).Context.Entry(p).State = System.Data.Entity.EntityState.Modified;
-            await ((ProductRepository)repository).Context.SaveChangesAsync();
-            return RedirectToAction("List");
+            if (Regex.IsMatch(p.Name, @"^\w{3,}$"))
+            {
+                ModelState.AddModelError("Name","you entered wrong name");
+            }
+
+
+            if (ModelState.IsValid)
+            {
+                ((ProductRepository)repository).Context.Entry(p).State = System.Data.Entity.EntityState.Modified;
+                await ((ProductRepository)repository).Context.SaveChangesAsync();
+                return RedirectToAction("List");
+            }
+            return View(p);
         }
 
 

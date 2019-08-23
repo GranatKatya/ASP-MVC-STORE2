@@ -17,13 +17,18 @@ namespace WebStoreUi.Controllers
         private IStoreRepository<Product> repository; //1 зависимость
         private IStoreRepository<Category> categrepository; //1 зависимость
         private int PageSize = 5;
-        public AdminProductController()
+        //public AdminProductController()
+        //{
+        //    repository = new ProductRepository();//2 зависимость
+        //    categrepository = new CategoryRepository();
+        //}
+
+
+        public AdminProductController(IStoreRepository<Product> storeRepository, IStoreRepository<Category> storeRepository2)
         {
-            repository = new ProductRepository();//2 зависимость
-            categrepository = new CategoryRepository();
+            repository = storeRepository; // there is no 2 injection 
+            categrepository = storeRepository2;                          // categrepository = new CategoryRepository();
         }
-
-
 
 
 

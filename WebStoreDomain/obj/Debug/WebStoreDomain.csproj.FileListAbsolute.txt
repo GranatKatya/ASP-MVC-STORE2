@@ -56,7 +56,6 @@ C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\o
 C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csproj.CopyComplete
 C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.dll
 C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.pdb
-C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csprojAssemblyReference.cache
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\WebStoreDomain.dll.config
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\WebStoreDomain.dll
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\WebStoreDomain.pdb
@@ -69,3 +68,19 @@ D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STOR
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csproj.CopyComplete
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.dll
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.pdb
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Helpers.dll
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Mvc.dll
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Razor.dll
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.WebPages.dll
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Helpers.xml
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Mvc.xml
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Razor.xml
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.WebPages.xml
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.Migrations.AddConstrains.resources
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csproj.GenerateResource.cache
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csprojAssemblyReference.cache

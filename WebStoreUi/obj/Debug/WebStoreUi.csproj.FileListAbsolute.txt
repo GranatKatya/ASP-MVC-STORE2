@@ -353,3 +353,11 @@ D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STOR
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreUi\obj\Debug\WebStoreUi.csproj.CopyComplete
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreUi\obj\Debug\WebStoreUi.dll
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreUi\obj\Debug\WebStoreUi.pdb
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreUi\bin\Ninject.dll
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreUi\bin\Ninject.Web.Common.dll
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreUi\bin\Ninject.Web.Common.WebHost.dll
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreUi\bin\Ninject.Web.Mvc.dll
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreUi\bin\Ninject.xml
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreUi\bin\Ninject.Web.Common.xml
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreUi\bin\Ninject.Web.Common.WebHost.xml
+C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreUi\bin\Ninject.Web.Mvc.xml

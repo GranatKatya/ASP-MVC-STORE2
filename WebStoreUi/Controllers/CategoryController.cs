@@ -20,23 +20,24 @@ namespace WebStoreUi.Controllers
         //dependency injection
         private IStoreRepository<Category> repository; //1 зависимость
         private int PageSize = 5;
-        public CategoryController()
+        public CategoryController(IStoreRepository<Category> storeRepository)
         {
-            repository = new CategoryRepository();//2 зависимость
+        //    repository = new CategoryRepository();//2 зависимость
+            repository = storeRepository;
         }
 
-     ////   public ActionResult Index()
-     //   //{
-     //   //    IEnumerable<Category> categories = db.Categories;
+        ////   public ActionResult Index()
+        //   //{
+        //   //    IEnumerable<Category> categories = db.Categories;
 
-     //   //    ViewBag.Categories = categories;
+        //   //    ViewBag.Categories = categories;
 
 
 
-     //   //    return View();
-     // //  }
+        //   //    return View();
+        // //  }
 
-     //   // GET: Category
+        //   // GET: Category
         public ActionResult List(int page = 1)
         {
             var plvm = new CategoryListViewModel

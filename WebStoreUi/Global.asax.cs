@@ -1,9 +1,13 @@
+using Ninject;
+using Ninject.Modules;
+using Ninject.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using WebStoreUi.Infrastructure;
 
 namespace WebStoreUi
 {
@@ -13,6 +17,12 @@ namespace WebStoreUi
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            NinjectModule registations = new NinjectRegistrations();
+            IKernel ninjectKernel = new StandardKernel(registations);
+            DependencyResolver.SetResolver(new NinjectDependencyResolver(ninjectKernel));
+
+
         }
     }
 }
