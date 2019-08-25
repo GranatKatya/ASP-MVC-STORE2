@@ -1,0 +1,31 @@
+﻿@model WebStoreDomain.Entities.Cart
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+   
+    <div class="navbar-right" style="  margin-left: 3%;">
+        <button type="button" class="btn btn-success btn-sm" style="margin-top: 10px;">
+            <i class="fa fa-shopping-cart" style="color:black">
+                @Html.ActionLink("Cart", "Index", "Cart", new { returnUrl = Request.Url.PathAndQuery }, new { style = " color: black;" })
+            </i>
+        </button>
+
+      
+
+            @*<i class="fa fa-shopping-cart" style="color:black">
+                @Html.ActionLink(" ", "Index", "Cart",
+                new { returnUrl = Request.Url.PathAndQuery },
+                new { @class = "btn btn-default navbar-btn", style = "text-decoration:none; color: black;" })
+
+            </i>*@
+
+    </div>
+
+        <div class="navbar-text navbar-right">
+            <b>Your cart:</b>
+            @Model.Items.Sum(x => x.Quantity) goods,
+            @Model.ComputeTotalValue().ToString("# $")
+        </div>
+   

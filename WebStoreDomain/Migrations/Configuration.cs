@@ -10,6 +10,7 @@ namespace WebStoreDomain.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            ContextKey = "WebStoreDomain.Concrete.StoreDbContext";
         }
 
         protected override void Seed(WebStoreDomain.Concrete.StoreDbContext context)

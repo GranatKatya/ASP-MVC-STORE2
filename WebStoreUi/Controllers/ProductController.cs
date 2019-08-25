@@ -35,10 +35,22 @@ namespace WebStoreUi.Controllers
 
 
         // GET: Product
-        public ActionResult List(string category , int page = 1)
+        public ActionResult List(string category, int? productname, int page = 1)
         {
-                var arr = ((DbSet<Product>)repository.Items).Include("Category");
-        var plvm = new ProductListViewModel
+            IQueryable<Product> arr = ((DbSet<Product>)repository.Items).Include("Category");
+
+            //  if (!String.IsNullOrEmpty(productname) && !productname.Equals("Все"))
+            if (productname != null && productname != 0)
+            {
+                page = 1;
+                //int id = Int32.Parse(productname);
+                arr = arr.Where(p => p.Id == productname);
+            }
+            List<Product> teams = ((DbSet<Product>)repository.Items).ToList();
+            // устанавливаем начальный элемент, который позволит выбрать всех
+            teams.Insert(0, new Product { Name = "Все", Id = 0 });
+
+            var plvm = new ProductListViewModel
             {
 
 
@@ -54,6 +66,7 @@ namespace WebStoreUi.Controllers
             //                .OrderBy(p => p.Id)
             //                .Skip((page - 1) * PageSize)
             //                .Take(PageSize),
+
             PagingInfo = new PagingInfo
                 {
                 TotalItems = arr.Where(p => category == null || p.Category.Name == category).Count(),
@@ -62,7 +75,8 @@ namespace WebStoreUi.Controllers
                 ItemsPerPage = PageSize,
                     CurrentPage = page
                 },
-                CurrentCategory = category
+                CurrentCategory = category,
+                ProductNames = new SelectList(teams, "Id", "Name"),
             };
 
             return View(plvm);

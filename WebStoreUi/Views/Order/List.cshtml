@@ -1,0 +1,106 @@
+﻿@using WebStoreDomain.Entities
+@using WebStoreUi.HtmlHelpers
+@using WebStoreUi.Models
+
+@*@model IEnumerable<WebStoreDomain.Entities.Category>*@
+@model  OrderListViewModel
+
+@{
+    ViewBag.Title = "List";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+@{ WebStoreDomain.Entities.Order myorder = null; }
+
+<h2>Orders</h2>
+<p>
+    <button type="button" class="btn btn-success "><i class="fa fa-plus" style="color:black">@Html.ActionLink("Create New", "Create", null, new { style = "text-decoration:none; color: black;" })</i></button>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => myorder.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => myorder.State)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => myorder.OrderItemId)
+            </th>*@
+        @*<th>
+                @Html.DisplayNameFor(model => myorder.OrderItem)
+            </th>*@
+        <th>
+            @Html.DisplayName("DeliveryMethod")
+        </th>
+        <th>
+            @Html.DisplayName("PaymentMethodId")
+        </th>
+        <th>
+            @Html.DisplayName("User Name")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Orders)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.OrderItemId)
+                </td>*@
+            @*///////////////////////////////////////////////////*@
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.OrderItem.DeliveryMethodId)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderItem.DeliveryMethod.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderItem.PaymentMethod.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderItem.UserInfo.Name)
+            </td>
+            @*/////////////////////////////////////////////////////////*@
+
+
+            <td>
+                <div>
+                    <button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit" style="color:black">@Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
+
+                    @*    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
+                    <button type="button" class="btn btn-success btn-sm"><i class="fa fa-info-circle" style="color:black">@Html.ActionLink("Details", "OrderDetails", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
+
+                    @*  @Html.ActionLink("Details", "CategoryDetails", new { id = item.Id }) |*@
+                    <button type="button" class="btn btn-success btn-sm"><i class="fa fa-close" style="color:black">@Html.ActionLink("Delete", "DeleteOrder", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
+
+                    @*   @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+
+
+
+
+@*<div>
+    @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i, state = Model.CurrentState }))
+</div>*@
+<div>
+    @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i, state = Model.CurrentState  }))
+</div>
+

@@ -11,9 +11,6 @@
     ViewBag.Title = "Goods";
 }
 
-
-
-
 <style>
 
     .e:hover {
@@ -32,24 +29,23 @@
         color: gray;
     }
 </style>
-
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-        .btn1 {
-            background-color: DodgerBlue;
-            border: none;
-            color: white;
-            padding: 12px 16px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+    .btn1 {
+        background-color: DodgerBlue;
+        border: none;
+        color: white;
+        padding: 12px 16px;
+        font-size: 16px;
+        cursor: pointer;
+    }
 
         /* Darker background on mouse-over */
         .btn1:hover {
             background-color: RoyalBlue;
         }
 </style>
+
 
 
 
@@ -63,15 +59,29 @@
     <div id="categories" style=" width: 20%; ">КОСМЕТИКА ДЛЯ ЛИЦА</div>
 </div>
 
-<div>
+@*<div>
     <h2>@Html.ActionLink("Add", "Add")</h2>
-</div>
+</div>*@
 
 <div style="margin: 20px; ">
     Главная > Товары
 </div>
 
 
+
+    <form method="get">
+        <div class="form-inline">
+            <label class="control-label">Name: </label>
+            @Html.DropDownList("productname", Model.ProductNames as SelectList,
+                        htmlAttributes: new { @class = "form-control" })
+
+            @*<label class="control-label">Позиция игрока: </label>
+            @Html.DropDownList("position", Model.Positions as SelectList,
+                    htmlAttributes: new { @class = "form-control" })*@
+
+            <input type="submit" value="Фильтр" class="btn btn-default" />
+        </div>
+    </form>
 
 
 
@@ -80,10 +90,10 @@
     {
         <div class="e" style="background-color: beige; height: 490px; width: 49%;  margin: 5px; border: 1px solid black; text-align: center;">
             <h2>@Html.ActionLink(good.Name, "Details", new { id = good.Id })</h2>
-          @*  <img src="@Url.Content(good.Src)" style="margin: 4px; width: 70%; height: 70%;" />*@
+            @*  <img src="@Url.Content(good.Src)" style="margin: 4px; width: 70%; height: 70%;" />*@
             <h5>@good.Description</h5>
             <p>Price: @good.Price $</p>
-            @Html.ActionLink("Buy", "AddToCart", "Cart", new { productId = good.Id, returnUrl = Request.Url.PathAndQuery}, new { @class="btn btn-primary"})
+            @Html.ActionLink("Buy", "AddToCart", "Cart", new { productId = good.Id, returnUrl = Request.Url.PathAndQuery }, new { @class = "btn btn-primary" })
 
             <div>
 
@@ -91,11 +101,11 @@
                 <button class="btn1"><i class="fa fa-edit"> @Html.ActionLink("Edit", "Edit", new { id = good.Id })</i></button>
             </div>
         </div>
-                          
-            @*<div>
-                    <p>@good.Name</p>
-                    <p>@good.Price.ToString("# $")</p>
-                </div>*@
+
+        @*<div>
+                <p>@good.Name</p>
+                <p>@good.Price.ToString("# $")</p>
+            </div>*@
     }
 </div>
 
@@ -104,52 +114,52 @@
 
 
 
-    <div>
-        @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i , category = Model.CurrentCategory}))
-    </div>
+<div>
+    @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i, category = Model.CurrentCategory  }))
+</div>
 
 
 
-        @*<h2>Goods</h2>
-            @foreach (var good in @Model)
-            {
-                <div>
-                    <p>@good.Name</p>
-                    <p>@good.Price.ToString("# $")</p>
-                </div>
-            }*@
-
-
-
-
+@*<h2>Goods</h2>
+    @foreach (var good in @Model)
+    {
+        <div>
+            <p>@good.Name</p>
+            <p>@good.Price.ToString("# $")</p>
+        </div>
+    }*@
 
 
 
 
 
-        @*<div >
-            @{
-                int totalPage = (int)Math.Ceiling((double) ViewBag.Count / ViewBag.PageSize);
-
-            }
-            @for (int i = 0; i < totalPage; i++)
-            {
-
-                string str = (i + 1 == ViewBag.CurrentPage) ? "select btn btn-success  btn-lg " : "btn btn-default";
-
-                @*if (totalPage == ViewBag.CurrentPage )
-                {
-                    @Html.ActionLink($"{i + 1}", "List", "Product", new { page = i + 1 }, new { @class = "btn btn-success" });
-                }
-                else
-                @*{*@
-        @*  @Html.ActionLink($"{i + 1}", "List", "Product", new { page = i + 1 }, new { @class = str });*@
-        @*}
-
-            }*@
 
 
-        @*</div>*@
+
+
+@*<div >
+    @{
+        int totalPage = (int)Math.Ceiling((double) ViewBag.Count / ViewBag.PageSize);
+
+    }
+    @for (int i = 0; i < totalPage; i++)
+    {
+
+        string str = (i + 1 == ViewBag.CurrentPage) ? "select btn btn-success  btn-lg " : "btn btn-default";
+
+        @*if (totalPage == ViewBag.CurrentPage )
+        {
+            @Html.ActionLink($"{i + 1}", "List", "Product", new { page = i + 1 }, new { @class = "btn btn-success" });
+        }
+        else
+        @*{*@
+@*  @Html.ActionLink($"{i + 1}", "List", "Product", new { page = i + 1 }, new { @class = str });*@
+@*}
+
+    }*@
+
+
+@*</div>*@
 
 
 

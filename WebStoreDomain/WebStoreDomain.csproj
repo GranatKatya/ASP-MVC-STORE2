@@ -75,30 +75,30 @@
     <Compile Include="Abstract\IStoreRepository.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Concrete\CategoryRepository.cs" />
+    <Compile Include="Concrete\EmailOrderProcessor.cs" />
+    <Compile Include="Concrete\Order\CartItemRepository.cs" />
+    <Compile Include="Concrete\Order\DeliveryMethodRepository.cs" />
+    <Compile Include="Concrete\Order\OrderItemRepository.cs" />
+    <Compile Include="Concrete\Order\OrdersRepository.cs" />
+    <Compile Include="Concrete\Order\PaymentMethodRepository.cs" />
+    <Compile Include="Concrete\Order\UserRepository.cs" />
     <Compile Include="Concrete\StoreDbContext.cs" />
     <Compile Include="Concrete\StoreRepository.cs" />
     <Compile Include="Entities\Cart.cs" />
-    <Compile Include="Entities\CartItem.cs" />
+    <Compile Include="Entities\Order\CartItem.cs" />
     <Compile Include="Entities\Category.cs" />
-    <Compile Include="Entities\Order.cs" />
-    <Compile Include="Entities\OrderItem.cs" />
+    <Compile Include="Entities\Order\Order.cs" />
+    <Compile Include="Entities\Order\OrderItem.cs" />
+    <Compile Include="Entities\Order\DeliveryMethod.cs" />
+    <Compile Include="Entities\Order\PaymentMethod.cs" />
     <Compile Include="Entities\Products.cs" />
     <Compile Include="Entities\ShippingDetails.cs" />
-    <Compile Include="Migrations\201908231217459_AddConstrains.cs" />
-    <Compile Include="Migrations\201908231217459_AddConstrains.Designer.cs">
-      <DependentUpon>201908231217459_AddConstrains.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Entities\Order\UserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201908231217459_AddConstrains.resx">
-      <DependentUpon>201908231217459_AddConstrains.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

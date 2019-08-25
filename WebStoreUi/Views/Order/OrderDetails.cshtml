@@ -1,0 +1,116 @@
+﻿@model WebStoreDomain.Entities.Order
+
+@{
+    ViewBag.Title = "ProductDetails";
+}
+@using WebStoreDomain.Entities;
+
+<h2>ProductDetails</h2>
+
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Order state")
+            @* @Html.DisplayNameFor(model => model.State)*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.State)
+        </dd>
+
+        <dt>
+            @*   @Html.DisplayNameFor(model => model.OrderItem.DeliveryMethod.Name)*@
+            @Html.DisplayName("DeliveryMethod")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrderItem.DeliveryMethod.Name)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayName("PaymentMethod")
+            @*@Html.DisplayNameFor(model => model.OrderItem.PaymentMethod.Name)*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrderItem.PaymentMethod.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("User name")
+            @*  @Html.DisplayNameFor(model => model.OrderItem.UserInfo.Name)*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrderItem.UserInfo.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("User surname")
+            @* @Html.DisplayNameFor(model => model.OrderItem.UserInfo.SurName)*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrderItem.UserInfo.SurName)
+        </dd>
+        <dt>
+            @Html.DisplayName("User city")
+            @*  @Html.DisplayNameFor(model => model.OrderItem.UserInfo.City)*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrderItem.UserInfo.City)
+        </dd>
+        <dt>
+            @Html.DisplayName("User phone")
+            @*   @Html.DisplayNameFor(model => model.OrderItem.UserInfo.Phone)*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrderItem.UserInfo.Phone)
+        </dd>
+        <dt>
+            @Html.DisplayName("User email")
+            @*   @Html.DisplayNameFor(model => model.OrderItem.UserInfo.Email)*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrderItem.UserInfo.Email)
+        </dd>
+        @*<dt>
+            @Html.DisplayName("products")
+        </dt>*@
+        @*<dd>
+            @Html.DisplayFor(model => model.OrderItem.UserInfo.Email)
+        </dd>*@
+
+        @{decimal sum = 0;}
+        @foreach (CartItem item in Model.CartItems)
+        {
+            <dt>
+                @Html.DisplayName("product name(#) (sum)")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => item.Product.Name)
+                (  @Html.DisplayFor(model => item.Quantity))
+                (@((item.Product.Price * item.Quantity).ToString("# $")))
+                ( @{sum += (item.Product.Price * item.Quantity);});
+            </dd>
+    }
+       
+
+
+        <dt>
+            @Html.DisplayName("Total sum")
+            @*   @Html.DisplayNameFor(model => model.OrderItem.UserInfo.Email)*@
+        </dt>
+        <dd>
+            @sum.ToString()
+        </dd>
+
+
+
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

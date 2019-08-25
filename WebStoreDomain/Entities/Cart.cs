@@ -27,6 +27,24 @@ namespace WebStoreDomain.Entities
                 item.Quantity += quantity;
             }
         }
+
+        public void RemoveItemDecremente(Product product)
+        {
+            CartItem item = items.Where(i => i.Product.Id == product.Id).FirstOrDefault();// First exequte query
+            if (item != null)
+            {
+                if (item.Quantity ==1)
+                {
+                    items.RemoveAll(i => i.Product.Id == product.Id);
+                }
+                else if (item.Quantity >= 1)
+                {
+
+                    item.Quantity -= 1;
+                }              
+            }
+        }
+
         public void RemoveItem(Product product)
         {
             items.RemoveAll(i=>i.Product.Id == product.Id);

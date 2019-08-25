@@ -63,7 +63,6 @@ D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STOR
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\EntityFramework.SqlServer.dll
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\EntityFramework.xml
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\EntityFramework.SqlServer.xml
-D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csprojAssemblyReference.cache
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csproj.CoreCompileInputs.cache
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csproj.CopyComplete
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.dll
@@ -84,3 +83,17 @@ C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\b
 C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.Migrations.AddConstrains.resources
 C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csproj.GenerateResource.cache
 C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csprojAssemblyReference.cache
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Helpers.dll
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Mvc.dll
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Razor.dll
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.WebPages.dll
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.WebPages.Razor.dll
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Helpers.xml
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Mvc.xml
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Razor.xml
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.WebPages.xml
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.WebPages.Razor.xml
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csprojAssemblyReference.cache

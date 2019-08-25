@@ -7,7 +7,7 @@ using WebStoreDomain.Entities;
 
 namespace WebStoreDomain.Abstract
 {
-    interface IOrderProcessor
+   public  interface IOrderProcessor
     {
         void ProcessOrder(Cart cart, ShippingDetails shippingDetails);
     }

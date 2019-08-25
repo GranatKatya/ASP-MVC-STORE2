@@ -2,7 +2,7 @@
 @model WebStoreDomain.Entities.ShippingDetails
 
 @{
-    ViewBag.Title = "GameStore: форма заказа";
+    ViewBag.Title = "Dushka: форма заказа";
 }
 
 <h2>Оформить заказ сейчас</h2>
@@ -11,16 +11,18 @@
 
 @using (Html.BeginForm())
 {
-    <h3>Данные</h3>
+    @Html.ValidationSummary();
+    <h3>Data</h3>
     <div class="form-group">
-        <label>Ваше имя:</label>
+        <label>Name:</label>
         @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
     </div>
 
 
     foreach (var property in ViewData.ModelMetadata.Properties)
     {
-        if (property.PropertyName != "Name" && property.PropertyName != "GiftWrap")
+        if (property.PropertyName != "Name" && property.PropertyName != "GiftWrap" 
+            && property.PropertyName !="SelectedItemId"    && property.PropertyName !="Items"   && property.PropertyName !="DeliveryMethod"    && property.PropertyName !="PaymentMethod" )
         {
             <div class="form-group">
                 <label>@(property.DisplayName ?? property.PropertyName)</label>
@@ -28,6 +30,19 @@
             </div>
         }
     }
+
+    <h3>Delivery method</h3>
+    <div>
+        @*@Html.LabelFor(model => model.DeliveryMethod)
+        @Html.DropDownListFor(model => model.DeliveryMethod, ViewBag.DeliveryMethods as SelectList)*@
+    </div>
+    <h3>Payment method</h3>
+    <div>
+       @* @Html.LabelFor(model => model.PaymentMethod)*@
+        @*   @Html.DropDownListFor(model => model.SelectedItemId, ViewBag.PaymentMethods as SelectList)*@
+        @*     @Html.DropDownListFor(model => model.SelectedItemId,   new SelectList(ViewBag.ItemsRep, "PaymentMethodId", "Name", 1, "2djdfgbdfjgb"))*@
+       @* @Html.DropDownListFor(n => n.SelectedOrderId, Model.OrderTemplates, "Please select an order template")*@
+    </div>
 
     <h3>Опции</h3>
 
@@ -62,6 +77,7 @@
     </div>
 
     <div class="text-center">
-        <input class="btn btn-primary" type="submit" value="Обработать заказ" />
+        <input class="btn btn-primary" type="submit" value="Process order" />
+        @*  @Html.ActionLink("Order", "Checkout", new { cart = ViewBag.Cart, shippingDetails = }, new { @class = "btn btn-primary" })*@
     </div>
 }

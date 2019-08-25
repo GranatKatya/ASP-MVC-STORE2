@@ -30,5 +30,13 @@ namespace WebStoreDomain.Entities
 
         public int? CategoryId { get; set; }
         public Category Category { get; set; }
+
+        //public int? CartItemId { get; set; }
+        //public CartItem CartItem { get; set; }
+
+
+
+        public virtual ICollection<CartItem> CartItems { get; set; }
     }
 }
+

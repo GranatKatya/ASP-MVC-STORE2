@@ -1,0 +1,13 @@
+﻿@*@model IEnumerable<WebStoreDomain.Entities.Order>*@
+@model IEnumerable<string>
+
+
+
+<div style="text-align: center; margin: 10px;">
+
+    @Html.ActionLink("all", "List", "Order", new {  page = 1 }, new { @class = "btn btn-default" })
+    @foreach (var order in Model)
+    {
+        @Html.ActionLink(order, "List", "Order", new { state = order, page = 1 }, new { @class = "btn btn-default" })
+    }
+</div>
