@@ -325,9 +325,22 @@ namespace WebStoreUi.Controllers
             }
 
             if (ModelState.IsValid)
-            {           
+            {
 
-           
+
+         //       IQueryable<Order> orders = ((DbSet<Order>)repository.Items)
+         //.Include(p => p.OrderItem)
+         // .Include(p => p.OrderItem.UserInfo)
+         //   .Include(p => p.OrderItem.DeliveryMethod)
+         //     .Include(p => p.OrderItem.PaymentMethod)
+         //              .Include(p => p.CartItems)
+         //                .Include(p => p.CartItems);
+         //       Order order = await orders.Where(p => p.Id == OrderCartListViewModel.Order.Id).FirstOrDefaultAsync();
+         //       ((OrdersRepository)repository).Context.Entry(order).State = System.Data.Entity.EntityState.Modified;
+         //       await ((OrdersRepository)repository).Context.SaveChangesAsync();
+
+
+
 
                 //// if model is valid
                 UserInfo userinfo = new UserInfo()
@@ -339,34 +352,59 @@ namespace WebStoreUi.Controllers
                     Email = OrderCartListViewModel.Order.OrderItem.UserInfo.Email,
                     Phone = OrderCartListViewModel.Order.OrderItem.UserInfo.Phone
                 };
+                ((UserRepository)userrepository).Context.Entry(userinfo).State = System.Data.Entity.EntityState.Modified;
+                await ((UserRepository)userrepository).Context.SaveChangesAsync();
 
 
                 //((DbSet<UserInfo>)userrepository.Items).Add(userinfo);
                 ////  await((UserRepository)userrepository).Context.SaveChangesAsync();
 
-                OrderItem orderItem = new OrderItem() {Id = OrderCartListViewModel.Order.OrderItem.Id, UserInfoId = userinfo.Id, UserInfo = userinfo, DeliveryMethodId = OrderCartListViewModel.Order.OrderItem.DeliveryMethodId, PaymentMethodId = OrderCartListViewModel.Order.OrderItem.PaymentMethodId };// , OrderItemId  = 9};
-           ////     ((DbSet<OrderItem>)orderItemRepository.Items).Add(orderItem);
-                ////  await ((OrderItemRepository)orderItemRepository).Context.SaveChangesAsync();
+                // OrderItem orderItem = new OrderItem() {Id = OrderCartListViewModel.Order.OrderItem.Id, UserInfoId = userinfo.Id, UserInfo = userinfo, DeliveryMethodId = OrderCartListViewModel.Order.OrderItem.DeliveryMethodId, PaymentMethodId = OrderCartListViewModel.Order.OrderItem.PaymentMethodId };// , OrderItemId  = 9};
+                OrderItem orderItem = new OrderItem() { Id = OrderCartListViewModel.Order.OrderItem.Id, UserInfoId = userinfo.Id, DeliveryMethodId = OrderCartListViewModel.Order.OrderItem.DeliveryMethodId, PaymentMethodId = OrderCartListViewModel.Order.OrderItem.PaymentMethodId };// , OrderItemId  = 9};
+                ((OrderItemRepository)orderItemRepository).Context.Entry(orderItem).State = System.Data.Entity.EntityState.Modified;
+                await ((OrderItemRepository)orderItemRepository).Context.SaveChangesAsync();                                                                                                                                                                                                                                                                                            ////     ((DbSet<OrderItem>)orderItemRepository.Items).Add(orderItem);
+                                                                                                                                                                                                                                                                                                                                                                                        ////  await ((OrderItemRepository)orderItemRepository).Context.SaveChangesAsync();
 
 
-                Order order = new Order() {Id = OrderCartListViewModel.Order.Id, OrderItemId = orderItem.Id,  OrderItem = orderItem, State = "change" };
+                //Order order = new Order() {Id = OrderCartListViewModel.Order.Id, OrderItemId = orderItem.Id,  OrderItem = orderItem, State = "change" };
+                Order order = new Order() { Id = OrderCartListViewModel.Order.Id, OrderItemId = orderItem.Id, OrderItem = orderItem, State = "change" };
+
                 //   order.CartItems = OrderCartListViewModel.Cart.Items;
                 order.CartItems = new List<CartItem>();
                 for (int i = 0; i < OrderCartListViewModel.Cart.Items.Count; i++)
                 {
-                    order.CartItems.Add(new CartItem() { Quantity = OrderCartListViewModel.Cart.Items[i].Quantity,
-                                            Id = OrderCartListViewModel.Cart.Items[i].Id, OrderId = order.Id,
-                                            ProductId = OrderCartListViewModel.Cart.Items[i].ProductId});
-                }
+                    CartItem cartItem = new CartItem()
+                    {
+                        Quantity = OrderCartListViewModel.Cart.Items[i].Quantity,
+                        Id = OrderCartListViewModel.Cart.Items[i].Id,
+                        OrderId = order.Id,
+                        ProductId = OrderCartListViewModel.Cart.Items[i].ProductId
+                    };
+
+                    order.CartItems.Add(cartItem);
+                    /////////////////////////////////////////
+                    CartItem o = await ((DbSet<CartItem>)cartitempository.Items).Where(or => or.Id == OrderCartListViewModel.Cart.Items[i].Id).FirstOrDefaultAsync();
+                    if (o == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                       // ((DbSet<CartItem>)cartitempository.Items).Remove(o);     // ((DbContext)repository).SaveChanges();
+                                                         
+                }// ((CartItemRepository)cartitempository).Context.SaveChanges();
 
 
-                        //////////((DbSet<Order>)repository.Items).Remove(o);     // ((DbContext)repository).SaveChanges();
-                        //////////((OrdersRepository)repository).Context.SaveChanges();
+                //////////((DbSet<Order>)repository.Items).Remove(o);     // ((DbContext)repository).SaveChanges();
+                //////////((OrdersRepository)repository).Context.SaveChanges();
 
 
+                //   ((OrdersRepository)repository).Context.Entry(order).State = System.Data.Entity.EntityState.Modified;
                 ((OrdersRepository)repository).Context.Entry(order).State = System.Data.Entity.EntityState.Modified;
+                //((OrdersRepository)repository).Context.As.Attach(order);
                 await ((OrdersRepository)repository).Context.SaveChangesAsync();
-              //  ((DbSet<Order>)repository.Items).Add(order);
+                //  ((OrdersRepository)repository).Context.Entry(order).State = System.Data.Entity.EntityState.Detached;
+
+                //  ((DbSet<Order>)repository.Items).Add(order);
                 //// await ((OrdersRepository)orderrepository).Context.SaveChangesAsync();
 
 
@@ -443,8 +481,10 @@ namespace WebStoreUi.Controllers
             OrderCartListViewModel.Order.OrderItem.UserInfo.Id = iduser;
             OrderCartListViewModel.Order.OrderItem.DeliveryMethod = orderCartListViewModel.Order.OrderItem.DeliveryMethod;
             OrderCartListViewModel.Order.OrderItem.PaymentMethod = orderCartListViewModel.Order.OrderItem.PaymentMethod;
-          //  OrderCartListViewModel.Cart = orderCartListViewModel.Cart;
-         
+            OrderCartListViewModel.Order.OrderItem.DeliveryMethodId = orderCartListViewModel.Order.OrderItem.DeliveryMethodId;
+            OrderCartListViewModel.Order.OrderItem.PaymentMethodId = orderCartListViewModel.Order.OrderItem.PaymentMethodId;
+            //  OrderCartListViewModel.Cart = orderCartListViewModel.Cart;
+
             return RedirectToAction("EditOrderCart");           
         }
 
