@@ -66,7 +66,7 @@ namespace WebStoreUi.Controllers
             //                .OrderBy(p => p.Id)
             //                .Skip((page - 1) * PageSize)
             //                .Take(PageSize),
-
+            
             PagingInfo = new PagingInfo
                 {
                 TotalItems = arr.Where(p => category == null || p.Category.Name == category).Count(),

@@ -14,6 +14,18 @@ namespace WebStoreUi
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 
+        //    routes.MapRoute(
+        //    name: "",
+        //    url: "Order/CreateOrderAdmin",
+        //    defaults: new
+        //    {
+        //        controller = "Order",
+        //        action = "CreateOrderAdmin"
+        //    }
+        //);
+
+
+
             routes.MapRoute(
                name: null,
                url: "",
@@ -75,7 +87,20 @@ namespace WebStoreUi
 
 
 
-            
+            routes.MapRoute(
+                name: "",
+                url: "Order",
+                defaults: new
+                {
+                    controller = "Order",
+                    action = "List",
+                    page = 1
+                }
+            );
+
+
+
+
 
             routes.MapRoute(
                 name: "",
@@ -92,6 +117,7 @@ namespace WebStoreUi
 
 
 
+
             //routes.MapRoute(
             //    name: "PagingRoute1",
             //    url: "ProductPage{page}",
@@ -103,8 +129,8 @@ namespace WebStoreUi
             //  defaults: new { controller = "Category", action = "List" }
             //  );
 
-
-
+           
+        
 
             routes.MapRoute(
                     name: "",

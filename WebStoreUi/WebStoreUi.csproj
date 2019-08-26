@@ -226,6 +226,11 @@
     <Content Include="Views\Nav\OrderFilter.cshtml" />
     <Content Include="Views\Order\OrderDetails.cshtml" />
     <Content Include="Views\Order\DeleteOrder.cshtml" />
+    <Content Include="Views\Order\CreateOrder.cshtml" />
+    <Content Include="Views\Order\CreateOrderCart.cshtml" />
+    <Content Include="Views\Order\Completed.cshtml" />
+    <Content Include="Views\Order\EditOrder.cshtml" />
+    <Content Include="Views\Order\EditOrderCart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

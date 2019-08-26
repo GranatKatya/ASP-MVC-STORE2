@@ -77,6 +77,7 @@
 
             @*<label class="control-label">Позиция игрока: </label>
             @Html.DropDownList("position", Model.Positions as SelectList,
+
                     htmlAttributes: new { @class = "form-control" })*@
 
             <input type="submit" value="Фильтр" class="btn btn-default" />
@@ -96,7 +97,6 @@
             @Html.ActionLink("Buy", "AddToCart", "Cart", new { productId = good.Id, returnUrl = Request.Url.PathAndQuery }, new { @class = "btn btn-primary" })
 
             <div>
-
                 <button class="btn1"><i class="fa fa-trash"> @Html.ActionLink("Delete", "Delete", new { id = good.Id })</i></button>
                 <button class="btn1"><i class="fa fa-edit"> @Html.ActionLink("Edit", "Edit", new { id = good.Id })</i></button>
             </div>

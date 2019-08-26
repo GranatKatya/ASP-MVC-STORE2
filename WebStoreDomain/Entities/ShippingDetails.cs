@@ -42,22 +42,24 @@ namespace WebStoreDomain.Entities
         [Required(ErrorMessage = "Input your correct phone")]
         public string Phone { get; set; }
 
-     
 
 
-      //  [Required(ErrorMessage = "Choose  delivery method")]
-        public string DeliveryMethod { get; set; }
+
+        //  [Required(ErrorMessage = "Choose  delivery method")]
+        public int DeliveryMethodId { get; set; }
+        public DeliveryMethod DeliveryMethod { get; set; }
 
 
         // public int? PaymentId { get; set; }
-     //   public string SelectedItemId { get; set; }
-     //   public List<SelectListItem> Items { get; set; } 
+        //   public string SelectedItemId { get; set; }
+        //   public List<SelectListItem> Items { get; set; } 
 
 
 
 
 
-     //   [Required(ErrorMessage = "Choose  payment method")]
+        //   [Required(ErrorMessage = "Choose  payment method")]
+        public int PaymentMethodId { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
 
 

@@ -1,0 +1,182 @@
+﻿@model WebStoreUi.Models.OrderCartListViewModel
+
+@{
+    ViewBag.Title = "Dushka: форма заказа";
+}
+
+
+@using WebStoreDomain.Entities;
+
+<h2>Оформить заказ сейчас</h2>
+<p>Пожалуйста введи ваши контактные данные, и мы сразу отправим товар!</p>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary();
+    @Html.AntiForgeryToken()
+
+
+
+    <h3>Data</h3>
+    <div class="form-group">
+        <label>Name:</label>
+        @Html.TextBoxFor(x => x.ShippingDetails.Name, new { @class = "form-control" })
+    </div>
+
+
+    <div class="form-group">
+        <label>Surname:</label>
+        @Html.TextBoxFor(x => x.ShippingDetails.Surname, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>City:</label>
+        @Html.TextBoxFor(x => x.ShippingDetails.City, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Phone:</label>
+        @Html.TextBoxFor(x => x.ShippingDetails.Phone, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Email:</label>
+        @Html.TextBoxFor(x => x.ShippingDetails.Email, new { @class = "form-control" })
+    </div>
+
+    @*<div>
+            <label class="control-label">Name: </label>
+            @Html.DropDownList("productname", Model.DeliveryMrthods as SelectList,
+                        htmlAttributes: new { @class = "form-control" })
+        </div>*@
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ShippingDetails.DeliveryMethod, "DeliveryMethod", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.ShippingDetails.DeliveryMethodId, Model.DeliveryMrthods as SelectList, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ShippingDetails.DeliveryMethod, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ShippingDetails.PaymentMethod, "PaymentMethod", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.ShippingDetails.PaymentMethodId, Model.PaymentMrthods as SelectList, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ShippingDetails.PaymentMethod, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    #cartTable td {
+        vertical-align: middle;
+    }
+</style>
+
+@*@model WebStoreUi.Models.CartIndexViewModel*@
+
+<h2>Ваша корзина:</h2>
+
+<table id="cartTable" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Good</th>
+            <th scope="col">Price</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Sum</th>
+            @*<th></th>*@
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Cart.Items)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Product.Price.ToString("# грн")</td>
+                <td>
+                    @item.Quantity
+
+                    @*<div>
+                        @Html.ActionLink("+", "AddToCart", "Order", new { productId = item.Product.Id, returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary btn-sm" })
+                        @Html.ActionLink("-", "RemoveFromCartDecrement", "Order", new { productId = item.Product.Id, returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary btn-sm" })
+                    </div>*@
+
+                </td>
+                <td>@((item.Product.Price * item.Quantity).ToString("# $"))</td>
+
+                @*<td>
+                    @using (Html.BeginForm("RemoveFromCart", "Order"))
+                    {
+                        @Html.Hidden("productid", item.Product.Id)
+                        @Html.HiddenFor(x => x.ReturnUrl)
+                        <button type="submit" class="btn btn-sm btn-warning"><i class="fa fa-close" style="color:black">Delete</i></button>
+                    }
+                </td>*@
+
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">Total:</td>
+            <td>@Model.Cart.ComputeTotalValue()</td>
+        </tr>
+    </tfoot>
+
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "List")
+</div>

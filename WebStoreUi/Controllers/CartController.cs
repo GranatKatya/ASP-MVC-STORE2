@@ -166,8 +166,6 @@ namespace WebStoreUi.Controllers
 
                 return View(shippingDetails);
             }
-
-
         }
 
 
@@ -189,8 +187,6 @@ namespace WebStoreUi.Controllers
 
         public PartialViewResult Summary()
         {
-
-
             return PartialView(Cart);
         }
     }
