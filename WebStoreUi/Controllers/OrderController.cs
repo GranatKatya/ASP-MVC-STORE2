@@ -383,11 +383,11 @@ namespace WebStoreUi.Controllers
 
                     order.CartItems.Add(cartItem);
                     /////////////////////////////////////////
-                    CartItem o = await ((DbSet<CartItem>)cartitempository.Items).Where(or => or.Id == OrderCartListViewModel.Cart.Items[i].Id).FirstOrDefaultAsync();
-                    if (o == null)
-                    {
-                        return HttpNotFound();
-                    }
+                    //CartItem o = await ((DbSet<CartItem>)cartitempository.Items).Where(or => or.Id == OrderCartListViewModel.Cart.Items[i].Id).FirstOrDefaultAsync();
+                    //if (o == null)
+                    //{
+                    //    return HttpNotFound();
+                    //}
 
                        // ((DbSet<CartItem>)cartitempository.Items).Remove(o);     // ((DbContext)repository).SaveChanges();
                                                          
@@ -608,11 +608,11 @@ namespace WebStoreUi.Controllers
         {
             get
             {
-                Cart cart = (Cart)Session["Cart"];
+                Cart cart = (Cart)Session["OrderCart"];
                 if (cart == null)
                 {
                     cart = new Cart();
-                    Session["Cart"] = cart;
+                    Session["OrderCart"] = cart;
                 }
                 return cart;
             }

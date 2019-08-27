@@ -80,8 +80,6 @@ C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\b
 C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.WebPages.xml
 C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.WebPages.Razor.xml
-C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.Migrations.AddConstrains.resources
-C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csproj.GenerateResource.cache
 C:\Users\Gran_mv08.OD.000\Desktop\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csprojAssemblyReference.cache
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\Microsoft.Web.Infrastructure.dll
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Helpers.dll

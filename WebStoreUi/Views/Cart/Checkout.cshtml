@@ -23,7 +23,10 @@
     foreach (var property in ViewData.ModelMetadata.Properties)
     {
         if (property.PropertyName != "Name" && property.PropertyName != "GiftWrap" 
-            && property.PropertyName !="SelectedItemId"    && property.PropertyName !="Items"   && property.PropertyName !="DeliveryMethod"    && property.PropertyName !="PaymentMethod" )
+            && property.PropertyName !="SelectedItemId"    && property.PropertyName !="Items" 
+            && property.PropertyName !="DeliveryMethod"    && property.PropertyName !="PaymentMethod"
+            && property.PropertyName != "DeliveryMethodId" && property.PropertyName != "PaymentMethodId"
+              && property.PropertyName != "SelectedOrderId" )
         {
             <div class="form-group">
                 <label>@(property.DisplayName ?? property.PropertyName)</label>
