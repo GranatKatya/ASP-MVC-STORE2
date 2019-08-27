@@ -208,6 +208,7 @@ namespace WebStoreUi.Controllers
             ((DbSet<Category>)repository.Items).Remove(p);
             // ((DbContext)repository).SaveChanges();
             await ((CategoryRepository)repository).Context.SaveChangesAsync();
+            await ((CategoryRepository)repository).Context.SaveChangesAsync();
 
             return RedirectToAction("List");
         }

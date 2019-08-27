@@ -371,27 +371,37 @@ namespace WebStoreUi.Controllers
 
                 //   order.CartItems = OrderCartListViewModel.Cart.Items;
                 order.CartItems = new List<CartItem>();
+                //   for (int i = 0; i < OrderCartListViewModel.Cart.Items.Count; i++)
+                var res = ((DbSet<CartItem>)cartitempository.Items).Where(or=> or.OrderId == OrderCartListViewModel.Order.Id).ToList();
+                  for (int i = 0; i < res.Count; i++)
+                  {
+                    //CartItem cartItem = new CartItem()
+                    //{
+                    //    Quantity = OrderCartListViewModel.Cart.Items[i].Quantity,
+                    //    Id = OrderCartListViewModel.Cart.Items[i].Id,
+                    //    OrderId = order.Id,
+                    //    ProductId = OrderCartListViewModel.Cart.Items[i].ProductId
+                    //};
+
+                  //  order.CartItems.Add(cartItem);
+                    /////////////////////////////////////////
+                    //CartItem o =  ((DbSet<CartItem>)cartitempository.Items).Where(or => or.Id == OrderCartListViewModel[i].Id).FirstOrDefault();
+                    //if (o != null)
+                    //{
+
+                    ((DbSet<CartItem>)cartitempository.Items).Remove(res[i]);
+                   
+
+                    // ((DbSet<CartItem>)cartitempository.Items).Remove(o);     // ((DbContext)repository).SaveChanges();
+
+                }
                 for (int i = 0; i < OrderCartListViewModel.Cart.Items.Count; i++)
                 {
-                    CartItem cartItem = new CartItem()
-                    {
-                        Quantity = OrderCartListViewModel.Cart.Items[i].Quantity,
-                        Id = OrderCartListViewModel.Cart.Items[i].Id,
-                        OrderId = order.Id,
-                        ProductId = OrderCartListViewModel.Cart.Items[i].ProductId
-                    };
+                    CartItem cartItem = new CartItem { Quantity = OrderCartListViewModel.Cart.Items[i].Quantity, OrderId = OrderCartListViewModel.Order.Id, ProductId = OrderCartListViewModel.Cart.Items[i].Product.Id };
+                    ((DbSet<CartItem>)cartitempository.Items).Add(cartItem);
+                }
 
-                    order.CartItems.Add(cartItem);
-                    /////////////////////////////////////////
-                    //CartItem o = await ((DbSet<CartItem>)cartitempository.Items).Where(or => or.Id == OrderCartListViewModel.Cart.Items[i].Id).FirstOrDefaultAsync();
-                    //if (o == null)
-                    //{
-                    //    return HttpNotFound();
-                    //}
-
-                       // ((DbSet<CartItem>)cartitempository.Items).Remove(o);     // ((DbContext)repository).SaveChanges();
-                                                         
-                }// ((CartItemRepository)cartitempository).Context.SaveChanges();
+                ((CartItemRepository)cartitempository).Context.SaveChanges();
 
 
                 //////////((DbSet<Order>)repository.Items).Remove(o);     // ((DbContext)repository).SaveChanges();

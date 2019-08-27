@@ -26,11 +26,11 @@ namespace WebStoreDomain.Migrations
                 "dbo.Orders",
                 c => new
                     {
-                        OrderId = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false, identity: true),
                         OrderItemId = c.Int(),
                         State = c.String(),
                     })
-                .PrimaryKey(t => t.OrderId)
+                .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.OrderItems", t => t.OrderItemId)
                 .Index(t => t.OrderItemId);
             
