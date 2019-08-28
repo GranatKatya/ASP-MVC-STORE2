@@ -1,0 +1,37 @@
+﻿
+
+@using WebStoreDomain.Entities
+@using WebStoreUi.HtmlHelpers
+@using WebStoreUi.Models
+
+@*@model  IEnumerable<Product>*@
+@model ProductListViewModel
+
+@{
+    ViewBag.Title = "Goods";
+}
+
+
+
+
+
+<h2 style="text-align: center; font-weight:  800; font-size: xx-large; ">Goods</h2>
+
+<div style=" display: flex; text-align: center;   justify-content: center; /* center items horizontally, in this case */
+    flex-direction:row; font-weight:800;  margin: 20px; text-decoration: underline; ">
+
+    <div id="categories" style=" width: 20%;  ">АКЦИОННЫЕ ТОВАРЫ</div>
+    <div id="categories" style=" width: 20%; ">ДЛЯ ТЕЛА</div>
+    <div id="categories" style=" width: 20%; ">КОСМЕТИКА ДЛЯ ЛИЦА</div>
+</div>
+
+@*<div>
+    <h2>@Html.ActionLink("Add", "Add")</h2>
+</div>*@
+
+<div style="margin: 20px; ">
+    Главная > Товары
+</div>
+
+
+
