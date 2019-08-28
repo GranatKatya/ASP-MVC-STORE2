@@ -30,12 +30,14 @@ namespace WebStoreUi.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -44,6 +46,7 @@ namespace WebStoreUi.Controllers
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password); // password 
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user.Id, "User");
                     // return RedirectToAction("Login");
                     return RedirectToAction("List", "Product");
                 }
@@ -51,7 +54,10 @@ namespace WebStoreUi.Controllers
                 {
                     foreach (var item in result.Errors)
                     {
-                        ModelState.AddModelError("", item);
+                        foreach (string error in result.Errors)
+                            ModelState.AddModelError("", error);
+
+                        //    ModelState.AddModelError("", item);
                         // return View(model);
                     }
 
@@ -62,6 +68,7 @@ namespace WebStoreUi.Controllers
 
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -69,6 +76,7 @@ namespace WebStoreUi.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -97,6 +105,12 @@ namespace WebStoreUi.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
+        }
+        [AllowAnonymous]
+        public ActionResult Logout()
+        {
+            AuthenticationManager.SignOut();
+            return RedirectToAction("Login");
         }
     }
 }

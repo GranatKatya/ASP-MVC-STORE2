@@ -43,6 +43,7 @@ namespace WebStoreUi.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult List(string state, int page = 1)
         {
             //   ((StoreDbContext)((OrdersRepository)repository).Context).ConContextOptions.LazyLoadingEnabled = false;
@@ -87,6 +88,7 @@ namespace WebStoreUi.Controllers
             return View(plvm);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> OrderDetails(int? id)
         {
             if (id == null)
@@ -120,6 +122,7 @@ namespace WebStoreUi.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteOrder(Order order)
         {
             if (order == null)
@@ -145,6 +148,7 @@ namespace WebStoreUi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteOrder(int id)
         {
             IQueryable<Order> orders = ((DbSet<Order>)repository.Items)
@@ -171,6 +175,7 @@ namespace WebStoreUi.Controllers
       //  OrderCartListViewModel OrderCartListViewModel;
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult CreateOrder(string returnUrl)
         {          
         //    List<Product> teams = ((DbSet<Product>)productrepository.Items).ToList();
@@ -192,6 +197,7 @@ namespace WebStoreUi.Controllers
           
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> CreateOrder(OrderCartListViewModel orderCartListViewModel)
         {
             //if (OrderCartListViewModel.Cart.Items.Count() == 0)
@@ -252,7 +258,10 @@ namespace WebStoreUi.Controllers
             //{ 
             //    return View(orderCartListViewModel);
             //}
-        }    
+        }
+
+
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> CreateOrderAdmin()
         {
             if (Cart.Items.Count() == 0)
@@ -317,6 +326,8 @@ namespace WebStoreUi.Controllers
 
         }
 
+
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> EditOrderAdmin()
         {
             if (Cart.Items.Count() == 0)
@@ -451,6 +462,7 @@ namespace WebStoreUi.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> EditOrder(int? id)
         {
             if (id == null)
@@ -483,6 +495,7 @@ namespace WebStoreUi.Controllers
 
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult EditOrder(OrderCartListViewModel orderCartListViewModel)
         {
             OrderCartListViewModel.ShippingDetails = orderCartListViewModel.ShippingDetails;
@@ -498,6 +511,7 @@ namespace WebStoreUi.Controllers
             return RedirectToAction("EditOrderCart");           
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult EditOrderCart()
         {
             return View(OrderCartListViewModel);
@@ -512,10 +526,12 @@ namespace WebStoreUi.Controllers
 
 
 
+        [Authorize(Roles = "Admin")]
         public ActionResult CreateOrderCart()
         {
             return View(OrderCartListViewModel);
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult AddToCart(int productid, OrderCartListViewModel orderCartListViewModel, string returnurl )
         {
             Product product = productrepository.Items.FirstOrDefault(p => p.Id == productid);
@@ -536,6 +552,7 @@ namespace WebStoreUi.Controllers
 
 
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult AddToCartEditMethod (int productid, OrderCartListViewModel orderCartListViewModel, string returnurl )
         {
             Product product = productrepository.Items.FirstOrDefault(p => p.Id == productid);
@@ -557,6 +574,8 @@ namespace WebStoreUi.Controllers
 
         }
 
+
+        [Authorize(Roles = "Admin")]
         public ActionResult RemoveFromCart(int productid, string returnurl )
         {
             Product product = productrepository.Items.FirstOrDefault(p => p.Id == productid);
@@ -574,6 +593,7 @@ namespace WebStoreUi.Controllers
             //}
             return RedirectToAction("CreateOrderCart");
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult RemoveFromCartEditMethod(int productid, string returnurl)
         {
             Product product = productrepository.Items.FirstOrDefault(p => p.Id == productid);
@@ -585,6 +605,7 @@ namespace WebStoreUi.Controllers
             return RedirectToAction("EditOrderCart");
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult RemoveFromCartDecrement(int productid, string returnurl= null)
         {
             Product product = productrepository.Items.FirstOrDefault(p => p.Id == productid);
@@ -601,6 +622,7 @@ namespace WebStoreUi.Controllers
             //}
             return RedirectToAction("CreateOrderCart");
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult RemoveFromCartDecrementEditMethod(int productid, string returnurl = null)
         {
             Product product = productrepository.Items.FirstOrDefault(p => p.Id == productid);
@@ -654,8 +676,6 @@ namespace WebStoreUi.Controllers
                 return orderCartListViewModel;
             }
         }
-
-
-
+               
     }
 }

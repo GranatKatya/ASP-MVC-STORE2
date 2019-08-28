@@ -116,3 +116,5 @@ D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STOR
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.Migrations.InitialCreate.resources
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csproj.GenerateResource.cache
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.Migrations.first.resources
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csprojAssemblyReference.cache
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.Migrations.AddRole.resources

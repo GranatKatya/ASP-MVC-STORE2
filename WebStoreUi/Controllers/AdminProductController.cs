@@ -34,6 +34,7 @@ namespace WebStoreUi.Controllers
 
         // Выводим всех футболистов
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult AllProducts()
         {
             var players = ((DbSet<Product>)repository.Items).Include(p => p.Category);
@@ -43,6 +44,7 @@ namespace WebStoreUi.Controllers
 
 
 
+        [Authorize(Roles = "Admin")]
         public ActionResult List(int page = 1)
         {
             var players = ((DbSet<Product>)repository.Items).Include(p => p.Category).OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize);
@@ -70,6 +72,7 @@ namespace WebStoreUi.Controllers
             // return View(products);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> ProductDetails(int? id)
         {
             if (id == null)
@@ -109,6 +112,7 @@ namespace WebStoreUi.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteProduct(Product p)
         {
             // Product p = db.Products.Find(id);
@@ -129,6 +133,7 @@ namespace WebStoreUi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
             Product p = await ((DbSet<Product>)repository.Items).FindAsync(id);
@@ -147,6 +152,7 @@ namespace WebStoreUi.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult CreateProduct()
         {
             SelectList categ = new SelectList(categrepository.Items, "Id", "Name");
@@ -154,6 +160,7 @@ namespace WebStoreUi.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> CreateProduct(Product p)
         {
             ((DbSet<Product>)repository.Items).Add(p);
@@ -167,6 +174,7 @@ namespace WebStoreUi.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> EditProduct(int? id)
         {
             if (id == null)
@@ -187,6 +195,7 @@ namespace WebStoreUi.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> EditProduct(Product p)
         {
             ((ProductRepository)repository).Context.Entry(p).State = System.Data.Entity.EntityState.Modified;

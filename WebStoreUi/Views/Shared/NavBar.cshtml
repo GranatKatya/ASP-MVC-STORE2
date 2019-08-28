@@ -1,0 +1,58 @@
+﻿
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            @Html.ActionLink("Dushka", "List", "Product", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Catalog", "List", "Product")</li>
+                <li>@Html.ActionLink("About", "About", "Product")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Product")</li>
+
+
+            </ul>
+
+            <div>                
+                    @Html.Action("Summary", "Cart")
+            </div>
+
+            @if (Request.IsAuthenticated)
+            {
+                using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                {
+                    @Html.AntiForgeryToken()
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                Hello  @User.Identity.Name!
+            </li>
+            @*<li>
+                <input style="" type="submit" value="Log out" />
+            </li>*@
+
+            <li>
+                @Html.ActionLink("Log out", "Login", "Account")
+            </li>
+
+        </ul>
+                }
+            }
+            else
+            {
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        @Html.ActionLink("Register", "Register", "Account",
+                   routeValues: null,
+                   htmlAttributes: new { id = "registerLink" })
+                    </li>
+
+                    <li>
+                        @Html.ActionLink("Log in", "Login", "Account",
+                   routeValues: new { returnUrl = Request.Url.PathAndQuery },
+                   htmlAttributes: new { id = "loginLink" })
+                    </li>
+                </ul>
+            }
+        </div>
+    </div>
+</div>

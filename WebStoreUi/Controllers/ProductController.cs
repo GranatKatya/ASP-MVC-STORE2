@@ -35,6 +35,7 @@ namespace WebStoreUi.Controllers
 
 
         // GET: Product
+        [AllowAnonymous]
         public ActionResult List(string category, int? productname, int page = 1)
         {
             IQueryable<Product> arr = ((DbSet<Product>)repository.Items).Include("Category");
@@ -82,7 +83,7 @@ namespace WebStoreUi.Controllers
             return View(plvm);
         }
 
-
+        [AllowAnonymous]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -116,6 +117,7 @@ namespace WebStoreUi.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(Product p)
         {
             // Product p = db.Products.Find(id);
@@ -137,6 +139,7 @@ namespace WebStoreUi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int id)
         {
           //    Product p =  repository.Items.Where(pr => pr.Id == id).FirstOrDefault();
@@ -156,6 +159,7 @@ namespace WebStoreUi.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult Add()
         {
             SelectList categ = new SelectList(categrepository.Items, "Id", "Name");
@@ -163,6 +167,7 @@ namespace WebStoreUi.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Add(Product p)
         {
             ((DbSet<Product>)repository.Items).Add(p);
@@ -176,6 +181,7 @@ namespace WebStoreUi.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(int? id)
         {
             // ModelState.IsValidField("Name"); 
@@ -203,6 +209,7 @@ namespace WebStoreUi.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(Product p)
         {
             if (Regex.IsMatch(p.Name, @"^\w{3,}$"))

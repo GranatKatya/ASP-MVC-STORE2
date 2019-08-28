@@ -4,34 +4,82 @@
 @using WebStoreUi.HtmlHelpers
 @using WebStoreUi.Models
 
-@*@model  IEnumerable<Product>*@
-@model ProductListViewModel
 
+@*@model WebStoreUi.Models.RegisterViewModel*@
 @{
-    ViewBag.Title = "Goods";
+    ViewBag.Title = "AdminPannel";
 }
 
 
 
 
 
-<h2 style="text-align: center; font-weight:  800; font-size: xx-large; ">Goods</h2>
+<h2 style="text-align: center; font-weight:  800; font-size: xx-large; ">Admin panel</h2>
+<head>
+    <div style="margin: 20px; ">
+        Главная > Товары
+    </div>
+</head>
 
-<div style=" display: flex; text-align: center;   justify-content: center; /* center items horizontally, in this case */
-    flex-direction:row; font-weight:800;  margin: 20px; text-decoration: underline; ">
+@*<div style=" display: flex; text-align: center;   justify-content: center; /* center items horizontally, in this case */
+        flex-direction:row; font-weight:800;  margin: 20px; text-decoration: underline; ">
 
-    <div id="categories" style=" width: 20%;  ">АКЦИОННЫЕ ТОВАРЫ</div>
-    <div id="categories" style=" width: 20%; ">ДЛЯ ТЕЛА</div>
-    <div id="categories" style=" width: 20%; ">КОСМЕТИКА ДЛЯ ЛИЦА</div>
-</div>
+        <div id="categories" style=" width: 20%;  ">АКЦИОННЫЕ ТОВАРЫ</div>
+        <div id="categories" style=" width: 20%; ">ДЛЯ ТЕЛА</div>
+        <div id="categories" style=" width: 20%; ">КОСМЕТИКА ДЛЯ ЛИЦА</div>
+    </div>*@
 
-@*<div>
-    <h2>@Html.ActionLink("Add", "Add")</h2>
-</div>*@
 
-<div style="margin: 20px; ">
-    Главная > Товары
-</div>
+<nav>
+    <div>
+        <div style=" display: block;  float: left; text-align:center; ">
+            @*  <h2>@Html.ActionLink("Add", "Add")</h2>*@
+            <div style="margin:5px; margin-top: 10px; ">
+                <a href=@Url.Action("List", "AdminProduct", new { page = 1 }) style="text-decoration:none; color: black;">
+                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Products</i></button>
+                </a>
+            </div>
+
+
+            @*<a href=@Url.Action("Index", "Cart", new { page = 1 }) style="text-decoration:none; color: black;">
+                <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Carts</i></button>
+                    </a>*@
+            <div style="margin:5px;  margin-top: 10px;">
+                <a href=@Url.Action("List", "Category", new { page = 1 }) style="text-decoration:none; color: black;">
+                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Categories</i></button>
+                </a>
+            </div>
+
+            <div style="margin:5px;  margin-top: 10px;">
+                <a href=@Url.Action("List", "Order", new { page = 1 }) style="text-decoration:none; color: black;">
+                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Orders</i></button>
+                </a>
+            </div>
+
+            <div style="margin:5px;  margin-top: 10px;">
+                <a href=@Url.Action("List", "Product", new { page = 1 }) style="text-decoration:none; color: black;">
+                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">User products</i></button>
+                </a>
+            </div>
+
+            <div style="margin:5px;  margin-top: 10px;">
+                <a href=@Url.Action("Index", "Roles", new { page = 1 }) style="text-decoration:none; color: black;">
+                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Roles</i></button>
+                </a>
+            </div>
+
+            @* <button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit" style="color:black">@Html.ActionLink("List", "List","AdminProduct",  new {  page = 1 }, new { style = "text-decoration:none; color: black;" })</i></button>*@
+
+        </div>
+
+
+        <div style="  float: right; ">
+            <img src="~/Resource/admin-banner.jpg" />
+        </div>
+
+    </div>
+</nav>
+
 
 
 

@@ -38,6 +38,7 @@ namespace WebStoreUi.Controllers
         // //  }
 
         //   // GET: Category
+        [Authorize(Roles = "Admin")]
         public ActionResult List(int page = 1)
         {
             var plvm = new CategoryListViewModel
@@ -60,6 +61,7 @@ namespace WebStoreUi.Controllers
 
 
 
+        [Authorize(Roles = "Admin")]
         public ActionResult CategoryDetails(int? id)
         {
             if (id == null)
@@ -78,11 +80,13 @@ namespace WebStoreUi.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create(Category c)
         {
 
@@ -99,6 +103,7 @@ namespace WebStoreUi.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -119,6 +124,7 @@ namespace WebStoreUi.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(Category p)
         {
             ((CategoryRepository)repository).Context.Entry(p).State = System.Data.Entity.EntityState.Modified;
@@ -176,6 +182,7 @@ namespace WebStoreUi.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int id)
         {
            
@@ -197,6 +204,7 @@ namespace WebStoreUi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(Category category)
         {
             Category p = await ((DbSet<Category>)repository.Items).FindAsync(category.Id);

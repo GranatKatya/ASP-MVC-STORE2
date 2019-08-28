@@ -125,7 +125,9 @@
     <Compile Include="Entities\Products.cs" />
     <Compile Include="Entities\ShippingDetails.cs" />
     <Compile Include="Entities\Order\UserInfo.cs" />
+    <Compile Include="Entities\UserAuthentication\StoreRoleManager.cs" />
     <Compile Include="Entities\UserAuthentication\StoreUserManager.cs" />
+    <Compile Include="Entities\UserAuthentication\Role.cs" />
     <Compile Include="Entities\UserAuthentication\User.cs" />
     <Compile Include="Migrations\201908251326352_InitialCreate.cs" />
     <Compile Include="Migrations\201908251326352_InitialCreate.Designer.cs">
@@ -134,6 +136,10 @@
     <Compile Include="Migrations\201908272036448_first.cs" />
     <Compile Include="Migrations\201908272036448_first.Designer.cs">
       <DependentUpon>201908272036448_first.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908281635095_AddRole.cs" />
+    <Compile Include="Migrations\201908281635095_AddRole.Designer.cs">
+      <DependentUpon>201908281635095_AddRole.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -148,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908272036448_first.resx">
       <DependentUpon>201908272036448_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908281635095_AddRole.resx">
+      <DependentUpon>201908281635095_AddRole.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

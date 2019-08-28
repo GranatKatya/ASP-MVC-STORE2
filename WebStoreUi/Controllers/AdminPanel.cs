@@ -13,22 +13,24 @@ using WebStoreDomain.Entities.UserAuthentication;
 using WebStoreUi.Models;
 namespace WebStoreUi.Controllers
 {
-    public class AdminPanel : Controller
+    public class AdminPanelController : Controller
     {   
 
-
         [HttpGet]
-        public ActionResult AdminPanelView()
+        [Authorize(Roles = "Admin")]
+        public ActionResult AdminPanel()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> AdminPanelView(RegisterViewModel model)
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> AdminPanel(string redirectUrl)
         {
-         
-            return View(model);
+            return RedirectToAction(redirectUrl);
+            //  return View(model);
         }
+
 
 
     }

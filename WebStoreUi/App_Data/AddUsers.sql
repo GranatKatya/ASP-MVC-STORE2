@@ -1,4 +1,6 @@
-﻿insert into UserInfoes (Name, SurName , City, Phone, Email)
+﻿
+
+insert into UserInfoes (Name, SurName , City, Phone, Email)
 values
 (N'Katya', N'Granat', N'Odessa', N'380634386548' , N'k.granat2017@gmail.com'),
 (N'Alica', N'Front', N'Vena', N'380632222548' , N'df.s@gmail.com'),

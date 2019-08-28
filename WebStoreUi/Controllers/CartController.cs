@@ -44,6 +44,7 @@ namespace WebStoreUi.Controllers
             cartitempository = cartitempositoryninject;
         }
         // GET: Cart
+        [AllowAnonymous]
         public ActionResult AddToCart(int productid, string returnurl)
         {
             Product product = repository.Items.FirstOrDefault(p=>p.Id == productid);
@@ -54,8 +55,8 @@ namespace WebStoreUi.Controllers
             }
             // return Redirect(returnurl);
             return RedirectToAction("Index", new { returnurl= returnurl });
-        }     
-        
+        }
+        [AllowAnonymous]
         public ActionResult RemoveFromCart(int productid, string returnurl) {
             Product product = repository.Items.FirstOrDefault(p => p.Id == productid);
             if (product != null)
@@ -65,7 +66,7 @@ namespace WebStoreUi.Controllers
             //  return Redirect(returnurl);
             return RedirectToAction("Index", new { returnurl = returnurl });
         }
-
+        [AllowAnonymous]
         public ActionResult RemoveFromCartDecrement(int productid, string returnurl)
         {
             Product product = repository.Items.FirstOrDefault(p => p.Id == productid);
@@ -77,8 +78,8 @@ namespace WebStoreUi.Controllers
             return RedirectToAction("Index", new { returnurl = returnurl });
         }
 
-        
-       public  ActionResult Index(string returnurl)
+        [AllowAnonymous]
+        public  ActionResult Index(string returnurl)
         {
             CartIndexViewModel cartIndexViewModel = new CartIndexViewModel {Cart = this.Cart, ReturnUrl = returnurl };
 
@@ -89,6 +90,7 @@ namespace WebStoreUi.Controllers
         //{
         //    return View(new ShippingDetails());
         //}
+        [AllowAnonymous]
         public ViewResult Checkout(Cart cart)
         {
 
@@ -105,6 +107,7 @@ namespace WebStoreUi.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         async public Task<ViewResult>  Checkout( ShippingDetails shippingDetails)
         {
             //   ModelState.Clear();
@@ -185,6 +188,7 @@ namespace WebStoreUi.Controllers
             }
         }
 
+        [AllowAnonymous]
         public PartialViewResult Summary()
         {
             return PartialView(Cart);

@@ -19,6 +19,7 @@ namespace WebStoreDomain.Abstract
         {
             app.CreatePerOwinContext<StoreDbContext>(StoreDbContext.Create);
             app.CreatePerOwinContext<StoreUserManager>(StoreUserManager.Create);
+            app.CreatePerOwinContext<StoreRoleManager>(StoreRoleManager.Create);
             app.UseCookieAuthentication(new Microsoft.Owin.Security.Cookies.CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
