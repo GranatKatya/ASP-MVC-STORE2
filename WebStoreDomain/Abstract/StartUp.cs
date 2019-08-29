@@ -37,8 +37,9 @@ namespace WebStoreDomain.Abstract
                 ClientId = "773595035325-bifbn0p72q92d0tvfoa99smgadgsao85.apps.googleusercontent.com",
                 ClientSecret = "gfstFx2NcGJQvRPaZKQIpOrM",
                 AuthenticationType="Google", // name to find it 
-                SignInAsAuthenticationType = app.GetDefaultSignInAsAuthenticationType(),
-                CallbackPath = new PathString("/Account/GoogleLoginCallback")
+                SignInAsAuthenticationType = app.GetDefaultSignInAsAuthenticationType()
+               
+              //  CallbackPath = new PathString("/Account/GoogleLoginCallback")
             });
         }
     }
