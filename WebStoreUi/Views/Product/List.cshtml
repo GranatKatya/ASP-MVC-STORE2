@@ -91,7 +91,7 @@
     {
         <div class="e" style="background-color: beige; height: 490px; width: 49%;  margin: 5px; border: 1px solid black; text-align: center;">
             <h2>@Html.ActionLink(good.Name, "Details", new { id = good.Id })</h2>
-            @*  <img src="@Url.Content(good.Src)" style="margin: 4px; width: 70%; height: 70%;" />*@
+              <img src="@Url.Content(good.Src)" style="margin: 4px; width: 70%; height: 70%;" />
             <h5>@good.Description</h5>
             <p>Price: @good.Price $</p>
             @Html.ActionLink("Buy", "AddToCart", "Cart", new { productId = good.Id, returnUrl = Request.Url.PathAndQuery }, new { @class = "btn btn-primary" })

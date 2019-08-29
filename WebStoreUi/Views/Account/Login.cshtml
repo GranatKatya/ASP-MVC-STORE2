@@ -38,6 +38,18 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+@using (Html.BeginForm("GoogleLogin", "Account", FormMethod.Post))
+{
+    @*@Html.AntiForgeryToken()*@
+
+    <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+    <input type="submit"  value="Google" class="btn btn-primary" />
+
+}
+
+
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>

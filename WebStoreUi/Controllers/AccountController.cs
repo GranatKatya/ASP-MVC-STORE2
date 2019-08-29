@@ -112,5 +112,50 @@ namespace WebStoreUi.Controllers
             AuthenticationManager.SignOut();
             return RedirectToAction("Login");
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult GoogleLogin(string returnUrl)
+        {
+            var properties = new AuthenticationProperties // googlr need to know where to send callback
+            {
+                RedirectUri = Url.Action("GoogleLoginCallback", new { returnUrl = returnUrl } )
+            };
+            HttpContext.GetOwinContext().Authentication.Challenge(properties, "Google");
+
+
+            return new HttpUnauthorizedResult();
+        }
+
+        public async Task<ActionResult> GoogleLoginCallback(string returnUrl)
+        {
+            ExternalLoginInfo loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+
+            User user = await UserManager.FindAsync(loginInfo.Login);
+            if (user == null)
+            {
+                user = new User { Email = loginInfo.Email, UserName = loginInfo.DefaultUserName };
+                IdentityResult result = await UserManager.CreateAsync(user);
+                if (result.Succeeded)
+                {
+                    result = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+                }
+                if (!result.Succeeded)
+                {
+                    return View("Error", result.Errors);
+                }
+
+
+                ClaimsIdentity claim = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+
+                claim.AddClaims(loginInfo.ExternalIdentity.Claims );
+                AuthenticationManager.SignOut();
+                AuthenticationManager.SignIn(new AuthenticationProperties { IsPersistent = true }, claim);
+
+            }
+
+            return Redirect(returnUrl ?? "/");
+        }
+
     }
 }
