@@ -167,4 +167,8 @@ C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\We
 C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.pdb
 C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\Microsoft.Owin.Security.Google.dll
 C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\Microsoft.Owin.Security.Google.xml
-C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csprojAssemblyReference.cache
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\Antlr3.Runtime.dll
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Optimization.dll
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\WebGrease.dll
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\Antlr3.Runtime.pdb
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Optimization.xml

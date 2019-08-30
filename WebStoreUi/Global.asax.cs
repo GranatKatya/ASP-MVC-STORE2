@@ -1,3 +1,4 @@
+using FirstMVCWebApp;
 using FluentValidation.WebApi;
 using Ninject;
 using Ninject.Modules;
@@ -8,6 +9,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 using WebStoreDomain.Concrete;
 using WebStoreUi.Infrastructure;
@@ -49,6 +51,8 @@ namespace WebStoreUi
 
             ModelValidatorProviders.Providers.Clear();
             //  ModelValidatorProviders.Providers.Add(new AttributeValidatorProvider());
+
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
 
         }
     }

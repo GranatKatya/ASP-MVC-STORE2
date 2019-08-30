@@ -520,3 +520,8 @@ C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreUi\obj\Debug\WebSto
 C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreUi\obj\Debug\WebStoreUi.pdb
 C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreUi\bin\Microsoft.Owin.Security.Google.dll
 C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreUi\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreUi\bin\Antlr3.Runtime.dll
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreUi\bin\System.Web.Optimization.dll
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreUi\bin\WebGrease.dll
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreUi\bin\Antlr3.Runtime.pdb
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreUi\bin\System.Web.Optimization.xml

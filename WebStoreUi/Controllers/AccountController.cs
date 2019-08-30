@@ -131,10 +131,11 @@ namespace WebStoreUi.Controllers
         {
             ExternalLoginInfo loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
 
+          
             User user = await UserManager.FindAsync(loginInfo.Login);
             if (user == null)
             {
-                user = new User { Email = loginInfo.Email, UserName = loginInfo.DefaultUserName };
+                user = new User { Email = loginInfo.Email, UserName = loginInfo.Email };
                 IdentityResult result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

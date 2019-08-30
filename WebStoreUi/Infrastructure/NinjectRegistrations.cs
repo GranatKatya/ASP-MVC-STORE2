@@ -9,7 +9,7 @@ using WebStoreDomain.Abstract;
 using WebStoreDomain.Concrete;
 using WebStoreDomain.Concrete.Order;
 using WebStoreDomain.Entities;
-
+using WebStoreDomain.Entities.UserAuthentication;
 
 namespace WebStoreUi.Infrastructure
 {
@@ -25,16 +25,19 @@ namespace WebStoreUi.Infrastructure
             Bind<IStoreRepository<PaymentMethod>>().To<PaymentMethodRepository>();
             Bind<IStoreRepository<Order>>().To<OrdersRepository>();
             Bind<IStoreRepository<CartItem>>().To<CartItemRepository>();
+          //  Bind<IStoreRepository<Role>>().To<CartItemRepository>();
 
-
-       
-// И с помощью вызова Bind<IRepository>().To<BookRepository>(); собственно устанавливается сопоставление между
-//интерфейсом -зависимостью и конкретным классом этого интерфейса.
-
+          
 
 
 
-EmailSettings emailSettings = new EmailSettings
+            // И с помощью вызова Bind<IRepository>().To<BookRepository>(); собственно устанавливается сопоставление между
+            //интерфейсом -зависимостью и конкретным классом этого интерфейса.
+
+
+
+
+            EmailSettings emailSettings = new EmailSettings
             {
                 WriteAsFile = bool.Parse(ConfigurationManager
                   .AppSettings["Email.WriteAsFile"] ?? "false")
