@@ -40,9 +40,30 @@
         @RenderBody()
     </div>
     <hr />
+
+    @*@section Footer {
+        Все права защищены. Syte Corp. 2012.
+    }*@
+
+
     <footer>
         @Html.Partial("Footer")
     </footer>
+  
+    <footer>
+        @if (IsSectionDefined("Footer1"))
+        {
+            @RenderSection("Footer1")
+        }
+        else
+        {
+            <span>Содержание элемента footer по умолчанию.</span>
+        }
+    </footer>
+
+
+    @*<footer>@RenderSection("Footer1", false)</footer>*@
+
 
 
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
@@ -52,11 +73,11 @@
     <script src="~/Scripts/vali"></script>
     @*@Scripts.Render()*@
 
-   
+
 
     @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)*@
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)*@
 </body>
 </html>
 

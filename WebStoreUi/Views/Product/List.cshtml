@@ -8,6 +8,7 @@
 @model ProductListViewModel
 
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Goods";
 }
 
@@ -60,8 +61,8 @@
 </div>
 
 @*<div>
-    <h2>@Html.ActionLink("Add", "Add")</h2>
-</div>*@
+        <h2>@Html.ActionLink("Add", "Add")</h2>
+    </div>*@
 
 <div style="margin: 20px; ">
     Главная > Товары
@@ -69,20 +70,20 @@
 
 
 
-    <form method="get">
-        <div class="form-inline">
-            <label class="control-label">Name: </label>
-            @Html.DropDownList("productname", Model.ProductNames as SelectList,
-                        htmlAttributes: new { @class = "form-control" })
+<form method="get">
+    <div class="form-inline">
+        <label class="control-label">Name: </label>
+        @Html.DropDownList("productname", Model.ProductNames as SelectList,
+                    htmlAttributes: new { @class = "form-control" })
 
-            @*<label class="control-label">Позиция игрока: </label>
+        @*<label class="control-label">Позиция игрока: </label>
             @Html.DropDownList("position", Model.Positions as SelectList,
 
                     htmlAttributes: new { @class = "form-control" })*@
 
-            <input type="submit" value="Фильтр" class="btn btn-default" />
-        </div>
-    </form>
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
 
 
 
@@ -91,7 +92,7 @@
     {
         <div class="e" style="background-color: beige; height: 490px; width: 49%;  margin: 5px; border: 1px solid black; text-align: center;">
             <h2>@Html.ActionLink(good.Name, "Details", new { id = good.Id })</h2>
-              <img src="@Url.Content(good.Src)" style="margin: 4px; width: 70%; height: 70%;" />
+            <img src="@Url.Content(good.Src)" style="margin: 4px; width: 70%; height: 70%;" />
             <h5>@good.Description</h5>
             <p>Price: @good.Price $</p>
             @Html.ActionLink("Buy", "AddToCart", "Cart", new { productId = good.Id, returnUrl = Request.Url.PathAndQuery }, new { @class = "btn btn-primary" })
@@ -115,7 +116,7 @@
 
 
 <div>
-    @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i, category = Model.CurrentCategory  }))
+    @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i, category = Model.CurrentCategory }))
 </div>
 
 
@@ -163,3 +164,9 @@
 
 
 
+@section Footer1 {
+    Все права защищены. Syte Corp. 2012.
+}
+@*@section Footer {
+    Все права защищены. Syte Corp. 2012.
+}*@
