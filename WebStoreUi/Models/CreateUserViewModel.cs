@@ -14,7 +14,9 @@ namespace WebStoreUi.Models
         public string Name { get; set; }
         [Required]
         public string Email { get; set; }
-        public SelectList Roles { get; set; }
-        public IEnumerable<Role> RolesList { get; set; }
+ 
+        [Required]
+        [Display(Name="UserRole")]
+        public string UserRole { get; set; }
     }
 }

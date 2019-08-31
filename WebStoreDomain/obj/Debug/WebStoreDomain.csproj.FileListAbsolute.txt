@@ -116,7 +116,6 @@ D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STOR
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.Migrations.InitialCreate.resources
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csproj.GenerateResource.cache
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.Migrations.first.resources
-D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csprojAssemblyReference.cache
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.Migrations.AddRole.resources
 C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\WebStoreDomain.dll.config
 C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\WebStoreDomain.dll
@@ -172,3 +171,11 @@ C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\Sy
 C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\WebGrease.dll
 C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\Antlr3.Runtime.pdb
 C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Optimization.xml
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\Antlr3.Runtime.dll
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\Microsoft.Owin.Security.Google.dll
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Optimization.dll
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\WebGrease.dll
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\Antlr3.Runtime.pdb
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\Microsoft.Owin.Security.Google.xml
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Optimization.xml
+D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.Migrations.UserRole.resources

@@ -1,16 +1,21 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/ErrorStyles.css" rel="stylesheet" />
+    <link href="~/Content/ErrorStyles.css" rel="stylesheet" />*@
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
 
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
     @*@Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")*@
+        @Scripts.Render("~/bundles/modernizr")*@
 
 </head>
 <body>
@@ -42,14 +47,14 @@
     <hr />
 
     @*@section Footer {
-        Все права защищены. Syte Corp. 2012.
-    }*@
+            Все права защищены. Syte Corp. 2012.
+        }*@
 
 
     <footer>
         @Html.Partial("Footer")
     </footer>
-  
+
     <footer>
         @if (IsSectionDefined("Footer1"))
         {
@@ -73,7 +78,9 @@
     <script src="~/Scripts/vali"></script>
     @*@Scripts.Render()*@
 
-
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 
     @*@Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")

@@ -7,7 +7,13 @@
 <h2>Roles: </h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <div style="margin:5px;  margin-top: 10px;">
+        <a href=@Url.Action("Create", "Roles") style="text-decoration:none; color: black;">
+            <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Create</i></button>
+        </a>
+    </div>
+
+    @*   @Html.ActionLink("Create New", "Create")*@
 </p>
 <table class="table">
     <tr>
@@ -30,8 +36,21 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+
+                <div>
+                    <a href=@Url.Action("Edit", "Roles", new { id = item.Id}) style="text-decoration:none; color: black;">
+                        <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Edit</i></button>
+                    </a>
+
+
+                    <a href=@Url.Action("Delete", "Roles", new { id = item.Id }) style="text-decoration:none; color: black;">
+                        <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Delete</i></button>
+                    </a>
+                </div>
+
+
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
             </td>
         </tr>
     }

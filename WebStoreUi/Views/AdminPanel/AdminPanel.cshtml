@@ -42,8 +42,8 @@
 
 
             @*<a href=@Url.Action("Index", "Cart", new { page = 1 }) style="text-decoration:none; color: black;">
-                <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Carts</i></button>
-                    </a>*@
+        <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Carts</i></button>
+            </a>*@
             <div style="margin:5px;  margin-top: 10px;">
                 <a href=@Url.Action("List", "Category", new { page = 1 }) style="text-decoration:none; color: black;">
                     <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Categories</i></button>
@@ -65,6 +65,12 @@
             <div style="margin:5px;  margin-top: 10px;">
                 <a href=@Url.Action("Index", "Roles", new { page = 1 }) style="text-decoration:none; color: black;">
                     <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Roles</i></button>
+                </a>
+            </div>
+
+            <div style="margin:5px;  margin-top: 10px;">
+                <a href=@Url.Action("Index", "User", new { page = 1 }) style="text-decoration:none; color: black;">
+                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Users</i></button>
                 </a>
             </div>
 

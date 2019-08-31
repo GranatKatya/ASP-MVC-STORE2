@@ -32,12 +32,32 @@
 
 
     @*<div class="form-group">
-        @Html.LabelFor(model => model.Roles, "DeliveryMethod", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.UserRoles, "Roles", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.RolesId, Model.Roles as SelectList, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserRoles, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserRole, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.ShippingDetails.DeliveryMethodId, Model.DeliveryMrthods as SelectList, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Roles, "", new { @class = "text-danger" })
+
+            @foreach (var item in @ViewBag.MyRoles)
+            {
+
+                @Html.RadioButtonFor(m => m.UserRole, (string)item.Name, new { @class = "radio-inline" })@Html.Label((string)item.Name)
+
+
+            }
+            @*@Html.RadioButtonFor(m => m.UserRole, "Admin", new { @class = "radio-inline" })@Html.Label("Admin")
+            @Html.RadioButtonFor(m => m.UserRole, "User", new { @class = "radio-inline" })@Html.Label("User")*@
+
+            @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })*@
         </div>
-    </div>*@
+    </div>
 
 
     <div class="col-md-offset-2 col-md-10">

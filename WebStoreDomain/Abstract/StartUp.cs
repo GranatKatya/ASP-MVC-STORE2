@@ -41,6 +41,10 @@ namespace WebStoreDomain.Abstract
                
               //  CallbackPath = new PathString("/Account/GoogleLoginCallback")
             });
+
+           
         }
+
+     
     }
 }

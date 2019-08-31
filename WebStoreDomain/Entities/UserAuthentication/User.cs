@@ -9,5 +9,6 @@ namespace WebStoreDomain.Entities.UserAuthentication
 {
     public class User : IdentityUser
     {
+        public string UserRole { get; set; }
     }
 }

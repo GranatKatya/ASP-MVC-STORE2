@@ -1,5 +1,6 @@
 using FirstMVCWebApp;
 using FluentValidation.WebApi;
+using Microsoft.AspNet.Identity;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Mvc;
@@ -12,6 +13,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using WebStoreDomain.Concrete;
+using WebStoreDomain.Entities.UserAuthentication;
 using WebStoreUi.Infrastructure;
 
 namespace WebStoreUi
@@ -28,7 +30,7 @@ namespace WebStoreUi
             IKernel ninjectKernel = new StandardKernel(registations);
             DependencyResolver.SetResolver(new NinjectDependencyResolver(ninjectKernel));
 
-
+            createRoles();
 
 
             //        FluentValidationModelValidatorProvider.Configure(
@@ -53,6 +55,18 @@ namespace WebStoreUi
             //  ModelValidatorProviders.Providers.Add(new AttributeValidatorProvider());
 
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+        }
+
+
+        private void createRoles()
+        {
+            //if (!RoleManager.RoleExists("User"))
+            //{
+
+            //    var role = new Role();        
+            //    //  role.Name 
+            //}
 
         }
     }
