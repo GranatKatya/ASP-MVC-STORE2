@@ -19,7 +19,7 @@ namespace WebStoreUi.Controllers
         //dependency injection
         private IStoreRepository<Product> repository; //1 зависимость
         private IStoreRepository<Category> categrepository; //1 зависимость
-        private int PageSize = 5;
+        private int PageSize = 9;
 
         //public ProductController()
         //{

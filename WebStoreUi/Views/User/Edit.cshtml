@@ -35,11 +35,25 @@
     <div class="form-group">
         @Html.LabelFor(model => model.UserRole, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
+            @{int count = 0;
+                bool isopendiv = false;}
             @foreach (var item in Model.MyRoles)
             {
+
+                if (count % 2 == 0)
+                {
+                    if (isopendiv)
+                    {
+                    @: </div>
+                }
+                @:<div>
+                    isopendiv = true;
+                }
+                count++;
+
                 if (item.Name == Model.Myroletofind)
                 {
-                    @Html.RadioButtonFor(m => m.UserRole, item.Name, new { @class = "radio-inline" , @checked = "checked"   })@Html.Label(item.Name)
+                    @Html.RadioButtonFor(m => m.UserRole, item.Name, new { @class = "radio-inline", @checked = "checked" })@Html.Label(item.Name)
 
                 }
                 else
@@ -47,10 +61,10 @@
                     @Html.RadioButtonFor(m => m.UserRole, item.Name, new { @class = "radio-inline" })@Html.Label(item.Name)
                 }
             }
-                    @*@Html.RadioButtonFor(m => m.UserRole, "Admin", new { @class = "radio-inline" })@Html.Label("Admin")
-                @Html.RadioButtonFor(m => m.UserRole, "User", new { @class = "radio-inline" })@Html.Label("User")*@
+            @*@Html.RadioButtonFor(m => m.UserRole, "Admin", new { @class = "radio-inline" })@Html.Label("Admin")
+            @Html.RadioButtonFor(m => m.UserRole, "User", new { @class = "radio-inline" })@Html.Label("User")*@
 
-                </div>
+        </div>
     </div>
 
 

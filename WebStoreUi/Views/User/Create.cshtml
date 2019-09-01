@@ -6,10 +6,10 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>CreateUserViewModel</h4>
     <hr />
@@ -40,24 +40,36 @@
         </div>*@
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.UserRole, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+<div class="form-group">
+    @Html.LabelFor(model => model.UserRole, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{int count = 0;
+            bool isopendiv = false;}
+        @foreach (var item in @ViewBag.MyRoles)
+        {
 
-            @foreach (var item in @ViewBag.MyRoles)
+            if (count % 2 == 0)
             {
-
-                @Html.RadioButtonFor(m => m.UserRole, (string)item.Name, new { @class = "radio-inline" })@Html.Label((string)item.Name)
-
-
+                if (isopendiv)
+                {
+                @: </div>
+                }
+                 @:<div>
+                isopendiv = true;
             }
-            @*@Html.RadioButtonFor(m => m.UserRole, "Admin", new { @class = "radio-inline" })@Html.Label("Admin")
+            count++;
+            @Html.RadioButtonFor(m => m.UserRole, (string)item.Name, new { @class = "radio-inline", @style="margin-left: 10px;" })@Html.Label((string)item.Name)
+
+
+        }
+
+        @*@Html.RadioButtonFor(m => m.UserRole, "Admin", new { @class = "radio-inline" })@Html.Label("Admin")
             @Html.RadioButtonFor(m => m.UserRole, "User", new { @class = "radio-inline" })@Html.Label("User")*@
 
-            @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })*@
-        </div>
+        @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })*@
     </div>
+</div>
 
 
     <div class="col-md-offset-2 col-md-10">

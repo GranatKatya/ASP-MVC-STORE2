@@ -1,24 +1,120 @@
 ﻿@model WebStoreDomain.Entities.Product
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ProductDetails";
 }
 
 
 
+  <div style="text-align: center;">
+      <h2>  @Html.DisplayFor(model => model.Name)</h2>
+  </div>  
 
-<h1>Product detail</h1>
 <div>
-    <h2>@Model.Name</h2>
-    <p>Price:@Model.Price </p>
-    @*<p>Description:</b> @Model.Description</p>*@
-
-    <div>
-        @Html.LabelFor(model => model.Description)
-         @Html.EditorFor(model => model.Description)
+    <div style="float: left; width: 30%;">
+      
+                <div style="margin-left: 10%;">
+                    <img src="@Url.Content(Model.Src)" style="margin: 4px; width: 90%; height: 98%;" />
+                </div>
+          
     </div>
+    <div style="float: right; width: 68%;">
+        @*<h4>Product</h4>*@
+        @*<hr />*@
+        <dl class="dl-horizontal">
+         
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
 
-    <p>Category:    @Html.DropDownListFor(model => model.CategoryId, ViewBag.Categ as SelectList)</p>
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Volume)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Volume)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.InStoke)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.InStoke)
+            </dd>
+
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.Src)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Src)
+                </dd>*@
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Category)
+            </dt>
+
+            <dd>
+                @Html.DropDownListFor(model => model.Category, ViewBag.Categ as SelectList)
+                @* @Html.DisplayFor(ViewBag.Categ as SelectList)*@
+            </dd>
+
+        </dl>
+    </div>
 </div>
+
+<footer style="clear: both;  ">
+    <div style="width: 100%;  margin-left: 11%;">
+
+        @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id })*@
+        @*@Html.ActionLink("Back to List", "Index")*@
+
+
+        <a href=@Url.Action("List", "Product") style="text-decoration:none; color: black;">
+            <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Back to List</i></button>
+        </a>
+
+
+    </div>
+</footer>
+
+
+
+
+
+    @*<h1>Product detail</h1>
+        <div>
+            <h2>@Model.Name</h2>
+            <p>Price:@Model.Price </p>
+
+            <div>
+                @Html.LabelFor(model => model.Description)
+                @Html.EditorFor(model => model.Description)
+            </div>
+
+
+
+            <p>Category:    @Html.DropDownListFor(model => model.CategoryId, ViewBag.Categ as SelectList)</p>
+        </div>*@
 
