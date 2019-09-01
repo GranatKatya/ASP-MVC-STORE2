@@ -4,80 +4,196 @@
     ViewBag.Title = "ProductDetails";
 }
 
-<h2>ProductDetails</h2>
+
+
+
+
+<div style="text-align: center;">
+    <h2>  @Html.DisplayFor(model => model.Name)</h2>
+</div>
 
 <div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        @*<dt>
-            @Html.DisplayNameFor(model => model.Category.Name)
-        </dt>*@
+    <div style="float: left; width: 30%;">
 
-        @*<dd>
-            @Html.DisplayFor(model => model.Category.Name)
-        </dd>*@
+        <div style="margin-left: 10%;">
+            <img src="@Url.Content(Model.Src)" style="margin: 4px; width: 90%; height: 98%;" />
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    </div>
+    <div style="float: right; width: 68%;">
+        @*<h4>Product</h4>*@
+        @*<hr />*@
+        <dl class="dl-horizontal">
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Volume)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Volume)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Volume)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.InStoke)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Volume)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.InStoke)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.InStoke)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Src)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.InStoke)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Src)
-        </dd>
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.Src)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Src)
+                </dd>*@
 
-        <dd>
-            @Html.DropDownListFor(model => model.Category, ViewBag.Categ as SelectList)
-           @* @Html.DisplayFor(ViewBag.Categ as SelectList)*@
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Category)
+            </dt>
 
-    </dl>
+            <dd>
+                @Html.DropDownListFor(model => model.Category, ViewBag.Categ as SelectList)
+                @* @Html.DisplayFor(ViewBag.Categ as SelectList)*@
+            </dd>
+
+        </dl>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<footer style="clear: both;  ">
+    <div style="width: 100%;  margin-left: 11%;">
+
+        @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id })*@
+        @*@Html.ActionLink("Back to List", "Index")*@
+
+
+        <a href=@Url.Action("List", "AdminProduct") style="text-decoration:none; color: black;">
+            <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Back to List</i></button>
+        </a>
+
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<h2>ProductDetails</h2>
+
+    <div>
+        <h4>Product</h4>
+        <hr />
+        <dl class="dl-horizontal">
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Volume)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Volume)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.InStoke)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.InStoke)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Src)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Src)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Category)
+            </dt>
+
+            <dd>
+                @Html.DropDownListFor(model => model.Category, ViewBag.Categ as SelectList)
+
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@

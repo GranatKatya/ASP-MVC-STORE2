@@ -15,11 +15,11 @@
 
 
 <h2 style="text-align: center; font-weight:  800; font-size: xx-large; ">Admin panel</h2>
-<head>
+@*<head>
     <div style="margin: 20px; ">
         Главная > Товары
     </div>
-</head>
+</head>*@
 
 @*<div style=" display: flex; text-align: center;   justify-content: center; /* center items horizontally, in this case */
         flex-direction:row; font-weight:800;  margin: 20px; text-decoration: underline; ">
@@ -30,9 +30,9 @@
     </div>*@
 
 
-<nav>
+
     <div>
-        <div style=" display: block;  float: left; text-align:center; ">
+        <div style=" display: block;  float: left; text-align:center; width: 30%; ">
             @*  <h2>@Html.ActionLink("Add", "Add")</h2>*@
             <div style="margin:5px; margin-top: 10px; ">
                 <a href=@Url.Action("List", "AdminProduct", new { page = 1 }) style="text-decoration:none; color: black;">
@@ -79,12 +79,16 @@
         </div>
 
 
-        <div style="  float: right; ">
-            <img src="~/Resource/admin-banner.jpg" />
+        <div style="  float: right;   width: 68%; ">
+            @*<img src="~/Resource/admin-banner.jpg" />*@
+
+            <div >
+                <img src="~/Resource/admin-banner.jpg" style="width: 90%; height: 98%;" />
+            </div>
         </div>
 
     </div>
-</nav>
+
 
 
 
