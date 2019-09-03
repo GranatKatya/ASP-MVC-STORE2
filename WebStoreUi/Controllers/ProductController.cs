@@ -82,6 +82,57 @@ namespace WebStoreUi.Controllers
 
             return View(plvm);
         }
+        [AllowAnonymous]
+        public ActionResult PartislListForAjaxCategories(string category, int? productname, int page = 1)
+        {
+            IQueryable<Product> arr = ((DbSet<Product>)repository.Items).Include("Category");
+
+            //  if (!String.IsNullOrEmpty(productname) && !productname.Equals("Все"))
+            if (productname != null && productname != 0)
+            {
+                page = 1;
+                //int id = Int32.Parse(productname);
+                arr = arr.Where(p => p.Id == productname);
+            }
+            List<Product> teams = ((DbSet<Product>)repository.Items).ToList();
+            // устанавливаем начальный элемент, который позволит выбрать всех
+            teams.Insert(0, new Product { Name = "Все", Id = 0 });
+
+            var plvm = new ProductListViewModel
+            {
+
+
+                Products = arr
+                            .Where(p => category == null || p.Category.Name == category)
+                            .OrderBy(p => p.Id)
+                            .Skip((page - 1) * PageSize)
+                            .Take(PageSize),
+
+                //    Products = repository
+                //                .Items
+                //                .Where(p=>category == null || p.Category.Name == category)
+                //                .OrderBy(p => p.Id)
+                //                .Skip((page - 1) * PageSize)
+                //                .Take(PageSize),
+
+                PagingInfo = new PagingInfo
+                {
+                    TotalItems = arr.Where(p => category == null || p.Category.Name == category).Count(),
+                    //TotalItems = repository.Items.Where(p => category == null || p.Category.Name == category).Count(),
+                    // TotalItems = repository.Items.Count(p => category == null || p.Category.Name == "For body"),
+                    ItemsPerPage = PageSize,
+                    CurrentPage = page
+                },
+                CurrentCategory = category,
+                ProductNames = new SelectList(teams, "Id", "Name"),
+            };
+
+            // return View(plvm);
+            return PartialView(plvm);
+        }
+
+
+
 
         [AllowAnonymous]
         public async Task<ActionResult> Details(int? id)

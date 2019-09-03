@@ -1,0 +1,43 @@
+﻿@using WebStoreDomain.Entities
+@using WebStoreUi.HtmlHelpers
+@using WebStoreUi.Models
+
+@model  ProductListViewModel
+
+@{
+    ViewBag.Title = "ProductsSearch";
+}
+
+<div style="display: flex;   flex-direction:row; flex-wrap: wrap;  align-content:center ">
+    @foreach (var good in @Model.Products)
+    {
+        <div class="e parent" style="background-color: beige;  min-height: 90px; height: auto;  width: 30%;  margin: 5px; border: 1px solid black; text-align: center;">
+
+            <div style="height: 50px;">
+                <h3>@Html.ActionLink(good.Name, "Details", new { id = good.Id })</h3>
+            </div>
+
+            <div>
+                <img src="@Url.Content(good.Src)" style="margin: 4px; width: 50%; height: 220px;" />
+            </div>
+
+            <div>
+                <p>Price: @good.Price $</p>
+            </div>
+
+            <div style="margin-bottom:10px;">
+
+                @Ajax.ActionLink("Buy", "AddItemToCart", "Cart", new { productId = good.Id, returnUrl = Request.Url.PathAndQuery }, new AjaxOptions { UpdateTargetId = "cartsummary" }, new { @class = "btn btn-primary" })
+                @*@Html.ActionLink("Buy", "AddToCart", "Cart", new { productId = good.Id, returnUrl = Request.Url.PathAndQuery }, new { @class = "btn btn-primary" })*@
+
+            </div>
+
+
+        </div>
+
+    }
+    </div>
+
+    <div>
+        @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i, category = Model.CurrentCategory }))
+    </div>

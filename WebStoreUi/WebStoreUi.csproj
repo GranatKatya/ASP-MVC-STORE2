@@ -312,6 +312,7 @@
     <Content Include="Views\Product\ProductsSearch.cshtml" />
     <Content Include="Views\Product\Search.cshtml" />
     <Content Include="Views\AdminProduct\ProductAdminSearch.cshtml" />
+    <Content Include="Views\Product\PartislListForAjaxCategories.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

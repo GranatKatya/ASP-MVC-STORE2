@@ -7,7 +7,8 @@
         @Html.ActionLink("all", "List", "Product", null, new { @class = "btn btn-default" })
         @foreach (var catergory in Model)
         {
-            @*@Ajax.ActionLink(catergory.Name, "List", "Product", new { category = catergory.Name, page = 1 }, new AjaxOptions{ UpdateTargetId="results"} , new { @class = "btn btn-default" })*@
-            @Html.ActionLink(catergory.Name, "List", "Product", new { category = catergory.Name, page = 1 }, new { @class = "btn btn-default" })
+            @Ajax.ActionLink(catergory.Name, "PartislListForAjaxCategories", "Product", new { category = catergory.Name, page = 1 }, new AjaxOptions { UpdateTargetId = "productresults", InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-default" })
+            @*@Html.ActionLink(catergory.Name, "List", "Product", new { category = catergory.Name, page = 1 }, new { @class = "btn btn-default" })
+        }*@
         }
     </div>

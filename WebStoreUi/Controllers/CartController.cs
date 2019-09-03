@@ -57,6 +57,22 @@ namespace WebStoreUi.Controllers
             return RedirectToAction("Index", new { returnurl= returnurl });
         }
         [AllowAnonymous]
+        public ActionResult AddItemToCart(int productid, string returnurl)
+        {
+            Product product = repository.Items.FirstOrDefault(p => p.Id == productid);
+            if (product != null)
+            {
+                //add product to cart
+                Cart.AddItem(product, 1);
+            }
+            return RedirectToAction("test_ajax", "Cart");
+            // return Redirect(returnurl);
+            // return RedirectToAction("Index", new { returnurl = returnurl });
+        }
+
+
+
+        [AllowAnonymous]
         public ActionResult RemoveFromCart(int productid, string returnurl) {
             Product product = repository.Items.FirstOrDefault(p => p.Id == productid);
             if (product != null)
@@ -83,7 +99,7 @@ namespace WebStoreUi.Controllers
         {
             CartIndexViewModel cartIndexViewModel = new CartIndexViewModel {Cart = this.Cart, ReturnUrl = returnurl };
 
-            return View (cartIndexViewModel);
+                return View (cartIndexViewModel);
         }
 
         //public ActionResult Checkout(Cart cart, ShippingDetails shippingDetails)
@@ -192,6 +208,13 @@ namespace WebStoreUi.Controllers
         public PartialViewResult Summary()
         {
             return PartialView(Cart);
+        }
+
+        [AllowAnonymous]
+        public ActionResult test_ajax()
+        {
+            return Content("  <b>Your cart:</b> "+ Cart.Items.Sum(x => x.Quantity) +"goods,"+
+                Cart.ComputeTotalValue().ToString("# $"));
         }
     }
 }

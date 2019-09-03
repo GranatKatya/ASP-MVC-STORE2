@@ -23,9 +23,10 @@
 
     </div>
 
-        <div class="navbar-text navbar-right">
-            <b>Your cart:</b>
-            @Model.Items.Sum(x => x.Quantity) goods,
-            @Model.ComputeTotalValue().ToString("# $")
+        <div class="navbar-text navbar-right" id="cartsummary"
+            <b>Your cart:</b>          
+                @Model.Items.Sum(x => x.Quantity) goods,         
+                @Model.ComputeTotalValue().ToString("# $")
+        
         </div>
    
