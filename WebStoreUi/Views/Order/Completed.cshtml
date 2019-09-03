@@ -5,6 +5,14 @@
 
 <h2>Completed</h2>
 
-<h2>Спасибо!</h2>
+<h2>Thanks!</h2>
 <p>Спасибо за выбор нашего магазина. Заказ в кратчайшие сроки будет отправлен в службу доставки.</p>
 
+<div class="text-center">
+    @*<a class="btn btn-primary" href="@Model.ReturnUrl">Continue shopping</a>*@
+
+    <a href=@Url.Action("List", "AdminProduct") style="text-decoration:none; color: black;">
+        <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Continue shopping</i></button>
+    </a>
+
+</div>

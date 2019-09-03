@@ -1,0 +1,88 @@
+﻿@model  WebStoreUi.Models.ProductListViewModel
+
+@{
+    ViewBag.Title = "ProductAdminSearch";
+}
+@{ WebStoreDomain.Entities.Product pr = null; }
+<h2>ProductAdminSearch</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+@using WebStoreDomain.Entities
+@using WebStoreUi.HtmlHelpers
+@using WebStoreUi.Models
+
+<table class="table">
+    <tr>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Category.Name)
+            </th>*@
+        <th>
+            @Html.DisplayFor(model => pr.Name)
+        </th>
+        <th>
+            @Html.DisplayFor(model => pr.Price)
+        </th>
+        <th>
+            @Html.DisplayFor(model => pr.Description)
+        </th>
+        <th>
+            @Html.DisplayFor(model => pr.Volume)
+        </th>
+        <th>
+            @Html.DisplayName("InStoke")
+        </th>
+        <th>
+            @Html.DisplayFor(model => pr.Category)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Products)
+    {
+        <tr>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Volume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InStoke)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Src)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @*<div>
+                        <button type="button" class="btn btn-success btn-sm" style="margin-top:1px"><i class="fa fa-edit" style="color:black">@Html.ActionLink("Edit", "EditProduct", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
+                        <button type="button" class="btn btn-success btn-sm" style="margin-top:1px"><i class="fa fa-info-circle" style="color:black">@Html.ActionLink("Details", "ProductDetails", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
+                        <button type="button" class="btn btn-success btn-sm" style="margin-top:1px"><i class="fa fa-close" style="color:black">@Html.ActionLink("Delete", "DeleteProduct", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
+
+                    </div>*@
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<div>
+    @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i }))
+</div>
+
+
+
+

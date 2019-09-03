@@ -14,7 +14,7 @@
 
     <div style="margin:5px;  margin-top: 10px;">
         <a href=@Url.Action("Create", "User") style="text-decoration:none; color: black;">
-            <button type="button" class="btn btn-primary btn-sm">  <i class="fa fa-edit" style="color:black">Create</i></button>
+            <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Create</i></button>
         </a>
     </div>
 
@@ -22,7 +22,7 @@
 
 
 
-<div class="panel panel-primary">
+<div class="panel panel-success">
     <div class="panel-heading"> 
         <h3 class="box-title">
             <b>Users with Roles</b>
@@ -31,7 +31,7 @@
     <!-- /.box-header -->
     <div class="panel-body">
         <table class="table table-hover table-bordered table-condensed" id="UsersWithRoles">
-            <thead>
+            <thead class="thead-dark">
                 <tr>
                     <td><b>Username</b></td>
                     <td><b>Email</b></td>
@@ -48,12 +48,12 @@
                     <td>
                         <div>
                             <a href=@Url.Action("Edit", "User", new { id = user.UserId}) style="text-decoration:none; color: black;">
-                                <button type="button" class="btn btn-primary btn-sm">  <i class="fa fa-edit" style="color:black">Edit</i></button>
+                                <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Edit</i></button>
                             </a>
 
 
                             <a href=@Url.Action("Delete", "User", new { id = user.UserId }) style="text-decoration:none; color: black;">
-                                <button type="button" class="btn btn-primary btn-sm">  <i class="fa fa-edit" style="color:black">Delete</i></button>
+                                <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Delete</i></button>
                             </a>
                         </div>
                     </td>
@@ -65,7 +65,7 @@
     </div>
 
     <div class="panel-footer">
-        <p class="box-title"><b>Total Users till @String.Format("{0 : dddd, MMMM d, yyyy}", DateTime.Now)  : </b><span class="label label-primary">@Model.Count()</span></p>
+        <p class="box-title"><b>Total Users till @String.Format("{0 : dddd, MMMM d, yyyy}", DateTime.Now)  : </b><span class="label label-success">@Model.Count()</span></p>
     </div>
 </div>
 

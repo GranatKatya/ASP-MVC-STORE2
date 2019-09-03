@@ -179,3 +179,5 @@ D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STOR
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\Microsoft.Owin.Security.Google.xml
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\bin\Debug\System.Web.Optimization.xml
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.Migrations.UserRole.resources
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.csprojAssemblyReference.cache
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreDomain\obj\Debug\WebStoreDomain.Migrations.UserRole.resources

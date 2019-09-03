@@ -208,5 +208,34 @@ namespace WebStoreUi.Controllers
 
 
 
+        [HttpPost]
+        public ActionResult ProductAdminSearch(string name, int page = 1)
+        {
+            var players = ((DbSet<Product>)repository.Items).Where(p => p.Name.Contains(name)).Include(p => p.Category)
+                .OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize).ToList();
+            var plvm = new ProductListViewModel
+            {
+                Products = players,
+                //Products = repository
+                //           .Products
+                //           .OrderBy(p => p.Id)
+                //           .Skip((page - 1) * PageSize)
+                //           .Take(PageSize).Include(p => p.Category),
+                PagingInfo = new PagingInfo
+                {
+                    TotalItems = repository.Items.Count(),
+                    ItemsPerPage = PageSize,
+                    CurrentPage = page
+                }
+            };
+
+            return PartialView(plvm);
+
+            //var products = ((DbSet<Product>)repository.Items).Where(p => p.Name.Contains(name)).ToList();
+           // return PartialView(products);
+        }
+      // public ActionResult Search() { return View(); }
+
+
     }
 }

@@ -26,7 +26,7 @@
             && property.PropertyName !="SelectedItemId"    && property.PropertyName !="Items" 
             && property.PropertyName !="DeliveryMethod"    && property.PropertyName !="PaymentMethod"
             && property.PropertyName != "DeliveryMethodId" && property.PropertyName != "PaymentMethodId"
-              && property.PropertyName != "SelectedOrderId" )
+              && property.PropertyName != "SelectedOrderId" && property.PropertyName != "" )
         {
             <div class="form-group">
                 <label>@(property.DisplayName ?? property.PropertyName)</label>
@@ -35,18 +35,18 @@
         }
     }
 
-    <h3>Delivery method</h3>
-    <div>
-        @*@Html.LabelFor(model => model.DeliveryMethod)
-        @Html.DropDownListFor(model => model.DeliveryMethod, ViewBag.DeliveryMethods as SelectList)*@
+    @*<h3>Delivery method</h3>*@
+    @*<div>
+        @Html.LabelFor(model => model.DeliveryMethod)
+        @Html.DropDownListFor(model => model.DeliveryMethod, ViewBag.DeliveryMethods as SelectList)
     </div>
     <h3>Payment method</h3>
-    <div>
+    <div>*@
        @* @Html.LabelFor(model => model.PaymentMethod)*@
         @*   @Html.DropDownListFor(model => model.SelectedItemId, ViewBag.PaymentMethods as SelectList)*@
         @*     @Html.DropDownListFor(model => model.SelectedItemId,   new SelectList(ViewBag.ItemsRep, "PaymentMethodId", "Name", 1, "2djdfgbdfjgb"))*@
        @* @Html.DropDownListFor(n => n.SelectedOrderId, Model.OrderTemplates, "Please select an order template")*@
-    </div>
+    @*</div>*@
 
     <h3>Опции</h3>
 

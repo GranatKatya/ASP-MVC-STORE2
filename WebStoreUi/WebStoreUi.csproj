@@ -211,6 +211,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -307,6 +309,9 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Shared\Footer1.cshtml" />
     <Content Include="Views\User\UsersWithRoles.cshtml" />
+    <Content Include="Views\Product\ProductsSearch.cshtml" />
+    <Content Include="Views\Product\Search.cshtml" />
+    <Content Include="Views\AdminProduct\ProductAdminSearch.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -336,7 +341,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>30126</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:30126/</IISUrl>
+          <IISUrl>http://localhost:30113/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

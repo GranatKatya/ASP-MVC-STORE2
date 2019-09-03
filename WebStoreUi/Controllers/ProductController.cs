@@ -229,7 +229,18 @@ namespace WebStoreUi.Controllers
 
 
 
+        [HttpPost]
+        public ActionResult ProductsSearch(string name)
+        {
+            var products = ((DbSet<Product>)repository.Items).Where(p=>p.Name.Contains(name)).ToList();
+            if (products.Count <= 0)
+            {
+                return HttpNotFound();
+            }
 
+            return PartialView(products);
+        }
+        public ActionResult Search() { return View(); }
 
 
 

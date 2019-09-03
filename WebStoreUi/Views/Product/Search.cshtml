@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+@using (Ajax.BeginForm("ProductsSearch", new AjaxOptions { UpdateTargetId ="result", LoadingElementId= "loading" ,
+            LoadingElementDuration = 200, InsertionMode  =  InsertionMode.Replace}))
+{
+<input type="text"   name="name" @*ПАРАМЕТР ИМЯ МЕТОДА  ProductsSearch*@  />
+<input type="submit"  value="Search" />
+}
+
+<div id="loading" style="display: none;" >Loading...</div>
+<div id="result">
+
+</div>
