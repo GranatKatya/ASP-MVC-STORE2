@@ -12,6 +12,8 @@ namespace WebStoreUi.Models
         public string Email { get; set; }
         public string Role { get; set; }
         public string UserRoles { get; set; }
-      
+
+
+        public string CurrentUser { get; set; }
     }
 }

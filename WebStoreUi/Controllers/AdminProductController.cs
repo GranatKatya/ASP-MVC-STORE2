@@ -213,6 +213,28 @@ namespace WebStoreUi.Controllers
         {
             var players = ((DbSet<Product>)repository.Items).Where(p => p.Name.Contains(name)).Include(p => p.Category)
                 .OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize).ToList();
+            if (players.Count <= 0)
+            {
+                //var plvm1 = new ProductListViewModel
+                //{
+                //    Products = new List<Product>() { new Product() },
+                //    //Products = repository
+                //    //           .Products
+                //    //           .OrderBy(p => p.Id)
+                //    //           .Skip((page - 1) * PageSize)
+                //    //           .Take(PageSize).Include(p => p.Category),
+                //    PagingInfo = new PagingInfo
+                //    {
+                //        //  TotalItems =repository.Items.Count(),
+                //        TotalItems = 0,
+                //        ItemsPerPage = PageSize,
+                //        CurrentPage = page
+                //    }
+                //};
+                //return PartialView(plvm1);
+                return HttpNotFound("There are no such product");
+              //  return PartialView();
+            }
             var plvm = new ProductListViewModel
             {
                 Products = players,
@@ -223,7 +245,9 @@ namespace WebStoreUi.Controllers
                 //           .Take(PageSize).Include(p => p.Category),
                 PagingInfo = new PagingInfo
                 {
-                    TotalItems = repository.Items.Count(),
+                  //  TotalItems =repository.Items.Count(),
+                   // TotalItems = players.Where(p => name == null || p.Name.Contains(name)).Count(),
+                   TotalItems = ((DbSet<Product>)repository.Items).Where(p => p.Name.Contains(name)).Include(p => p.Category).ToList().Count(),
                     ItemsPerPage = PageSize,
                     CurrentPage = page
                 }

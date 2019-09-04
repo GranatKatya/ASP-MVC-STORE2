@@ -1,0 +1,49 @@
+﻿
+
+@using PagedList.Mvc;
+@model PagedList.IPagedList<WebStoreUi.Models.Users_in_Role_ViewModel>
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+<table class="table table-hover table-bordered table-condensed" id="UsersWithRoles">
+    <thead class="thead-dark">
+        <tr>
+            <td><b>Username</b></td>
+            <td><b>Email</b></td>
+            <td><b>Roles</b></td>
+            <td></td>
+        </tr>
+    </thead>
+    @foreach (WebStoreUi.Models.Users_in_Role_ViewModel user in Model)
+    {
+        <tr>
+            <td>@user.Username</td>
+            <td>@user.Email</td>
+            <td>@user.Role</td>
+            <td>
+                <div>
+                    <a href=@Url.Action("Edit", "User", new { id = user.UserId}) style="text-decoration:none; color: black;">
+                        <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Edit</i></button>
+                    </a>
+
+
+                    <a href=@Url.Action("Delete", "User", new { id = user.UserId }) style="text-decoration:none; color: black;">
+                        <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Delete</i></button>
+                    </a>
+                </div>
+            </td>
+
+        </tr>
+
+    }
+</table>
+
+  Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)  of @Model.PageCount
+
+@*@Html.PagedListPager(Model, page => Url.Action("UsersWithRoles", new { page }))*@
+@Html.PagedListPager(
+    Model,
+    page => Url.Action("UsersWithRolesAjax", new { page = page,  param = Model[0].CurrentUser }),
+    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "movie_grid" })
+)

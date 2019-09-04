@@ -1,10 +1,10 @@
 ﻿@model  WebStoreUi.Models.ProductListViewModel
 
-@{
+@*@{
     ViewBag.Title = "ProductAdminSearch";
-}
+}*@
 @{ WebStoreDomain.Entities.Product pr = null; }
-<h2>ProductAdminSearch</h2>
+@*<h2>ProductAdminSearch</h2>*@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 @using WebStoreDomain.Entities
@@ -80,7 +80,7 @@
 
 
 <div>
-    @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i }))
+    @Html.PageLinks(Model.PagingInfo, i => Url.Action("ProductAdminSearch", new { page = i }))
 </div>
 
 

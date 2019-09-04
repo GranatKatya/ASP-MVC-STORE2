@@ -1,10 +1,17 @@
-﻿@model IEnumerable<WebStoreDomain.Entities.UserAuthentication.User>
+﻿@*@model IEnumerable<WebStoreDomain.Entities.UserAuthentication.User>*@
+@using PagedList.Mvc;
+@model PagedList.IPagedList<WebStoreDomain.Entities.UserAuthentication.User>
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
 
 @{
     ViewBag.Title = "Index";
 }
 
-    <h2>Users</h2>
+@{WebStoreDomain.Entities.UserAuthentication.User user = new WebStoreDomain.Entities.UserAuthentication.User(); }
+<h2>Users</h2>
 
 <p>
     @*  @Html.ActionLink("Create New", "Create")*@
@@ -14,52 +21,61 @@
         <a href=@Url.Action("Create", "User") style="text-decoration:none; color: black;">
             <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Create</i></button>
         </a>
+
+    
     </div>
 
 </p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => @user.Email)
         </th>
-       
+
         <th>
-            @Html.DisplayNameFor(model => model.AccessFailedCount)
+            @Html.DisplayNameFor(model => @user.AccessFailedCount)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserName)
+            @Html.DisplayNameFor(model => @user.UserName)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-      
-        <td>
-            @Html.DisplayFor(modelItem => item.AccessFailedCount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
 
-            <div>
-                <a href=@Url.Action("Edit", "User", new { id = item.Id}) style="text-decoration:none; color: black;">
-                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Edit</i></button>
-                </a>
-         
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessFailedCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
 
-                <a href=@Url.Action("Delete", "User", new { id = item.Id }) style="text-decoration:none; color: black;">
-                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Delete</i></button>
-                </a>
-            </div>
+                <div>
+                    <a href=@Url.Action("Edit", "User", new { id = item.Id}) style="text-decoration:none; color: black;">
+                        <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Edit</i></button>
+                    </a>
 
-        
-        </td>
-    </tr>
-}
+
+                    <a href=@Url.Action("Delete", "User", new { id = item.Id }) style="text-decoration:none; color: black;">
+                        <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Delete</i></button>
+                    </a>
+                </div>
+
+
+            </td>
+        </tr>
+    }
 
 </table>
+
+<br />
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

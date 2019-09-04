@@ -139,7 +139,7 @@ namespace WebStoreUi
             );
 
 
-
+           
 
 
             routes.MapRoute(
@@ -154,8 +154,18 @@ namespace WebStoreUi
            defaults: new { controller = "Category", action = "List" }
            );
 
+            //////////////////////
+            //routes.MapRoute(
+            //          name: "PageingRoute21",
+            //          url: "AdminProduct/ProductAdminSearch/Page{page}",
+            //          defaults: new
+            //          {
+            //              controller = "AdminProduct",
+            //              action = "ProductAdminSearch"
 
-
+            //          }
+            //      );
+            //////////////////////
 
             routes.MapRoute(
                  name: "PageingRoute2",

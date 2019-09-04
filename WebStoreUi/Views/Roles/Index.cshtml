@@ -1,4 +1,19 @@
-﻿@model IEnumerable<WebStoreDomain.Entities.UserAuthentication.Role>
+﻿@*@model IEnumerable<WebStoreDomain.Entities.UserAuthentication.Role>*@
+
+
+@using PagedList.Mvc;
+@model PagedList.IPagedList<WebStoreDomain.Entities.UserAuthentication.Role>
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@{WebStoreDomain.Entities.UserAuthentication.Role myrole = new WebStoreDomain.Entities.UserAuthentication.Role(); }
+
 
 @{
     ViewBag.Title = "Index";
@@ -18,15 +33,15 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => @myrole.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => @myrole.Description)
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (WebStoreDomain.Entities.UserAuthentication.Role item in Model)
     {
         <tr>
             <td>
@@ -50,9 +65,16 @@
 
 
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
             </td>
         </tr>
     }
 
 </table>
+
+
+
+<br />
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

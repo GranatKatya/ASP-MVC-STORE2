@@ -1,4 +1,13 @@
-﻿@model IEnumerable<WebStoreUi.Models.Users_in_Role_ViewModel>
+﻿@*@model IEnumerable<WebStoreUi.Models.Users_in_Role_ViewModel>*@
+
+
+@using PagedList.Mvc;
+@model PagedList.IPagedList<WebStoreUi.Models.Users_in_Role_ViewModel>
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{WebStoreUi.Models.Users_in_Role_ViewModel user1 = new WebStoreUi.Models.Users_in_Role_ViewModel(); }
+
 
 @{
     ViewBag.Title = "Users With Roles";
@@ -6,7 +15,6 @@
 }
 
 
-@*<h2>Users</h2>*@
 
 <p>
     @*  @Html.ActionLink("Create New", "Create")*@
@@ -16,58 +24,97 @@
         <a href=@Url.Action("Create", "User") style="text-decoration:none; color: black;">
             <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Create</i></button>
         </a>
+
+        <div style="float: right; width: 58%;">
+            @using (Ajax.BeginForm("UserAdminSearch", new AjaxOptions
+            {
+                UpdateTargetId = "adminusersresults",
+                LoadingElementId = "loading",
+                LoadingElementDuration = 200,
+                InsertionMode = InsertionMode.Replace
+            }))
+            {
+                <div style="display: inline; display: flex; justify-content: flex-end ">
+
+                    @*<div class="form-group">*@
+                    @*<label for="formGroupExampleInput">Example label</label>*@
+                    <input style="display: inline" type="text" name="name" @*ПАРАМЕТР ИМЯ МЕТОДА  ProductsSearch*@ class="form-control" placeholder="Search" id="formGroupExampleInput" />
+                    <input type="submit" value="Search" class="btn btn-success" style="color: black; display: inline " />
+                    @*</div>*@
+                </div>
+            }
+            <div id="loading" style="display: none;">Loading...</div>
+        </div>
     </div>
 
+
+
+    
 </p>
 
 
 
 <div class="panel panel-success">
-    <div class="panel-heading"> 
+    <div class="panel-heading">
         <h3 class="box-title">
             <b>Users with Roles</b>
         </h3>
     </div>
     <!-- /.box-header -->
-    <div class="panel-body">
-        <table class="table table-hover table-bordered table-condensed" id="UsersWithRoles">
-            <thead class="thead-dark">
-                <tr>
-                    <td><b>Username</b></td>
-                    <td><b>Email</b></td>
-                    <td><b>Roles</b></td>
-                    <td></td>
-                </tr>
-            </thead>
-            @foreach (var user in Model)
-            {
-                <tr>
-                    <td>@user.Username</td>
-                    <td>@user.Email</td>
-                    <td>@user.Role</td>
-                    <td>
-                        <div>
-                            <a href=@Url.Action("Edit", "User", new { id = user.UserId}) style="text-decoration:none; color: black;">
-                                <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Edit</i></button>
-                            </a>
+    <div id="adminusersresults">
+        <div class="panel-body" id="movie_grid">
+            <table class="table table-hover table-bordered table-condensed" id="UsersWithRoles">
+                <thead class="thead-dark">
+                    <tr>
+                        <td><b>Username</b></td>
+                        <td><b>Email</b></td>
+                        <td><b>Roles</b></td>
+                        <td></td>
+                    </tr>
+                </thead>
+                @foreach (WebStoreUi.Models.Users_in_Role_ViewModel user in Model)
+                {
+                    <tr>
+                        <td>@user.Username</td>
+                        <td>@user.Email</td>
+                        <td>@user.Role</td>
+                        <td>
+                            <div>
+                                <a href=@Url.Action("Edit", "User", new { id = user.UserId}) style="text-decoration:none; color: black;">
+                                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Edit</i></button>
+                                </a>
 
 
-                            <a href=@Url.Action("Delete", "User", new { id = user.UserId }) style="text-decoration:none; color: black;">
-                                <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Delete</i></button>
-                            </a>
-                        </div>
-                    </td>
+                                <a href=@Url.Action("Delete", "User", new { id = user.UserId }) style="text-decoration:none; color: black;">
+                                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Delete</i></button>
+                                </a>
+                            </div>
+                        </td>
 
-                </tr>
+                    </tr>
 
-            }
-        </table>
+                }
+            </table>
+
+            <br />
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)  of @Model.PageCount
+
+            @*@Html.PagedListPager(Model, page => Url.Action("UsersWithRoles", new { page }))*@
+            @Html.PagedListPager(
+                Model,
+                page => Url.Action("UsersWithRolesAjax", new { page = page, param = Model[0].CurrentUser   /*, @style="color: red" */}),
+                PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "movie_grid" })
+         
+                )
+        </div>
     </div>
 
     <div class="panel-footer">
-        <p class="box-title"><b>Total Users till @String.Format("{0 : dddd, MMMM d, yyyy}", DateTime.Now)  : </b><span class="label label-success">@Model.Count()</span></p>
+        <p class="box-title"><b> Users in a page @String.Format("{0 : dddd, MMMM d, yyyy}", DateTime.Now)  : </b><span class="label label-success">@Model.Count()</span></p>
     </div>
 </div>
+
+
 
 
 @section scripts{
@@ -84,4 +131,5 @@
             });
         });
     </script>
-}  
+}
+

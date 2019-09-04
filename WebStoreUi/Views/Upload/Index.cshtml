@@ -10,6 +10,14 @@
 <div align="center">
     <h2>Upload files</h2>
 
+    @*<label class="btn btn-primary" for="my-file-selector">
+            <input id="my-file-selector" type="file" style="display:none"
+                   onchange="$('#upload-file-info').html(this.files[0].name)">
+            Button Text Here
+        </label>
+        <span class='label label-info' id="upload-file-info"></span>*@
+
+
     @using (Html.BeginForm("UploadMany", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @*<input type="file" name="uploads" /><br>
@@ -17,32 +25,62 @@
             <input type="file" name="uploads" /><br>*@
 
         <div style="position:relative;">
-            <a class='btn btn-primary' href='javascript:;'>
-                Choose File...
-                <input type="file" name="uploads" value="F;LDFVKJ" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-        opacity:0;background-color:transparent;color:transparent;' size="40" onchange='$("#upload-file-info").html($(this).val());'>
-            </a>
-            &nbsp;
+            <label class="btn btn-primary" for="my-file-selector">
+                <input name="uploads" id="my-file-selector" type="file" style="display:none"
+                       onchange="$('#upload-file-info').html($(this).val())">
+                Button Text Here
+            </label>
             <span class='label label-info' id="upload-file-info"></span>
-        </div><br />
+        </div>
+        <br />
         <div style="position:relative;">
-            <a class='btn btn-primary' href='javascript:;'>
-                Choose File...
-                <input type="file" name="uploads" value="F;LDFVKJ" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-        opacity:0;background-color:transparent;color:transparent;' size="40" onchange='$("#upload-file-info1").html($(this).val());'>
-            </a>
-            &nbsp;
+            <label class="btn btn-primary" for="my-file-selector1">
+                <input name="uploads" id="my-file-selector1" type="file" style="display:none"
+                       onchange="$('#upload-file-info1').html($(this).val())">
+                Button Text Here
+            </label>
             <span class='label label-info' id="upload-file-info1"></span>
-        </div><br />
+
+        </div>
+        <br />
         <div style="position:relative;">
-            <a class='btn btn-primary' href='javascript:;'>
-                Choose File...
-                <input type="file" name="uploads" value="F;LDFVKJ" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-        opacity:0;background-color:transparent;color:transparent;' size="40" onchange='$("#upload-file-info2").html($(this).val());'>
-            </a>
-            &nbsp;
+            <label class="btn btn-primary" for="my-file-selector2">
+                <input name="uploads" id="my-file-selector2" type="file" style="display:none"
+                       onchange="$('#upload-file-info2').html(this.files[0].name)">
+                Button Text Here
+            </label>
             <span class='label label-info' id="upload-file-info2"></span>
-        </div><br />
+
+        </div>
+        <br />
+
+        @*<div style="position:relative;">
+                <a class='btn btn-primary' href='javascript:;'>
+                    Choose File...
+                    <input type="file" name="uploads" value="F;LDFVKJ" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+            opacity:0;background-color:transparent;color:transparent;' size="40" onchange='$("#upload-file-info").html($(this).val());'>
+                </a>
+                &nbsp;
+                <span class='label label-info' id="upload-file-info"></span>
+            </div><br />
+            <div style="position:relative;">
+                <a class='btn btn-primary' href='javascript:;'>
+                    Choose File...
+                    <input type="file" name="uploads" value="F;LDFVKJ" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+            opacity:0;background-color:transparent;color:transparent;' size="40" onchange='$("#upload-file-info1").html($(this).val());'>
+                </a>
+                &nbsp;
+                <span class='label label-info' id="upload-file-info1"></span>
+            </div><br />
+            <div style="position:relative;">
+                <a class='btn btn-primary' href='javascript:;'>
+                    Choose File...
+                    <input type="file" name="uploads" value="F;LDFVKJ" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+            opacity:0;background-color:transparent;color:transparent;' size="40" onchange='$("#upload-file-info2").html($(this).val());'>
+                </a>
+                &nbsp;
+                <span class='label label-info' id="upload-file-info2"></span>
+            </div><br />*@
 
         <input type="submit" value="Upload" />
 

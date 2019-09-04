@@ -12,6 +12,8 @@ using WebStoreDomain.Abstract;
 using WebStoreDomain.Entities;
 using WebStoreDomain.Entities.UserAuthentication;
 using WebStoreUi.Models;
+using PagedList.Mvc;
+using PagedList;
 
 namespace WebStoreUi.Controllers
 {
@@ -25,7 +27,7 @@ namespace WebStoreUi.Controllers
         //{
         //    rolerepository = rolerepositoryninject;
         //}
-
+        int pageSize = 5;
 
         private StoreUserManager UserManager
         {
@@ -49,9 +51,11 @@ namespace WebStoreUi.Controllers
 
 
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(UserManager.Users);
+           // int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(UserManager.Users.ToList().ToPagedList(pageNumber, pageSize));
         }
 
         [HttpGet]
@@ -179,7 +183,7 @@ namespace WebStoreUi.Controllers
         }
 
 
-        public ActionResult UsersWithRoles()
+        public ActionResult UsersWithRoles(int? page)
         {
             var usersWithRoles = (from user in UserManager.Users
                                   select new
@@ -200,8 +204,85 @@ namespace WebStoreUi.Controllers
                                       Role = string.Join(",", p.RoleNames)
                                   });
 
+            int pageNumber = (page ?? 1);
+            return View(usersWithRoles.ToPagedList(pageNumber, pageSize));
+           // return View(usersWithRoles);
+        }
 
-            return View(usersWithRoles);
+
+
+        public ActionResult UsersWithRolesAjax(string param , int? page)
+        {
+            var usersWithRoles = (from user in UserManager.Users
+                                  select new
+                                  {
+                                      UserId = user.Id,
+                                      Username = user.UserName,
+                                      Email = user.Email,
+                                      RoleNames = (from userRole in user.Roles
+                                                   join role in RoleManager.Roles on userRole.RoleId
+                                                   equals role.Id
+                                                   select role.Name).ToList()
+                                  }).ToList().Select(p => new Users_in_Role_ViewModel()
+
+                                  {
+                                      UserId = p.UserId,
+                                      Username = p.Username,
+                                      Email = p.Email,
+                                      Role = string.Join(",", p.RoleNames),
+                                      CurrentUser = param
+                                  });
+
+            int pageNumber = (page ?? 1);
+           // Where(u => u.Username.Contains(name)
+            return PartialView(usersWithRoles.Where(p => param == null || p.Username.Contains(param) ).ToPagedList(pageNumber, pageSize));
+
+            // return PartialView(usersWithRoles.Where(p => param == null || p.CurrentUser == param).ToPagedList(pageNumber, pageSize));
+            // return View(usersWithRoles);
+        }
+
+
+        [HttpPost]
+        public ActionResult UserAdminSearch(string name, int? page = 1)
+        {
+            //  var names = new string[] { name };
+          //  var arr = UserManager.Users.Where(u =>u.UserName.Contains(name)).Include(p => p.Roles);
+            var usersWithRoles = (from user in UserManager.Users   //where user.UserName == name  // name.Contains(user.UserName) //  
+                                  select new
+                                  {
+                                      UserId = user.Id,
+                                      Username = user.UserName,
+                                      Email = user.Email,
+                                      RoleNames = (from userRole in user.Roles
+                                                   join role in RoleManager.Roles on userRole.RoleId
+                                                   equals role.Id
+                                                   select role.Name).ToList()
+                                  }).ToList().Select(p => new Users_in_Role_ViewModel()
+
+                                  {
+                                      UserId = p.UserId,
+                                      Username = p.Username,
+                                      Email = p.Email,
+                                      Role = string.Join(",", p.RoleNames),
+                                      CurrentUser = name
+                                  });
+            var res = usersWithRoles.Where(u => u.Username.Contains(name));
+
+            //var players = UserManager.Users.Where(p => p.Name.Contains(name)).Include(p => p.Category)
+            //    .OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize).ToList();
+            if (res.ToList().Count <= 0)
+            {
+                return HttpNotFound("There are no such product");
+                //  return PartialView();
+            }
+
+
+            int pageNumber = (page ?? 1);
+            return PartialView(res.ToPagedList(pageNumber, pageSize));
+            // return PartialView(plvm);
+
+            //var products = ((DbSet<Product>)repository.Items).Where(p => p.Name.Contains(name)).ToList();
+            // return PartialView(products);
         }
 
     }

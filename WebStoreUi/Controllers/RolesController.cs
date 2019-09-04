@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using WebStoreDomain.Entities.UserAuthentication;
 using WebStoreUi.Models;
+using PagedList.Mvc;
+using PagedList;
 
 namespace WebStoreUi.Controllers
 {
@@ -25,9 +27,12 @@ namespace WebStoreUi.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(RoleManager.Roles);
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(RoleManager.Roles.ToList().ToPagedList(pageNumber, pageSize));
+           // return View(RoleManager.Roles);
         }
 
         [HttpGet]
