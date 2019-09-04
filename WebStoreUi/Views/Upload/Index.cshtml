@@ -1,0 +1,229 @@
+﻿
+@{
+    ViewBag.Title = "Upload file";
+}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+
+<div align="center">
+    <h2>Upload files</h2>
+
+    @using (Html.BeginForm("UploadMany", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @*<input type="file" name="uploads" /><br>
+            <input type="file" name="uploads" /><br>
+            <input type="file" name="uploads" /><br>*@
+
+        <div style="position:relative;">
+            <a class='btn btn-primary' href='javascript:;'>
+                Choose File...
+                <input type="file" name="uploads" value="F;LDFVKJ" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        opacity:0;background-color:transparent;color:transparent;' size="40" onchange='$("#upload-file-info").html($(this).val());'>
+            </a>
+            &nbsp;
+            <span class='label label-info' id="upload-file-info"></span>
+        </div><br />
+        <div style="position:relative;">
+            <a class='btn btn-primary' href='javascript:;'>
+                Choose File...
+                <input type="file" name="uploads" value="F;LDFVKJ" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        opacity:0;background-color:transparent;color:transparent;' size="40" onchange='$("#upload-file-info1").html($(this).val());'>
+            </a>
+            &nbsp;
+            <span class='label label-info' id="upload-file-info1"></span>
+        </div><br />
+        <div style="position:relative;">
+            <a class='btn btn-primary' href='javascript:;'>
+                Choose File...
+                <input type="file" name="uploads" value="F;LDFVKJ" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        opacity:0;background-color:transparent;color:transparent;' size="40" onchange='$("#upload-file-info2").html($(this).val());'>
+            </a>
+            &nbsp;
+            <span class='label label-info' id="upload-file-info2"></span>
+        </div><br />
+
+        <input type="submit" value="Upload" />
+
+
+    }
+
+</div>
+@*<br/>
+    <div>
+        <form class="md-form" action="#">
+            <div class="file-field">
+                <div class="btn btn-primary btn-sm float-left">
+                    <span>Choose files</span>
+                    <input type="file" multiple>
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                </div>
+            </div>
+        </form>
+    </div>*@
+
+
+
+
+
+
+@*<br />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <div class="input-group input-file">
+        <div class="form-control">
+            <a href="/path/to/your/current_file_name.pdf" target="_blank">current_file_name.pdf</a>
+        </div>
+        <span class="input-group-addon">
+            <a class='btn btn-primary' href='javascript:;'>
+                Browse
+                <input type="file" name="field_name" onchange="$(this).parent().parent().parent().find('.form-control').html($(this).val());">
+            </a>
+        </span>
+    </div>
+
+    <br />
+    <div class="input-group">
+        <input type="text" class="form-control input-file-dummy" placeholder="Choose file" aria-describedby="fileHelp" required>
+        <div class="valid-feedback order-last">File is valid</div>
+        <div class="invalid-feedback order-last">File is required</div>
+        <label class="input-group-append mb-0">
+            <span class="btn btn-primary input-file-btn">
+                Browse… <input type="file" hidden>
+            </span>
+        </label>
+    </div>
+    <small id="fileHelp" class="form-text text-muted">Choose any file you like</small>
+
+    <br />
+
+
+    <p>SADDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD</p>
+
+    <div class="file-loading">
+        <input id="input-20" type="file">
+    </div>
+    <script>
+        $(document).on('ready', function () {
+            $("#input-20").fileinput({
+                browseClass: "btn btn-primary btn-block",
+                showCaption: false,
+                showRemove: false,
+                showUpload: false
+            });
+        });
+    </script>
+
+
+
+    <p>ddddddddddddddddddddddddddd</p>
+    <label for="input-24">Planets and Satellites</label>
+    <div class="file-loading">
+        <input id="input-24" name="input24[]" type="file" multiple>
+    </div>
+    <script>
+        $(document).on('ready', function () {
+            var url1 = 'http://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/631px-FullMoon2010.jpg',
+                url2 = 'http://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/600px-Earth_Eastern_Hemisphere.jpg';
+            $("#input-24").fileinput({
+                initialPreview: [url1, url2],
+                initialPreviewAsData: true,
+                initialPreviewConfig: [
+                    { caption: "Moon.jpg", downloadUrl: url1, size: 930321, width: "120px", key: 1 },
+                    { caption: "Earth.jpg", downloadUrl: url2, size: 1218822, width: "120px", key: 2 }
+                ],
+                deleteUrl: "/site/file-delete",
+                overwriteInitial: false,
+                maxFileSize: 100,
+                initialCaption: "The Moon and the Earth"
+            });
+        });
+    </script>
+
+
+
+    <p>
+        sssssssssssssssssss
+    </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="jquery-2.1.1.min.js"></script>
+
+    <body>
+
+        <form id="MyID" method="post" action="JSFPAGE" enctype="multipart/form-data">
+
+            <span class="btn btn-success fileinput-button">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>Select files...</span>
+                <input id="fileupload" type="file" name="files[]" multiple>
+            </span><br><br>
+
+            ...
+
+            <script type="text/javascript">
+                $(function () {
+                    'use strict';
+                    // Change this to the location of your server-side upload handler:
+                    var url = 'xUpload.xsp';
+                    $('#fileupload').fileupload({
+                        url: url,
+                        dataType: 'json',
+                        done: function (e, data) {
+                            $.each(data.result.files, function (index, file) {
+                                $('<p/>').text(file.name).appendTo('#files');
+                            });
+                        },
+                        ...
+    });
+            </script>
+
+        </form>
+
+
+
+
+        <p>SADDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD</p>
+
+        <div class="file-loading">
+            <input id="input-20" type="file">
+        </div>
+        <script>
+            $(document).on('ready', function () {
+                $("#input-20").fileinput({
+                    browseClass: "btn btn-primary btn-block",
+                    showCaption: false,
+                    showRemove: false,
+                    showUpload: false
+                });
+            });
+        </script>
+
+
+
+
+        <script type="text/javascript" src="jquery.ui.widget.js"></script>
+        <script type="text/javascript" src="jquery.iframe-transport.js"></script>
+        <script type="text/javascript" src="jquery.fileupload.js"></script>
+    </body>*@
+
+
+
+
+
+

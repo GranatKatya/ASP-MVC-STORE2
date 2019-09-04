@@ -223,6 +223,7 @@
     <Compile Include="Controllers\AdminPanel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminProductController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
@@ -313,6 +314,8 @@
     <Content Include="Views\Product\Search.cshtml" />
     <Content Include="Views\AdminProduct\ProductAdminSearch.cshtml" />
     <Content Include="Views\Product\PartislListForAjaxCategories.cshtml" />
+    <Content Include="Views\Upload\Index.cshtml" />
+    <Content Include="Views\Upload\Index1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -320,7 +323,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Files\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebStoreDomain\WebStoreDomain.csproj">
       <Project>{cf1ade91-eec3-492f-ba01-26b0ec29be14}</Project>
@@ -342,7 +347,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>30126</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:30113/</IISUrl>
+          <IISUrl>http://localhost:30126/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
