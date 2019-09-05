@@ -1,0 +1,6563 @@
+132METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+METANIT.COM
+Сайт о программировании
+       
+C#/.NET JAVA WEB PYTHON C/C++ SQL MONGODB GO VB.NET SWIFT KOTLIN DART
+Загрузка файлов на сервер в ASP.NET MVC
+Последнее обновление: 13.09.2012
+   
+
+ 
+Во-первых, создадим в проекте папку, в которую будем загружать файлы. Пусть она будет называться Files.
+
+Потом создадим код разметки в представлении, с помощью которого пользователь мог бы загружать файл:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+@{
+    ViewBag.Title = "Upload";
+}
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Хелпер Html.BeginForm сгенерирует форму. Так как первые два параметра указывают, что форма будет обрабатываться на сервере методом Upload контроллера HomeController.
+
+Благодаря установке атрибута формы enctype="multipart/form-data" браузер будет знать, что надо загрузить файл.
+
+Тогда мы можем получить загруженный файл в методе действия Upload:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+[HttpGet]
+public ActionResult Index()
+{
+    return View();
+}
+ 
+[HttpPost]
+public ActionResult Upload(HttpPostedFileBase upload)
+{
+    if(upload!=null)
+    {
+        // получаем имя файла
+        string fileName = System.IO.Path.GetFileName(upload.FileName);
+        // сохраняем файл в папку Files в проекте
+        upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+    }
+    return RedirectToAction("Index");
+}
+Переданный с клиента на сервер файл передается через объект HttpPostedFileBase.
+
+С помощью метода SaveAs мы сохраняем файл по определенному пути на сервере. А помочь определить точный путь для сохранения поможет метод Server.MapPath().
+
+С помощью свойства InputStream мы можем получить поток файла и манипулировать им как обычными потоками:
+
+1
+2
+3
+//считаем загруженный файл в массив
+byte[] avatar = new byte[upload.ContentLength];
+upload.InputStream.Read(avatar, 0, upload.ContentLength);
+Множественная загрузка файлов
+При множественной загрузке файлов создаем в представлении набор элементов с типом file с одинаковым значением атрибута name:
+
+1
+2
+3
+4
+5
+6
+7
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="file" name="uploads" /><br>
+    <input type="submit" value="Загрузить" />
+}
+Теперь в метода контроллера мы уже будем получать коллекцию объектов HttpPostedFileBase:
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[HttpPost]
+public ActionResult Upload(IEnumerable<HttpPostedFileBase> uploads)
+{
+    foreach (var file in uploads)
+    {
+        if(file!=null)
+        {
+            // получаем имя файла
+            string fileName = System.IO.Path.GetFileName(file.FileName);
+            // сохраняем файл в папку Files в проекте
+            file.SaveAs(Server.MapPath("~/Files/" + fileName));
+        }
+    }
+ 
+    return RedirectToAction("Index");
+}
+Ограничение размера файлов
+Даже если мы все сделаем правильно, мы можем получить ошибку, если попытаемся загрузить файл размером больше 4 МБ. 4 мегабайта - ограничение, действующее на стороне сервера. Однако мы можм его переопределить.
+
+Для этого найдем в файле конфигурации web.config узел httpRuntime (он вложен в элемент system.web). Чтобы установить новое ограничение по размеру, нам надо указать атрибут maxRequestLength. Например, зададим в качестве нового размера около 20 мегабайт:
+
+1
+2
+3
+4
+<system.web>
+  <compilation debug="true" targetFramework="4.5"/>
+  <httpRuntime targetFramework="4.5" maxRequestLength="20000"/>
+</system.web>
+
+ 
+   
+Яндекс.Директ
+Содействие в подборе финансовых услуг/организаций
+Стартовый капитал - 800 гривен!
+roboforex.com
+Получите стартовый капитал при минимальном вложении!
+ 
+Яндекс.Директ
+Высокий доход – PushProfit!
+pushprofit.ru
+PushProfit монетизирует посетителей развлекательных сайтов по топовым ставкам!
+ 
+
+ 
+Помощь сайту
+WebMoney
+P378451176208
+Z280152397659
+Yandex-деньги
+410011174743222
+PayPal
+metanit22@mail.ru
+C# / Общее
+ASP.NET
+Десктоп
+Базы данных
+Вконтакте| Twitter| Канал сайта на youtube| Помощь сайту
+Контакты для связи: metanit22@mail.ru
+
+Copyright © metanit.com, 2012-2019. Все права защищены.
+
+<form class="md-form" action="#">
+  <div class="file-field">
+    <div class="btn btn-primary btn-sm float-left">
+      <span>Choose files</span>
+      <input type="file" multiple>
+    </div>
+    <div class="file-path-wrapper">
+      <input class="file-path validate" type="text" placeholder="Upload one or more files">
+    </div>
+  </div>
+</form>

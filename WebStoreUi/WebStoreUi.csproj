@@ -325,6 +325,7 @@
     <Content Include="Views\Upload\Index1.cshtml" />
     <Content Include="Views\User\UsersWithRolesAjax.cshtml" />
     <Content Include="Views\User\UserAdminSearch.cshtml" />
+    <Content Include="Views\Product\ProductSearch.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -356,7 +357,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>30126</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:30126/</IISUrl>
+          <IISUrl>http://localhost:30113/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

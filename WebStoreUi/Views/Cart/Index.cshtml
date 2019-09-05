@@ -16,7 +16,7 @@
 }
 
 <h2>Ваша корзина:</h2>
-
+@{ int count = 0;}
 <table id="cartTable"  class="table table-bordered table-hover">
     <thead>
         <tr>
@@ -31,34 +31,44 @@
     <tbody>
         @foreach (var item in Model.Cart.Items)
         {
-        <tr>
-            <td>@item.Product.Name</td>
-            <td>@item.Product.Price.ToString("# грн")</td>
-            <td>@item.Quantity
-            
-                <div>
-                    @Html.ActionLink("+", "AddToCart", "Cart", new { productId = item.Product.Id, returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary btn-sm" })
-                    @*<button type="button" class="btn btn-success "><i class="fa fa-plus" style="color:black">
-            @Html.ActionLink("+", "AddToCart", "Cart", new { productId = item.Product.Id, returnUrl = Model.ReturnUrl }, new { style = "text-decoration:none; color: black;" })
-        </i></button>*@
-                    @Html.ActionLink("-", "RemoveFromCartDecrement", "Cart", new { productId = item.Product.Id, returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary btn-sm" })
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Product.Price.ToString("# грн")</td>
+                <td>
+                    @*<p id="#cartIncrement+@count.ToString()">@item.Quantity</p>*@
+                    <p id="#cartIncrement">@item.Quantity</p>
 
-                </div>
+                    <div>
+                        @*@Ajax.ActionLink("+", "AddToCartAjax", "Cart", new { productId = item.Product.Id, returnUrl = Model.ReturnUrl }, new AjaxOptions { UpdateTargetId = "cartIncrement+" + @count.ToString(), InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-primary btn-sm" })*@
 
-            </td>
-            <td>@((item.Product.Price * item.Quantity).ToString("# грн"))</td>
 
-            <td>
-                @using (Html.BeginForm("RemoveFromCart", "Cart"))
-                {
-                    @Html.Hidden("productid", item.Product.Id)
-                    @Html.HiddenFor(x => x.ReturnUrl)
-                    @*<input class="btn btn-sm btn-warning" type="submit" value="Delete">*@
-                    <button type="submit" class="btn btn-sm btn-warning"><i class="fa fa-close" style="color:black">Delete</i></button>
-                }
-            </td>
+                        @Html.ActionLink("+", "AddToCart", "Cart", new { productId = item.Product.Id, returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary btn-sm" })
+                        @*<button type="button" class="btn btn-success "><i class="fa fa-plus" style="color:black">
+                @Html.ActionLink("+", "AddToCart", "Cart", new { productId = item.Product.Id, returnUrl = Model.ReturnUrl }, new { style = "text-decoration:none; color: black;" })
+            </i></button>*@
 
-        </tr>
+                        @*@Ajax.ActionLink("-", "RemoveFromCartDecrementAjax", "Cart", new { productId = item.Product.Id, returnUrl = Model.ReturnUrl }, new AjaxOptions { UpdateTargetId = "cartIncrement", InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-primary btn-sm" })*@
+
+                        @Html.ActionLink("-", "RemoveFromCartDecrement", "Cart", new { productId = item.Product.Id, returnUrl = Model.ReturnUrl }, new { @class = "btn btn-primary btn-sm" })
+
+                    </div>
+
+                </td>
+                <td>@((item.Product.Price * item.Quantity).ToString("# грн"))</td>
+
+                <td>
+                    @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                    {
+                        @Html.Hidden("productid", item.Product.Id)
+                        @Html.HiddenFor(x => x.ReturnUrl)
+                        @*<input class="btn btn-sm btn-warning" type="submit" value="Delete">*@
+                        <button type="submit" class="btn btn-sm btn-warning"><i class="fa fa-close" style="color:black">Delete</i></button>
+                    }
+                </td>
+
+            </tr>
+
+             count++; 
         }
     </tbody>
     <tfoot>

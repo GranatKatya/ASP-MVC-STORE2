@@ -45,9 +45,9 @@ namespace WebStoreUi.Controllers
 
 
         [Authorize(Roles = "Admin")]
-        public ActionResult List(int page = 1)
+        public ActionResult List(string name, int page = 1)
         {
-            var players = ((DbSet<Product>)repository.Items).Include(p => p.Category).OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize);
+            var players = ((DbSet<Product>)repository.Items).Where(p => name == null ||  p.Name.Contains(name)).Include(p => p.Category).OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize);
             var plvm = new ProductListViewModel
             {
                 Products= players,
@@ -58,10 +58,12 @@ namespace WebStoreUi.Controllers
                 //           .Take(PageSize).Include(p => p.Category),
                 PagingInfo = new PagingInfo
                 {
-                    TotalItems = repository.Items.Count(),
+                    TotalItems = repository.Items.Where(p => name == null || p.Name.Contains(name)).Count(),
                     ItemsPerPage = PageSize,
                     CurrentPage = page
-                }
+                },
+                CurrentItemSearch = name
+
             };
 
             return View(plvm);
@@ -92,23 +94,7 @@ namespace WebStoreUi.Controllers
             return View(p);
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                    
 
 
         [HttpGet]
@@ -208,7 +194,7 @@ namespace WebStoreUi.Controllers
 
 
 
-        [HttpPost]
+      //  [HttpPost]
         public ActionResult ProductAdminSearch(string name, int page = 1)
         {
             var players = ((DbSet<Product>)repository.Items).Where(p => p.Name.Contains(name)).Include(p => p.Category)
@@ -245,12 +231,13 @@ namespace WebStoreUi.Controllers
                 //           .Take(PageSize).Include(p => p.Category),
                 PagingInfo = new PagingInfo
                 {
-                  //  TotalItems =repository.Items.Count(),
-                   // TotalItems = players.Where(p => name == null || p.Name.Contains(name)).Count(),
-                   TotalItems = ((DbSet<Product>)repository.Items).Where(p => p.Name.Contains(name)).Include(p => p.Category).ToList().Count(),
+                    //  TotalItems =repository.Items.Count(),
+                    // TotalItems = players.Where(p => name == null || p.Name.Contains(name)).Count(),
+                    TotalItems = ((DbSet<Product>)repository.Items).Where(p => p.Name.Contains(name)).Include(p => p.Category).ToList().Count(),
                     ItemsPerPage = PageSize,
                     CurrentPage = page
-                }
+                },
+                CurrentItemSearch = name
             };
 
             return PartialView(plvm);

@@ -1,0 +1,62 @@
+﻿
+
+@using WebStoreDomain.Entities
+@using WebStoreUi.HtmlHelpers
+@using WebStoreUi.Models
+
+@*@model  IEnumerable<Product>*@
+@model ProductListViewModel
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+
+<div id="productresults">
+    <div style="display: flex;   flex-direction:row; flex-wrap: wrap;  align-content:center ">
+        @foreach (var good in @Model.Products)
+        {
+            <div class="e parent" style="background-color: beige;  min-height: 90px; height: auto;  width: 30%;  margin: 5px; border: 1px solid black; text-align: center;">
+
+                <div style="height: 50px;">
+                    <h3>@Html.ActionLink(good.Name, "Details", new { id = good.Id })</h3>
+                </div>
+
+                <div>
+                    <img src="@Url.Content(good.Src)" style="margin: 4px; width: 50%; height: 220px;" />
+                </div>
+
+                @*<h5>@good.Description</h5>*@
+                <div>
+                    <p>Price: @good.Price $</p>
+                </div>
+
+                <div style="margin-bottom:10px;">
+
+                    @Ajax.ActionLink("Buy", "AddItemToCart", "Cart", new { productId = good.Id, returnUrl = Request.Url.PathAndQuery }, new AjaxOptions { UpdateTargetId = "cartsummary" }, new { @class = "btn btn-primary" })
+                    @*@Html.ActionLink("Buy", "AddToCart", "Cart", new { productId = good.Id, returnUrl = Request.Url.PathAndQuery }, new { @class = "btn btn-primary" })*@
+
+                </div>
+
+                @*<div>
+                        <button class="btn1"><i class="fa fa-trash"> @Html.ActionLink("Delete", "Delete", new { id = good.Id })</i></button>
+                        <button class="btn1"><i class="fa fa-edit"> @Html.ActionLink("Edit", "Edit", new { id = good.Id })</i></button>
+                    </div>*@
+            </div>
+
+            @*<div>
+                    <p>@good.Name</p>
+                    <p>@good.Price.ToString("# $")</p>
+                </div>*@
+        }
+    </div>
+
+
+
+    <div>
+        @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i, category = Model.CurrentCategory , searchparam = Model.CurrentItemSearch}))
+    </div>
+
+</div>

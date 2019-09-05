@@ -36,7 +36,7 @@ namespace WebStoreUi.Controllers
 
         // GET: Product
         [AllowAnonymous]
-        public ActionResult List(string category, int? productname, int page = 1)
+        public ActionResult List(string searchparam  , string category, int? productname, int page = 1)
         {
             IQueryable<Product> arr = ((DbSet<Product>)repository.Items).Include("Category");
 
@@ -57,6 +57,7 @@ namespace WebStoreUi.Controllers
 
             Products = arr
                             .Where(p => category == null || p.Category.Name == category)
+                                .Where(s => searchparam == null || s.Name.Contains(searchparam))
                             .OrderBy(p => p.Id)
                             .Skip((page - 1) * PageSize)
                             .Take(PageSize),
@@ -70,13 +71,15 @@ namespace WebStoreUi.Controllers
             
             PagingInfo = new PagingInfo
                 {
-                TotalItems = arr.Where(p => category == null || p.Category.Name == category).Count(),
+                TotalItems = arr.Where(p => category == null || p.Category.Name == category)
+                                .Where(s => searchparam == null || s.Name.Contains(searchparam)).Count(),
                 //TotalItems = repository.Items.Where(p => category == null || p.Category.Name == category).Count(),
                 // TotalItems = repository.Items.Count(p => category == null || p.Category.Name == "For body"),
                 ItemsPerPage = PageSize,
                     CurrentPage = page
                 },
                 CurrentCategory = category,
+                CurrentItemSearch = searchparam,
                 ProductNames = new SelectList(teams, "Id", "Name"),
             };
 
@@ -293,6 +296,107 @@ namespace WebStoreUi.Controllers
         }
         public ActionResult Search() { return View(); }
 
+
+        public ActionResult ProductSearch(string searchparam, string category, int? productname, int page = 1)
+        {
+
+
+            IQueryable<Product> arr = ((DbSet<Product>)repository.Items).Include("Category");
+
+            //  if (!String.IsNullOrEmpty(productname) && !productname.Equals("Все"))
+            if (productname != null && productname != 0)
+            {
+                page = 1;
+                //int id = Int32.Parse(productname);
+                arr = arr.Where(p => p.Id == productname);
+            }
+            List<Product> teams = ((DbSet<Product>)repository.Items).ToList();
+            // устанавливаем начальный элемент, который позволит выбрать всех
+            teams.Insert(0, new Product { Name = "Все", Id = 0 });
+
+            var plvm = new ProductListViewModel
+            {
+
+
+                Products = arr
+                            .Where(p => category == null || p.Category.Name == category)
+                            .Where(s=> searchparam == null || s.Name.Contains(searchparam))
+                            .OrderBy(p => p.Id)
+                            .Skip((page - 1) * PageSize)
+                            .Take(PageSize),
+
+                //    Products = repository
+                //                .Items
+                //                .Where(p=>category == null || p.Category.Name == category)
+                //                .OrderBy(p => p.Id)
+                //                .Skip((page - 1) * PageSize)
+                //                .Take(PageSize),
+
+                PagingInfo = new PagingInfo
+                {
+                    TotalItems = arr.Where(p => category == null || p.Category.Name == category)
+                                        .Where(s => searchparam == null || s.Name.Contains(searchparam)).Count(),
+                    //TotalItems = repository.Items.Where(p => category == null || p.Category.Name == category).Count(),
+                    // TotalItems = repository.Items.Count(p => category == null || p.Category.Name == "For body"),
+                    ItemsPerPage = PageSize,
+                    CurrentPage = page
+                },
+                CurrentCategory = category,
+                CurrentItemSearch = searchparam,
+                ProductNames = new SelectList(teams, "Id", "Name"),
+            };
+
+
+
+
+            //var players = ((DbSet<Product>)repository.Items).Where(p => p.Name.Contains(name)).Include(p => p.Category)
+            //    .OrderBy(p => p.Id).Skip((page - 1) * PageSize).Take(PageSize).ToList();
+            //if (players.Count <= 0)
+            //{
+            //    //var plvm1 = new ProductListViewModel
+            //    //{
+            //    //    Products = new List<Product>() { new Product() },
+            //    //    //Products = repository
+            //    //    //           .Products
+            //    //    //           .OrderBy(p => p.Id)
+            //    //    //           .Skip((page - 1) * PageSize)
+            //    //    //           .Take(PageSize).Include(p => p.Category),
+            //    //    PagingInfo = new PagingInfo
+            //    //    {
+            //    //        //  TotalItems =repository.Items.Count(),
+            //    //        TotalItems = 0,
+            //    //        ItemsPerPage = PageSize,
+            //    //        CurrentPage = page
+            //    //    }
+            //    //};
+            //    //return PartialView(plvm1);
+            //    return HttpNotFound("There are no such product");
+            //    //  return PartialView();
+            //}
+            //var plvm = new ProductListViewModel
+            //{
+            //    Products = players,
+            //    //Products = repository
+            //    //           .Products
+            //    //           .OrderBy(p => p.Id)
+            //    //           .Skip((page - 1) * PageSize)
+            //    //           .Take(PageSize).Include(p => p.Category),
+            //    PagingInfo = new PagingInfo
+            //    {
+            //        //  TotalItems =repository.Items.Count(),
+            //        // TotalItems = players.Where(p => name == null || p.Name.Contains(name)).Count(),
+            //        TotalItems = ((DbSet<Product>)repository.Items).Where(p => p.Name.Contains(name)).Include(p => p.Category).ToList().Count(),
+            //        ItemsPerPage = PageSize,
+            //        CurrentPage = page
+            //    },
+            //    CurrentItemSearch = name
+            //};
+
+            return PartialView(plvm);
+
+            //var products = ((DbSet<Product>)repository.Items).Where(p => p.Name.Contains(name)).ToList();
+            // return PartialView(products);
+        }
 
 
 

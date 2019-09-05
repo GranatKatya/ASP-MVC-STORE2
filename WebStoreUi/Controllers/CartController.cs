@@ -56,6 +56,19 @@ namespace WebStoreUi.Controllers
             // return Redirect(returnurl);
             return RedirectToAction("Index", new { returnurl= returnurl });
         }
+        public ActionResult AddToCartAjax(int productid, string returnurl)
+        {
+            Product product = repository.Items.FirstOrDefault(p => p.Id == productid);
+            if (product != null)
+            {
+                //add product to cart
+                Cart.AddItem(product, 1);
+            }
+            // return Redirect(returnurl);
+            //   return RedirectToAction("Index", new { returnurl = returnurl });
+            return RedirectToAction("increment_ajax", "Cart", new { productId = productid });
+        }
+
         [AllowAnonymous]
         public ActionResult AddItemToCart(int productid, string returnurl)
         {
@@ -92,6 +105,18 @@ namespace WebStoreUi.Controllers
             }
             //return Redirect(returnurl);
             return RedirectToAction("Index", new { returnurl = returnurl });
+        }
+        [AllowAnonymous]
+        public ActionResult RemoveFromCartDecrementAjax(int productid, string returnurl)
+        {
+            Product product = repository.Items.FirstOrDefault(p => p.Id == productid);
+            if (product != null)
+            {
+                Cart.RemoveItemDecremente(product);
+            }
+            //return Redirect(returnurl);
+            return RedirectToAction("increment_ajax", "Cart", new { productId = productid });
+            //  return RedirectToAction("Index", new { returnurl = returnurl });
         }
 
         [AllowAnonymous]
@@ -216,5 +241,19 @@ namespace WebStoreUi.Controllers
             return Content("  <b>Your cart:</b> "+ Cart.Items.Sum(x => x.Quantity) +"goods,"+
                 Cart.ComputeTotalValue().ToString("# $"));
         }
+        [AllowAnonymous]
+        public ActionResult increment_ajax(int productId)
+        {
+            IEnumerable<CartItem> ci = Cart.Items.Where(p => p.Product.Id == productId).ToList();
+            CartItem c = ci.FirstOrDefault();
+            int res = c.Quantity;
+
+            return Content(Cart.Items.Where(p => p.Product.Id == productId).FirstOrDefault().Quantity.ToString());
+                //[productId-1].Quantity.ToString());
+                
+        }
+        
+
+        
     }
 }

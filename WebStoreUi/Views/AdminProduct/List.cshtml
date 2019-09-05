@@ -31,7 +31,7 @@
     
 
     <div style="float: right; width: 58%;">
-        @using (Ajax.BeginForm("ProductAdminSearch", new AjaxOptions
+        @using (Ajax.BeginForm("ProductSearch", new AjaxOptions
         {
             UpdateTargetId = "adminproductresults",
             LoadingElementId = "loading",
@@ -126,7 +126,7 @@
 
 
     <div>
-        @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i }))
+        @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i, name  = Model.CurrentItemSearch }))
     </div>
 </div>
 

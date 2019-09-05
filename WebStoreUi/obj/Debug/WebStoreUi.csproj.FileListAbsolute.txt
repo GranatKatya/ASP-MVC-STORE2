@@ -536,3 +536,7 @@ D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STOR
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreUi\bin\PagedList.Mvc.dll
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreUi\bin\PagedList.xml
 D:\Флэшка\ASP.NET\class\SecondApp\my2wersion\2\ASP-MVC-STORE2\ASP-MVC-STORE2\WebStoreUi\bin\PagedList.Mvc.xml
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreUi\bin\PagedList.dll
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreUi\bin\PagedList.Mvc.dll
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreUi\bin\PagedList.xml
+C:\Users\Gran_mv08\Desktop\asp store2\ASP-MVC-STORE2\WebStoreUi\bin\PagedList.Mvc.xml

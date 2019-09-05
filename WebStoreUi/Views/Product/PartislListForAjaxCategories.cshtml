@@ -39,5 +39,5 @@
     </div>
 
     <div>
-        @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i, category = Model.CurrentCategory }))
+        @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i, category = Model.CurrentCategory , searchparam = Model.CurrentItemSearch}))
     </div>

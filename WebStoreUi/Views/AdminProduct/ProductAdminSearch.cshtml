@@ -65,12 +65,12 @@
                 @Html.DisplayFor(modelItem => item.Category.Name)
             </td>
             <td>
-                @*<div>
-                        <button type="button" class="btn btn-success btn-sm" style="margin-top:1px"><i class="fa fa-edit" style="color:black">@Html.ActionLink("Edit", "EditProduct", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
-                        <button type="button" class="btn btn-success btn-sm" style="margin-top:1px"><i class="fa fa-info-circle" style="color:black">@Html.ActionLink("Details", "ProductDetails", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
-                        <button type="button" class="btn btn-success btn-sm" style="margin-top:1px"><i class="fa fa-close" style="color:black">@Html.ActionLink("Delete", "DeleteProduct", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
+                <div>
+                    <button type="button" class="btn btn-success btn-sm" style="margin-top:1px"><i class="fa fa-edit" style="color:black">@Html.ActionLink("Edit", "EditProduct", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
+                    <button type="button" class="btn btn-success btn-sm" style="margin-top:1px"><i class="fa fa-info-circle" style="color:black">@Html.ActionLink("Details", "ProductDetails", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
+                    <button type="button" class="btn btn-success btn-sm" style="margin-top:1px"><i class="fa fa-close" style="color:black">@Html.ActionLink("Delete", "DeleteProduct", new { id = item.Id }, new { style = "text-decoration:none; color: black;" })</i></button>
 
-                    </div>*@
+                </div>
 
             </td>
         </tr>
@@ -79,8 +79,8 @@
 </table>
 
 
-<div>
-    @Html.PageLinks(Model.PagingInfo, i => Url.Action("ProductAdminSearch", new { page = i }))
+<div> 
+    @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i, name= Model.CurrentItemSearch }))
 </div>
 
 
