@@ -48,7 +48,9 @@ namespace WebStoreUi.Controllers
                 {
                     await UserManager.AddToRoleAsync(user.Id, "User");
                     // return RedirectToAction("Login");
+
                     return RedirectToAction("List", "Product");
+                  
                 }
                 else
                 {
@@ -94,7 +96,8 @@ namespace WebStoreUi.Controllers
                     AuthenticationManager.SignIn(new AuthenticationProperties { IsPersistent = true }, claim);
                     if (String.IsNullOrEmpty(returnUrl))
                     {
-                        return RedirectToAction("List", "Product");
+                         return RedirectToAction("List", "Product");
+                        //return RedirectToAction("AdminPanel", "AdminPanel");
                     }
                     else
                     {

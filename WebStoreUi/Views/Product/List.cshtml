@@ -12,6 +12,11 @@
     ViewBag.Title = "Goods";
 }
 
+<div style="display: block;">
+    @Html.Action("Menu", "Nav")
+</div>
+
+
 <style>
 
     .e:hover {
@@ -169,7 +174,7 @@
 
 
         <div>
-            @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i, category = Model.CurrentCategory , searchparam = Model.CurrentItemSearch}))
+            @Html.PageLinks(Model.PagingInfo, i => Url.Action("List", new { page = i, category = Model.CurrentCategory, searchparam = Model.CurrentItemSearch }))
         </div>
 
     </div>

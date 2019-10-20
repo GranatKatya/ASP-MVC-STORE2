@@ -16,10 +16,10 @@
 
 <h2 style="text-align: center; font-weight:  800; font-size: xx-large; ">Admin panel</h2>
 @*<head>
-    <div style="margin: 20px; ">
-        Главная > Товары
-    </div>
-</head>*@
+        <div style="margin: 20px; ">
+            Главная > Товары
+        </div>
+    </head>*@
 
 @*<div style=" display: flex; text-align: center;   justify-content: center; /* center items horizontally, in this case */
         flex-direction:row; font-weight:800;  margin: 20px; text-decoration: underline; ">
@@ -31,63 +31,63 @@
 
 
 
-    <div>
-        <div style=" display: block;  float: left; text-align:center; width: 30%; ">
-            @*  <h2>@Html.ActionLink("Add", "Add")</h2>*@
-            <div style="margin:5px; margin-top: 10px; ">
-                <a href=@Url.Action("List", "AdminProduct", new { page = 1 }) style="text-decoration:none; color: black;">
-                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Products</i></button>
-                </a>
-            </div>
-
-
-            @*<a href=@Url.Action("Index", "Cart", new { page = 1 }) style="text-decoration:none; color: black;">
-        <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Carts</i></button>
-            </a>*@
-            <div style="margin:5px;  margin-top: 10px;">
-                <a href=@Url.Action("List", "Category", new { page = 1 }) style="text-decoration:none; color: black;">
-                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Categories</i></button>
-                </a>
-            </div>
-
-            <div style="margin:5px;  margin-top: 10px;">
-                <a href=@Url.Action("List", "Order", new { page = 1 }) style="text-decoration:none; color: black;">
-                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Orders</i></button>
-                </a>
-            </div>
-
-            <div style="margin:5px;  margin-top: 10px;">
-                <a href=@Url.Action("List", "Product", new { page = 1 }) style="text-decoration:none; color: black;">
-                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">User products</i></button>
-                </a>
-            </div>
-
-            <div style="margin:5px;  margin-top: 10px;">
-                <a href=@Url.Action("Index", "Roles", new { page = 1 }) style="text-decoration:none; color: black;">
-                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Roles</i></button>
-                </a>
-            </div>
-
-            <div style="margin:5px;  margin-top: 10px;">
-                <a href=@Url.Action("UsersWithRoles", "User", new { page = 1 }) style="text-decoration:none; color: black;">
-                    <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Users</i></button>
-                </a>
-            </div>
-
-            @* <button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit" style="color:black">@Html.ActionLink("List", "List","AdminProduct",  new {  page = 1 }, new { style = "text-decoration:none; color: black;" })</i></button>*@
-
+<div>
+    <div style=" display: block;  float: left; text-align:center; width: 30%; ">
+        @*  <h2>@Html.ActionLink("Add", "Add")</h2>*@
+        <div style="margin:5px; margin-top: 10px; ">
+            <a href=@Url.Action("List", "AdminProduct", new { page = 1 }) style="text-decoration:none; color: black;">
+                <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Products</i></button>
+            </a>
         </div>
 
 
-        <div style="  float: right;   width: 68%; ">
-            @*<img src="~/Resource/admin-banner.jpg" />*@
-
-            <div >
-                <img src="~/Resource/admin-banner.jpg" style="width: 90%; height: 98%;" />
-            </div>
+        @*<a href=@Url.Action("Index", "Cart", new { page = 1 }) style="text-decoration:none; color: black;">
+            <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Carts</i></button>
+                </a>*@
+        <div style="margin:5px;  margin-top: 10px;">
+            <a href=@Url.Action("List", "Category", new { page = 1 }) style="text-decoration:none; color: black;">
+                <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Categories</i></button>
+            </a>
         </div>
+
+        <div style="margin:5px;  margin-top: 10px;">
+            <a href=@Url.Action("List", "Order", new { page = 1 }) style="text-decoration:none; color: black;">
+                <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Orders</i></button>
+            </a>
+        </div>
+
+        <div style="margin:5px;  margin-top: 10px;">
+            <a href=@Url.Action("List", "Product", new { page = 1 }) style="text-decoration:none; color: black;">
+                <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">User products</i></button>
+            </a>
+        </div>
+
+        <div style="margin:5px;  margin-top: 10px;">
+            <a href=@Url.Action("Index", "Roles", new { page = 1 }) style="text-decoration:none; color: black;">
+                <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Roles</i></button>
+            </a>
+        </div>
+
+        <div style="margin:5px;  margin-top: 10px;">
+            <a href=@Url.Action("UsersWithRoles", "User", new { page = 1 }) style="text-decoration:none; color: black;">
+                <button type="button" class="btn btn-success btn-sm">  <i class="fa fa-edit" style="color:black">Users</i></button>
+            </a>
+        </div>
+
+        @* <button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit" style="color:black">@Html.ActionLink("List", "List","AdminProduct",  new {  page = 1 }, new { style = "text-decoration:none; color: black;" })</i></button>*@
 
     </div>
+
+
+    <div style="  float: right;   width: 68%; ">
+        @*<img src="~/Resource/admin-banner.jpg" />*@
+
+        <div>
+            <img src="~/Resource/admin-banner.jpg" style="width: 90%; height: 98%;" />
+        </div>
+    </div>
+
+</div>
 
 
 
